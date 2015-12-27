@@ -1,0 +1,14 @@
+Package: dzVis
+Type: Package
+Title: Data Visualization with Data Zoom and googleVis
+Version: 0.1
+Date: 2015-12-14
+Author: Talitha Speranza
+Maintainer: Talitha Speranza <talitha.speranza@gmail.com>
+Description: An OpenCPU Web Application for Data Zoom to make charts of economic
+   data from the Brazilian Institute of Geography and Statistics (IBGE) using
+   the googleVis R package.
+License: LGPL-3
+LazyData: TRUE
+Imports: googleVis
+
