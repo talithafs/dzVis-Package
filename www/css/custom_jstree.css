@@ -1,0 +1,47 @@
+.jstree-default .jstree-themeicon {
+  /*background-position: -260px -4px;*/
+  background-image: url("../img/table.png");
+  background-position: center ;
+  background-size: cover;
+}
+
+.jstree-default .jstree-checkbox {
+  background-image: url("../img/checkbox-unchecked.png");
+  background-position: center;
+}
+.jstree-default .jstree-checkbox:hover {
+  background-image: url("../img/checkbox-partial.png");
+  background-position: center;
+ }
+ 
+.jstree-default.jstree-checkbox-selection .jstree-clicked > .jstree-checkbox,
+.jstree-default .jstree-checked > .jstree-checkbox {
+  background-image: url("../img/checkbox-checked.png");
+  background-position: center;
+}
+.jstree-default.jstree-checkbox-selection .jstree-clicked > .jstree-checkbox:hover,
+.jstree-default .jstree-checked > .jstree-checkbox:hover {
+  background-image: url("../img/checkbox-checked.png");
+  opacity: 0.6 ;
+  background-position: center;
+}
+.jstree-default .jstree-anchor > .jstree-undetermined {
+  background-image: url("../img/checkbox-partial.png");
+  background-position: center;
+}
+.jstree-default .jstree-anchor > .jstree-undetermined:hover {
+	background-image: url("../img/checkbox-partial.png");
+	opacity: 0.6 ;
+  	background-position: center;
+}
+
+.jstree-default .jstree-wholerow-clicked {
+  background: -webkit-linear-gradient(top, rgba(52,104,154,0.58) 0%, rgba(52,104,154,0.45) 100%);
+  background: linear-gradient(to bottom, rgba(52,104,154,0.58) 0%, rgba(52,104,154,0.45) 100%);
+}
+
+.jstree-default .jstree-search {
+  font-style: italic;
+  color: #F54848;
+  font-weight: 800;
+}

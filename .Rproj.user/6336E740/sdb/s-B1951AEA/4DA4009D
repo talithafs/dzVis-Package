@@ -1,0 +1,18 @@
+{
+    "contents" : "updateFrontEnd <- function(){\n  wamp <- \"C:\\\\Users\\\\Talitha\\\\Dropbox\\\\Economia\\\\Projeto Final\\\\R Package\\\\dzVis\\\\www\\\\\"\n  dzvis <- \"C:\\\\Users\\\\Talitha\\\\Documents\\\\R\\\\win-library\\\\3.2\\\\dzVis\\\\\"\n  www <- paste(dzvis, \"\\\\www\", sep=\"\")\n\n  if(file.exists(www)) {\n    unlink(www, recursive = TRUE)\n  }\n\n  file.copy(wamp,dzvis,recursive=TRUE)\n}\n",
+    "created" : 1451314430407.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3266038893",
+    "id" : "4DA4009D",
+    "lastKnownWriteTime" : 1451318354,
+    "path" : "C:/Users/Talitha/Dropbox/Economia/Projeto Final/R Package/dzVis/util.R",
+    "project_path" : "util.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

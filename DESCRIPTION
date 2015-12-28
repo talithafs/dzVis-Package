@@ -6,9 +6,10 @@ Date: 2015-12-14
 Author: Talitha Speranza
 Maintainer: Talitha Speranza <talitha.speranza@gmail.com>
 Description: An OpenCPU Web Application for Data Zoom to make charts of economic
-   data from the Brazilian Institute of Geography and Statistics (IBGE) using
-   the googleVis R package.
+    data from the Brazilian Institute of Geography and Statistics (IBGE) using
+    the googleVis R package.
 License: LGPL-3
 LazyData: TRUE
-Imports: googleVis
-
+Imports:
+    googleVis
+RoxygenNote: 5.0.1

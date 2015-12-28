@@ -1,0 +1,158 @@
+body {
+	background-color: rgba(128, 128, 128, 0.73);
+	margin: 0;
+}
+
+.wrapper {
+	position: fixed ;
+    width: 99.8vw ;
+    height: 99.8vh;
+    margin: 0%;
+    padding: 0%;
+}
+
+#data {
+	width: 29.8vw;
+	padding-right: 0;
+	border-right: solid 8px rgba(128, 128, 128, 0.73) ;
+	background-color: #F1F1F1;
+}
+
+.panel {
+	margin: 0 ;
+	padding: 0 ;
+	height: 99vh;
+	width: 70vw;
+}
+
+
+#details {
+	height: 29vh;
+	margin: 0; 
+	padding: 0;
+	border-top: solid 4px rgba(128, 128, 128, 0.73) ;
+}
+
+#details-field {
+	padding: 0 8px 0 8px ;
+	overflow-y: auto ;
+	height: 23vh ;
+}
+
+#details-field h1 {
+	font-size: 16px ;
+	text-transform: uppercase ;
+	font-weight: bold ;
+}
+
+#details-field h2 {
+	font-size: 14px ;
+	font-weight: bold ;
+}
+
+#details-field p {
+	font-size: 12px ;
+	display: inline-block ;
+	margin-bottom: 2px ;
+	padding: 0 ;
+}
+
+#details-field #view-data {
+	color: blue ;
+	text-decoration: underline;
+	float: right ; 
+	cursor: pointer ;
+}
+
+.header {
+	background-image: url("../img/header.jpg");
+	height: 39px;
+}
+
+.header p {
+	position: absolute ;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif ;
+	color: #fff ;
+	font-size: 15px;
+	margin-top: 5.7px ;
+	margin-left: 5.5px ;
+	display: inline ;
+	background-color: #34689A ;
+}
+
+.tree-panel{
+	height: 64vh;
+	margin: 0; 
+	padding: 0;
+}
+
+
+.tree-search {
+	background: #beebff;
+  	background: -webkit-linear-gradient(top, #beebff 0%, #add8e6 100%);
+  	background: linear-gradient(to bottom, #beebff 0%, #add8e6 100%);
+}
+
+#search-box {
+	height: 10vh ;
+	text-align: left ;
+	display: none ;
+	max-height: 10vh; 
+	border-bottom: solid 2px #34689A ;
+}
+
+
+#pull-search {
+	display: inline-block ;
+	border-bottom: solid 2px #34689A  ;
+	border-radius: 0 0 8px 8px ;
+	height: 30px ;
+	float: right ;
+	cursor: pointer ;
+	background: inherit ;
+	margin-bottom: 10px ;
+}
+
+#pull-search p {
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif ;
+	font-size: 14px;
+	color: #fff ;
+	padding-right: 10px ;
+}
+
+#pull-search p, img {
+	display: inline-block ;
+}
+
+#search-field {
+	width: 20vw;
+	margin-top: 1vh;
+	margin-left: 1vw;
+}
+
+#tree {
+	text-transform: uppercase ;
+	font-size: 13px;
+	font-weight: 600 ;
+	overflow-y: auto ;
+	width: inherit ;
+	height: 58vh ;
+}
+
+.on-vertical-border {
+	cursor: ew-resize;
+}
+
+.on-horizontal-border {
+	cursor: ns-resize;
+}
+
+
+.no-selection {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
