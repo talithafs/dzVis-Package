@@ -1,6 +1,7 @@
 body {
 	background-color: rgba(128, 128, 128, 0.73);
 	margin: 0;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif ;
 }
 
 .wrapper {
@@ -27,7 +28,7 @@ body {
 
 
 #details {
-	height: 29vh;
+	height: 34vh;
 	margin: 0; 
 	padding: 0;
 	border-top: solid 4px rgba(128, 128, 128, 0.73) ;
@@ -36,7 +37,8 @@ body {
 #details-field {
 	padding: 0 8px 0 8px ;
 	overflow-y: auto ;
-	height: 23vh ;
+	height: 28vh ;
+	word-wrap: break-word;
 }
 
 #details-field h1 {
@@ -81,7 +83,7 @@ body {
 }
 
 .tree-panel{
-	height: 64vh;
+	height: 59vh;
 	margin: 0; 
 	padding: 0;
 }
@@ -136,7 +138,7 @@ body {
 	font-weight: 600 ;
 	overflow-y: auto ;
 	width: inherit ;
-	height: 58vh ;
+	height: 53vh ;
 }
 
 .on-vertical-border {
@@ -155,4 +157,11 @@ body {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+}
+
+.loading {
+	background-image: url('../img/carregando.gif') ;
+	background-position: center top ;
+	background-repeat: no-repeat ;
+	margin-top: 15px ;
 }

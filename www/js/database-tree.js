@@ -9,7 +9,8 @@ $(document).ready(function(){
 		var checked = instance.get_checked(true);
 		var dim = checked.length ;
 		var description = "" ;
-		var view = "<p id = \"view-data\">Ver dados >> </p>";
+		var view = "<p id = \"view-data\">Ver dados >></p>";
+		var viewMode = false ;
 		
 		if(checked.length != 0){
 			currentAttr = findAttr(checked, wholeTree);
@@ -19,23 +20,46 @@ $(document).ready(function(){
 							"<h2>" + currentAttr.text + "</h2>" + "<p>" + currentAttr.description + "</p>" + view ; 
 		}
 		
-		document.getElementById("details-field").innerHTML= description ;
+		$("#details-field").html(description) ;
 		
 		$("#view-data").click(function() {
-	    	var req = ocpu.rpc("getAttributeValues", {
-	    		attribute : currentAttr.id,
-	    		table : currentTable.id,
-	    		nvalues : 10 
-    		}, 
-				function(session){
-		        arr = session;
-		        alert(arr.values.join()) ;
-     		});
-    
-		    req.fail(function(){
-		      alert("Erro no servidor: " + req.responseText);
-	    });
-    });
+			
+			viewMode = !viewMode ;
+			
+			if(viewMode) {
+			
+				$("#details-field").addClass('loading');
+				$("#details-field").html("") ;
+				
+				window.setTimeout(function(){
+			    	var req = ocpu.call("getAttributeValues", {
+			    		attribute : currentAttr.id,
+			    		table : currentTable.id,
+			    		nvalues : 10 
+		    		}, 
+						function(session){
+				        
+				        session.getObject(function(filename){ 
+				        	$.getJSON(session.getFileURL(filename), function(data) {
+				        		$("#details-field").removeClass('loading');
+				        		$("#view-data").text("<< Voltar");
+				        		$("#details-field").html(data.values.join() + view) ;
+				        	});
+				        });
+				        
+		     		});
+		    
+				    req.fail(function(){
+				      alert("Erro no servidor: " + req.responseText);
+			    	});
+			    	
+			 	}, 0);
+			 }
+			 else {
+			 	$("#details-field").html(description) ;
+			 	$("#view-data").text("Ver dados >>");
+			 }
+    	});
 	});
 	
 	$('#search-field').keyup(function () {
@@ -145,27 +169,6 @@ function findTable(node, tree){
 	
 	return found[0] ;
 }
-
-
-
-
-// $("#graphingArea").on("click", function() {
-// 	
-	// alert("oie");
-// 	
-	// var req = ocpu.rpc("hello", {
-          // myname : "Talitha"
-        // }, function(output){
-           // alert(output);
-        // });
-//         
-        // //if R returns an error, alert the error message
-        // req.fail(function(){
-          // alert("Server error: " + req.responseText);
-        // });
-//         
-// 	
-// });
 
 
 

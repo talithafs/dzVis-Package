@@ -7,7 +7,7 @@
 disconnect(connection)
 }
 \arguments{
-\item{connection}{The connection string to access the dzVis database}
+\item{connection}{The connection object to access the dzVis database}
 }
 \description{
 Disconnect from the dzVis database

@@ -1,0 +1,18 @@
+{
+    "contents" : "#' @title Disconnect from the dzVis database\n#'\n#' @description Disconnect from the dzVis database\n#'\n#' @param connection The connection object to access the dzVis database\n#'\n#' @details Detailed information about the dzVis database can be found on\n#'\n#' @seealso \\code{\\link{connect}}\n#'\n#' @export\n#' @import DBI\n\ndisconnect <- function(connection){\n  dbDisconnect(connection)\n}\n",
+    "created" : 1451309538491.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "837800507",
+    "id" : "C1BDB758",
+    "lastKnownWriteTime" : 1451946386,
+    "path" : "C:/Users/Talitha/Dropbox/Economia/Projeto Final/R Package/dzVis/R/disconnect.R",
+    "project_path" : "R/disconnect.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

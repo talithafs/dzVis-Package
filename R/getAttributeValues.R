@@ -1,13 +1,13 @@
-#' @title Get attribute values
+#' @title Get attribute values from a dzVis table
 #'
-#' @description Get top values of an attribute from a dzVis database table
+#' @description Get top values of an attribute - a column - from a dzVis database table
+#' and save the results to a json file.
 #'
 #' @param attribute The name of the column to be selected
 #' @param table The name of the table to be selected
 #' @param nvalues The number of values to be selected from the top.
 #'
-#' @return An array with the top \code{nvalues} values of \code{attribute}
-#' from \code{table}.
+#' @return The name of the file in which the results were written.
 #'
 #' @seealso \code{\link{connect}}
 #'
@@ -15,9 +15,17 @@
 #' @import DBI
 
 getAttributeValues <- function(attribute, table, nvalues){
+  filename <- "attributes.json"
+
   connection <- connect()
   query <- paste("select", attribute, "from", table, "limit", nvalues, ";")
   data <- DBI::dbGetQuery(connection, query)
   disconnect(connection)
-  list(values = as.list(data[,1]))
+
+  if(createJSONFile(list(values = data[,1]), filename) == TRUE) {
+    return(filename)
+  }
+
+  stop("JSON file was not created.")
+
 }

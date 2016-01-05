@@ -1,0 +1,18 @@
+{
+    "contents" : "#' @title Get attribute values from a dzVis table\n#'\n#' @description Get top values of an attribute - a column - from a dzVis database table\n#' and save the results to a json file.\n#'\n#' @param attribute The name of the column to be selected\n#' @param table The name of the table to be selected\n#' @param nvalues The number of values to be selected from the top.\n#'\n#' @return The name of the file in which the results were written.\n#'\n#' @seealso \\code{\\link{connect}}\n#'\n#' @export\n#' @import DBI\n\ngetAttributeValues <- function(attribute, table, nvalues){\n  filename <- \"attributes.json\"\n\n  connection <- connect()\n  query <- paste(\"select\", attribute, \"from\", table, \"limit\", nvalues, \";\")\n  data <- DBI::dbGetQuery(connection, query)\n  disconnect(connection)\n\n  if(createJSONFile(list(values = data[,1]), filename) == TRUE) {\n    return(filename)\n  }\n\n  stop(\"JSON file was not created.\")\n\n}\n",
+    "created" : 1451276540295.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "376121703",
+    "id" : "7DAAC1EC",
+    "lastKnownWriteTime" : 1451946619,
+    "path" : "C:/Users/Talitha/Dropbox/Economia/Projeto Final/R Package/dzVis/R/getAttributeValues.R",
+    "project_path" : "R/getAttributeValues.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

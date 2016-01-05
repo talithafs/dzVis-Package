@@ -10,7 +10,7 @@
 #'
 #' @export
 #' @import DBI
-#' @import RMySQL
+#' @importFrom RMySQL MySQL
 
 
 connect <- function(){

@@ -14,11 +14,11 @@ getAttributeValues(attribute, table, nvalues)
 \item{nvalues}{The number of values to be selected from the top.}
 }
 \value{
-An array with the top \code{nvalues} values of \code{attribute}
-from \code{table}.
+The name of the file in which the results were written.
 }
 \description{
-Get top values of an attribute from a dzVis database table
+Get top values of an attribute - a column - from a dzVis database table
+and save the results to a json file.
 }
 \seealso{
 \code{\link{connect}}

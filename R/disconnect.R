@@ -2,7 +2,7 @@
 #'
 #' @description Disconnect from the dzVis database
 #'
-#' @param connection The connection string to access the dzVis database
+#' @param connection The connection object to access the dzVis database
 #'
 #' @details Detailed information about the dzVis database can be found on
 #'
