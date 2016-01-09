@@ -34,6 +34,10 @@ body {
 	border-top: solid 4px rgba(128, 128, 128, 0.73) ;
 }
 
+#view-option {
+	display: none ;
+}
+
 #details-field {
 	padding: 0 8px 0 8px ;
 	overflow-y: auto ;
@@ -64,6 +68,15 @@ body {
 	text-decoration: underline;
 	float: right ; 
 	cursor: pointer ;
+}
+
+#view-option {
+	margin-top: 10px ;
+}
+
+#table, #column {
+	text-transform: uppercase;
+	font-weight: bold ;
 }
 
 .header {
@@ -161,7 +174,11 @@ body {
 
 .loading {
 	background-image: url('../img/carregando.gif') ;
-	background-position: center top ;
+	background-position: center bottom 30px;
 	background-repeat: no-repeat ;
-	margin-top: 15px ;
+}
+
+hr {
+  border: 0;
+  border-bottom: 1px dashed #000;
 }

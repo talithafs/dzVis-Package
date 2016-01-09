@@ -1,65 +1,73 @@
 var wholeTree, currentAttr, currentTable, conn, arr = undefined ;
-var done = false;
 
 $(document).ready(function(){
+	
+	var DF_TEXT = $("#details-text").text() ;
+	var DF_OPT = $('option:first', "#opt-nvalues").val() ;
+	
+	var description = "" ;
+	var viewMode = false ;
+	var lastOpt = DF_OPT ;
+	var done = false;
 
     $("#tree").click(function() {
 		
 		var instance = $('#tree').jstree(true);
 		var checked = instance.get_checked(true);
 		var dim = checked.length ;
-		var description = "" ;
-		var view = "<p id = \"view-data\">Ver dados >></p>";
-		var viewMode = false ;
+		var view = "" ;
+		
+		description = DF_TEXT ;
+		
+		$("#view-option").hide();
 		
 		if(checked.length != 0){
 			currentAttr = findAttr(checked, wholeTree);
 			currentTable = findTable(currentAttr, wholeTree);
 			
 			description = "<h1>" + currentTable.text + "</h1>" + "<p>" + currentTable.description + "</p>" +
-							"<h2>" + currentAttr.text + "</h2>" + "<p>" + currentAttr.description + "</p>" + view ; 
+							"<h2>" + currentAttr.text + "</h2>" + "<p>" + currentAttr.description + "</p>" ; 
+		
+			view = "Ver Dados >>" ;
 		}
 		
-		$("#details-field").html(description) ;
+		if(viewMode) viewMode = !viewMode ;
 		
-		$("#view-data").click(function() {
+		$("#details-text").html(description) ;	
+		$("#view-data").text(view);
+		
+	});
+	
+	$("#view-data").click(function() {
+		
+		viewMode = !viewMode ;
+		
+		if(viewMode) {
 			
-			viewMode = !viewMode ;
+			$("#table").text(currentTable.text);
+			$("#column").text(currentAttr.text);
+			$("#view-option").show();
 			
-			if(viewMode) {
-			
-				$("#details-field").addClass('loading');
-				$("#details-field").html("") ;
-				
-				window.setTimeout(function(){
-			    	var req = ocpu.call("getAttributeValues", {
-			    		attribute : currentAttr.id,
-			    		table : currentTable.id,
-			    		nvalues : 10 
-		    		}, 
-						function(session){
-				        
-				        session.getObject(function(filename){ 
-				        	$.getJSON(session.getFileURL(filename), function(data) {
-				        		$("#details-field").removeClass('loading');
-				        		$("#view-data").text("<< Voltar");
-				        		$("#details-field").html(data.values.join() + view) ;
-				        	});
-				        });
-				        
-		     		});
-		    
-				    req.fail(function(){
-				      alert("Erro no servidor: " + req.responseText);
-			    	});
-			    	
-			 	}, 0);
-			 }
-			 else {
-			 	$("#details-field").html(description) ;
-			 	$("#view-data").text("Ver dados >>");
-			 }
-    	});
+			getAttributeValues();
+	 	}
+	 	else { 
+	 		$("#details-text").html(description) ;
+	 		$("#view-data").text("Ver Dados >>") ;
+	 		$("#opt-nvalues").val(DF_OPT);
+	 		$("#view-option").hide();
+	 	}
+	 	
+	});
+	
+	$("#opt-nvalues").change(function(){
+		
+		var currentOpt = $(this).val();
+		
+		if(currentOpt != lastOpt){
+			getAttributeValues();
+		}
+		
+		lastOpt = currentOpt ;
 	});
 	
 	$('#search-field').keyup(function () {
@@ -73,11 +81,46 @@ $(document).ready(function(){
 	 
 	});
 	
+	function getAttributeValues(){
+		
+		var nvalues = $("#opt-nvalues").val() ;
+		
+		$("#details-field").addClass('loading');
+		$("#details-text").html("") ;
+		$("#view-data").text("");
+		
+		window.setTimeout(function(){
+	    	var req = ocpu.call("getAttributeValues", {
+	    		attribute : currentAttr.id,
+	    		table : currentTable.id,
+	    		nvalues : nvalues
+    		}, 
+				function(session){
+		        
+		        session.getObject(function(filename){ 
+		        	
+		        	$.getJSON(session.getFileURL(filename), function(data) {
+		        		
+		        		$("#details-field").removeClass('loading');
+		        		$("#details-text").html(data.values.join()) ;
+		        		$("#view-data").text("<< Voltar") ;
+		        	});
+		        });
+		        
+     		});
+    
+		    req.fail(function(){
+		      alert("Erro no servidor: " + req.responseText);
+	    	});
+	    	
+	 	}, 0);
+	}
+	
 	
 });
 
 $.getJSON('data/menu.json', function(data) {
-	
+		
 	wholeTree = data ;
 	
 	$('#tree').jstree({
@@ -127,6 +170,8 @@ $.getJSON('data/menu.json', function(data) {
         // output+="</ul>";
         // document.getElementById("placeholder").innerHTML=output;
 });
+
+
 
 function findAttr(itens, tree) {
 	var index = 0 ;
