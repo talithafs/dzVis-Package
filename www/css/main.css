@@ -4,6 +4,12 @@ body {
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif ;
 }
 
+hr {
+  border: 0;
+  border-bottom: 1px dashed #000;
+}
+
+
 .wrapper {
 	position: fixed ;
     width: 99.8vw ;
@@ -19,65 +25,7 @@ body {
 	background-color: #F1F1F1;
 }
 
-.panel {
-	margin: 0 ;
-	padding: 0 ;
-	height: 99vh;
-	width: 70vw;
-}
 
-
-#details {
-	height: 34vh;
-	margin: 0; 
-	padding: 0;
-	border-top: solid 4px rgba(128, 128, 128, 0.73) ;
-}
-
-#view-option {
-	display: none ;
-}
-
-#details-field {
-	padding: 0 8px 0 8px ;
-	overflow-y: auto ;
-	height: 28vh ;
-	word-wrap: break-word;
-}
-
-#details-field h1 {
-	font-size: 16px ;
-	text-transform: uppercase ;
-	font-weight: bold ;
-}
-
-#details-field h2 {
-	font-size: 14px ;
-	font-weight: bold ;
-}
-
-#details-field p {
-	font-size: 12px ;
-	display: inline-block ;
-	margin-bottom: 2px ;
-	padding: 0 ;
-}
-
-#details-field #view-data {
-	color: blue ;
-	text-decoration: underline;
-	float: right ; 
-	cursor: pointer ;
-}
-
-#view-option {
-	margin-top: 10px ;
-}
-
-#table, #column {
-	text-transform: uppercase;
-	font-weight: bold ;
-}
 
 .header {
 	background-image: url("../img/header.jpg");
@@ -96,7 +44,6 @@ body {
 }
 
 .tree-panel{
-	height: 59vh;
 	margin: 0; 
 	padding: 0;
 }
@@ -154,6 +101,64 @@ body {
 	height: 53vh ;
 }
 
+#details {
+	/*height: 34vh;*/
+	margin: 0; 
+	padding: 0;
+	border-top: solid 4px rgba(128, 128, 128, 0.73) ;
+}
+
+#view-option {
+	display: none ;
+	margin-top: 10px ;
+}
+
+#details-field {
+	padding: 0 8px 0 8px ;
+	overflow-y: auto ;
+	/*height: 28vh ;*/
+	height: calc(0px + 1000px);
+	word-wrap: break-word;
+}
+
+#details-field h1 {
+	font-size: 16px ;
+	text-transform: uppercase ;
+	font-weight: bold ;
+}
+
+#details-field h2 {
+	font-size: 14px ;
+	font-weight: bold ;
+}
+
+#details-field p {
+	font-size: 12px ;
+	display: inline-block ;
+	margin-bottom: 2px ;
+	padding: 0 ;
+}
+
+#details-field #view-data {
+	color: blue ;
+	text-decoration: underline;
+	float: right ; 
+	cursor: pointer ;
+}
+
+
+#table, #column {
+	text-transform: uppercase;
+	font-weight: bold ;
+}
+
+.panel {
+	margin: 0 ;
+	padding: 0 ;
+	height: 99vh;
+	width: 70vw;
+}
+
 .on-vertical-border {
 	cursor: ew-resize;
 }
@@ -178,7 +183,3 @@ body {
 	background-repeat: no-repeat ;
 }
 
-hr {
-  border: 0;
-  border-bottom: 1px dashed #000;
-}

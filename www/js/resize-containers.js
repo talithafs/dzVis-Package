@@ -90,6 +90,10 @@ $(document).mouseup(function() {
 	}
 });
 
+/* probably should be placed in another file*/
+
+$("#details-field").height($(".panel").height() - $("#tree-panel").height() - 2*$(".header").height());
+
 var open = false ;
 
 $("#pull-search").click(function(){
