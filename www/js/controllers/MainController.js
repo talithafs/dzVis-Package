@@ -7,10 +7,19 @@ app.controller("MainController",["$scope", function($scope){
 	
 	// Static text 
 	$scope.detailsText = "Clique em uma tabela ou em alguma de suas colunas para obter detalhes de sua especificação." ;
+
+	// Resizing logic	
+	var $data = resizableContainers.$data ;
+	var $details = resizableContainers.$details ;
 	
-	$scope.btnSearchClick = function() {
-		alert("hi from the button");
-		
-	};
+	$data.mousedown(resizableContainers.dataOnMouseDown);
+	$data.mousemove(resizableContainers.dataOnMouseMove);
+
+	$details.mousedown(resizableContainers.detailsOnMouseDown);
+	$details.mousemove(resizableContainers.detailsOnMouseMove);
+
+	$(document).mousemove(resizableContainers.documentOnMouseMove);
+	$(document).mouseup(resizableContainers.documentOnMouseUp);
 
 }]);
+
