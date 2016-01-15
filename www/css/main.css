@@ -4,11 +4,6 @@ body {
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif ;
 }
 
-hr {
-  border: 0;
-  border-bottom: 1px dashed #000;
-}
-
 
 .wrapper {
 	position: fixed ;
@@ -25,7 +20,12 @@ hr {
 	background-color: #F1F1F1;
 }
 
-
+.panel {
+	margin: 0 ;
+	padding: 0 ;
+	height: 99vh;
+	width: 70vw;
+}
 
 .header {
 	background-image: url("../img/header.jpg");
@@ -109,8 +109,13 @@ hr {
 }
 
 #view-option {
-	display: none ;
 	margin-top: 10px ;
+}
+
+#view-option img {
+	display: block ;
+	margin-left: auto ;
+	margin-right: auto ;
 }
 
 #details-field {
@@ -152,11 +157,8 @@ hr {
 	font-weight: bold ;
 }
 
-.panel {
-	margin: 0 ;
-	padding: 0 ;
-	height: 99vh;
-	width: 70vw;
+#graphingArea {
+	position: fixed ;
 }
 
 .on-vertical-border {
@@ -183,3 +185,7 @@ hr {
 	background-repeat: no-repeat ;
 }
 
+hr {
+  border: 0;
+  border-bottom: 1px dashed #000;
+}

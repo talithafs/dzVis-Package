@@ -1,7 +1,7 @@
 var resizableContainers = (function(){	
 	
 	var $data = $("#data") ;
-	var $graphingArea = $("#graphingArea") ;
+	var $graphingArea = $("#graphing-area") ;
 	var $tree = $("#tree") ;
 	var $details = $("#details") ;
 	var $treePanel = $(".tree-panel") ;
@@ -12,9 +12,9 @@ var resizableContainers = (function(){
 	var onLeftBorder, onMiddleBorder = false ;
 	var vPressed, mPressed = false;
 
-	var dataOnMouseMove = function(element){
+	var dataOnMouseMove = function(event){
 
-		if(element.offsetX > $data.innerWidth()){
+		if(event.offsetX > $data.innerWidth()){
 			$data.addClass("on-vertical-border");
 			onLeftBorder = true; 
 		}
@@ -24,12 +24,12 @@ var resizableContainers = (function(){
 		}
 	};
 
-	var dataOnMouseDown = function(element){
+	var dataOnMouseDown = function(event){
 
 		if(onLeftBorder){
 
 			vPressed = true;
-			dataX = element.pageX;
+			dataX = event.pageX;
 			dataWidth = $data.width();
 			gAreaWidth = $graphingArea.width();
 			$data.addClass("no-selection");
@@ -37,11 +37,11 @@ var resizableContainers = (function(){
 		}
 	};
 
-	var detailsOnMouseMove = function(element){
-
+	var detailsOnMouseMove = function(event){
+	
 		var borderWidth = parseInt($details.css('border-top-width'));
 	
-		if(element.offsetY < borderWidth){
+		if(event.offsetY < borderWidth){
 			$details.addClass("on-horizontal-border");
 			onMiddleBorder = true; 
 		}
@@ -51,12 +51,12 @@ var resizableContainers = (function(){
 		}
 	};
 
-	var detailsOnMouseDown = function(e) {
+	var detailsOnMouseDown = function(event) {
 	
 		if(onMiddleBorder){
 			
 			mPressed = true;
-			treeY = e.pageY;
+			treeY = event.pageY;
 			detailsFieldHeight = $detailsField.height();
 			treeHeight = $tree.height();
 			treePanelHeight = $treePanel.height();
@@ -66,21 +66,21 @@ var resizableContainers = (function(){
 		}
 	};
 
-	var documentOnMouseMove = function(element){
+	var documentOnMouseMove = function(event){
 
 		if(vPressed) {
-			$data.width(dataWidth+(element.pageX-dataX));
-			$graphingArea.width(gAreaWidth - (element.pageX-dataX));
+			$data.width(dataWidth+(event.pageX-dataX));
+			$graphingArea.width(gAreaWidth - (event.pageX-dataX));
 		}
 		if(mPressed){
-			$tree.height(treeHeight + (element.pageY-treeY));
-			$treePanel.height(treePanelHeight + (element.pageY-treeY));
-			$details.height(detailsHeight - (element.pageY-treeY));
-			$detailsField.height(detailsFieldHeight - (element.pageY-treeY));
+			$tree.height(treeHeight + (event.pageY-treeY));
+			$treePanel.height(treePanelHeight + (event.pageY-treeY));
+			$details.height(detailsHeight - (event.pageY-treeY));
+			$detailsField.height(detailsFieldHeight - (event.pageY-treeY));
 		}
 	};
 
-	var documentOnMouseUp = function(element){
+	var documentOnMouseUp = function(event){
 
 		if(vPressed) {
 			$graphingArea.removeClass("no-selection");

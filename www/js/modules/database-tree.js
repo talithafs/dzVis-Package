@@ -101,8 +101,6 @@ var databaseTree = (function(){
 		var found = [] ;
 		var tableId = "" ;
 		
-		alert(node.type);
-		
 		// If 'node' is already a root node, return it
 		if(node.type != "attr" && node.type != "lvl"){
 			return node ;
@@ -132,7 +130,6 @@ var databaseTree = (function(){
 	
 	return {
 		$tree : $tree,
-		instance : instance,
 		getInstance : getInstance,
 		create : create,
 		getSource : getSource,

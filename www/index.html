@@ -27,10 +27,10 @@
 			<div class="col-sm-3 col-md-3" id="data">
 				<div id='databases'>
 					<div class='header'>
-						<p>{{treeHeader}}</p>
+						<p>{{databasesHeader}}</p>
 					</div>
 					
-					<div class="row col-sm-12 col-md-12 tree-panel" id="tree-panel">
+					<div class="row col-sm-12 col-md-12 tree-panel" id="tree-panel" ng-controller ="TreeController">
 						<div class="tree-search no-selection">
 							<div id='search-box'>
 								<input type="text" placeholder="Search" id="search-field">
@@ -42,56 +42,49 @@
 							</div>
 						</div>
 						<br>
-						<div id="tree">
+						<div id="tree" ng-click="treeClicked()">
 							<!-- tree -->
 						</div>
 					</div>
 				</div>
 				
-				<div class="row col-sm-12 col-md-12" id="details">
+				<div class="row col-sm-12 col-md-12" id="details" ng-controller="DetailsController">
 					<div class='header'>
 						<p>{{detailsHeader}}</p>
 					</div>
 					<div id="details-field">
-						<div ng-include="'views/view-option.html'"> </div>
-						<div id="details-text">
-							{{detailsText}}
-						</div> 
-						<p id = "view-data"> </p>
+						<div ng-include="'views/details-field-template.html'" > </div>
 					</div>
 				</div> 
 			</div>
 			
 			<div class="col-sm-9 col-md-9 panel" id="graphing-area" ng-controller="GraphsController"> 
 			<!-- <iframe src="data/rais.html" width="625px" height="550px" frameborder="0"> </iframe> -->
-				<div id="graph-options">
-					<button id="btn-1" ui-sref="one">View ONE</button>
-					<button id="btn-2" ui-sref="two">View TWO</button>
+				<!-- <div id="graph-options">
+					<div ng-include="'views/graphs-template.html'" > </div>
 					<div id="views" ui-view> </div>
-				</div>	
+				</div>	 -->
 			</div>
 	</div>
 		
 	</div>
+	
+	<!-- JQuery Modules --> 
+    <script src="js/modules/resizable-containers.js"></script>
+    <script src="js/modules/database-tree.js"></script> 
+    <script src="js/modules/connection.js"></script> 
 	
 	<!-- AngularJS Modules -->
     <script src="js/dzvis-app.js"></script>
 
     <!-- AngularJS Controllers -->
     <script src="js/controllers/MainController.js"></script>
-    <script src="js/controllers/GraphsController.js"></script>
-    <script src="js/controllers/Test1Controller.js"></script>
-    <script src="js/controllers/Test2Controller.js"></script>
+    <script src="js/controllers/TreeController.js"></script>
+    <script src="js/controllers/GraphsController.js"></script> 
+    <script src="js/controllers/DetailsController.js"></script>
 
-    <!-- AngularJS Services -->
-    <!-- -->
+    <script src="js/search.js"></script>
 	
-	
-	<!-- JQuery Modules --> 
-    <script src="js/modules/resizable-containers.js"></script>
-    <script src="js/modules/database-tree.js"></script> 
-    
-    <script src="js/database-tree.js"></script>
 	
 </body>
 </html>

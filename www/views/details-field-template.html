@@ -1,0 +1,22 @@
+<div ng-show="showDefault">{{defaultText}}</div>
+
+<div ng-show="showData && !showDefault" id="view-option">
+	Visualizando os  
+	<select id="opt-nvalues" ng-model="nValues" ng-change="selectionChanged(nValues)" ng-options="opt for opt in [20,100,500,1000]"> </select>  
+	primeiros dados da coluna 
+	<span id="column">{{column}}</span> 
+	- tabela 
+	<span id="table">{{table}}</span> 
+	<hr/>
+	<img src="img/carregando.gif" ng-show="loading">
+	{{sampleData}}
+</div>
+
+<div ng-show="!showData && !showDefault" id="details-text"> 
+	<h1>{{table}}</h1>
+	<p>{{tableDescription}}</p>
+	<h2>{{column}}</h2>
+	<p>{{columnDescription}}</p>	
+</div> 
+
+<p ng-show="!showDefault && !loading" ng-click="viewDataClicked()" id="view-data">{{viewData}}</p>
