@@ -1,4 +1,4 @@
-app.controller("GraphsController",["$scope", function($scope){
+application.controller("GraphsController",["$scope", function($scope){
 	
 	
 

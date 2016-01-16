@@ -1,9 +1,10 @@
-app.controller("DetailsController",["$scope", function($scope){
+application.controller("DetailsController",["$scope", "databasetree", "connection", function($scope, databaseTree, connection){
 	
 	const DEF_NVALUES = 20 ;
 	const STR_VIEW_DATA = "Ver Dados >>" ;
 	const STR_BACK = "<< Voltar" ;
 	const STR_EMPTY = "" ;
+	const DEF_TEXT = "Clique em uma tabela ou em alguma de suas colunas para obter detalhes de sua especificação." ;
 	
 	var currentAttr = undefined ;
 	var currentTable = undefined ;
@@ -11,7 +12,7 @@ app.controller("DetailsController",["$scope", function($scope){
 	$scope.showDefault = true ;
 	$scope.showData = false ;
 	$scope.loading = false ;
-	$scope.defaultText = "Clique em uma tabela ou em alguma de suas colunas para obter detalhes de sua especificação." ;
+	$scope.defaultText = DEF_TEXT ;
 	$scope.viewData = STR_VIEW_DATA ;
 	$scope.nValues = DEF_NVALUES ;
 	

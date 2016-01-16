@@ -1,4 +1,6 @@
-var resizableContainers = (function(){	
+services.service("resizing", Resizing);
+
+function Resizing(){
 	
 	var $data = $("#data") ;
 	var $graphingArea = $("#graphing-area") ;
@@ -94,9 +96,8 @@ var resizableContainers = (function(){
 		}
 	};
 	
+	
 	return {
-		$data : $data,
-		$details : $details,
 		dataOnMouseMove : dataOnMouseMove,
 		dataOnMouseDown : dataOnMouseDown,
 		detailsOnMouseMove : detailsOnMouseMove,
@@ -104,4 +105,4 @@ var resizableContainers = (function(){
 		documentOnMouseMove : documentOnMouseMove,
 		documentOnMouseUp : documentOnMouseUp
 	};
-})();
+}

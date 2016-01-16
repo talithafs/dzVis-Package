@@ -1,4 +1,6 @@
-var connection = (function(){
+services.service("connection", Connection);
+
+function Connection() {
 	
 	var call = function(functionName, parameters, callback){
 		
@@ -34,4 +36,4 @@ var connection = (function(){
 		getAttributeValues : getAttributeValues 
 	};
 	
-})();
+}

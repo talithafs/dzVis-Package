@@ -1,4 +1,4 @@
-app.controller("TreeController",["$scope", function($scope){
+application.controller("TreeController",["$scope", "databasetree", function($scope, databaseTree){
 	
 	databaseTree.create('data/menu.json');
 

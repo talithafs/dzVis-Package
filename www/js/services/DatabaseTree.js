@@ -1,4 +1,6 @@
-var databaseTree = (function(){
+services.service("databasetree", DatabaseTree);
+
+function DatabaseTree(){
 	
 	var source = undefined ;
 	var instance = undefined ;
@@ -130,11 +132,11 @@ var databaseTree = (function(){
 	
 	return {
 		$tree : $tree,
-		getInstance : getInstance,
 		create : create,
+		getInstance : getInstance,
 		getSource : getSource,
 		getCurrentAttr : getCurrentAttr,
 		getCurrentTable : getCurrentTable 
 	};
 	
-})();
+}

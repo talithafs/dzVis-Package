@@ -1,6 +1,8 @@
-app = angular.module("dzvis-app",["ui.router"]);
+application = angular.module("dzvis-app",["ui.router", "dzvis-services"]);
 
-app.config(function($stateProvider){
+services = angular.module("dzvis-services", []);
+
+application.config(function($stateProvider){
 	
 	// $stateProvider.state("one", {
 		// url: "",

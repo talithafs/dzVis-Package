@@ -24,22 +24,15 @@
 	<div class="container wrapper" ng-controller="MainController">
 		<div class="row">
 			
-			<div class="col-sm-3 col-md-3" id="data">
+			<div class="col-sm-3 col-md-3" id="data" ng-mousemove="dataOnMouseMove($event)" ng-mousedown="dataOnMouseDown($event)">
 				<div id='databases'>
 					<div class='header'>
 						<p>{{databasesHeader}}</p>
 					</div>
 					
 					<div class="row col-sm-12 col-md-12 tree-panel" id="tree-panel" ng-controller ="TreeController">
-						<div class="tree-search no-selection">
-							<div id='search-box'>
-								<input type="text" placeholder="Search" id="search-field">
-								<img src="img/search.png" id="btn-search" >
-							</div>
-							<div id='pull-search'>
-								<img src="img/arrow-down-small.png" id="pull-down">
-								<p>{{searchHeader}}</p>
-							</div>
+						<div class="tree-search no-selection" ng-controller="SearchController" ng-include="'views/tree-search-template.html'" > 
+							<!-- tree search -->	
 						</div>
 						<br>
 						<div id="tree" ng-click="treeClicked()">
@@ -48,7 +41,7 @@
 					</div>
 				</div>
 				
-				<div class="row col-sm-12 col-md-12" id="details" ng-controller="DetailsController">
+				<div class="row col-sm-12 col-md-12" id="details" ng-controller="DetailsController" ng-mousemove="detailsOnMouseMove($event)" ng-mousedown="detailsOnMouseDown($event)">
 					<div class='header'>
 						<p>{{detailsHeader}}</p>
 					</div>
@@ -69,22 +62,21 @@
 		
 	</div>
 	
-	<!-- JQuery Modules --> 
-    <script src="js/modules/resizable-containers.js"></script>
-    <script src="js/modules/database-tree.js"></script> 
-    <script src="js/modules/connection.js"></script> 
-	
 	<!-- AngularJS Modules -->
     <script src="js/dzvis-app.js"></script>
 
-    <!-- AngularJS Controllers -->
+    <!-- AngularJS Main Controllers -->
     <script src="js/controllers/MainController.js"></script>
     <script src="js/controllers/TreeController.js"></script>
     <script src="js/controllers/GraphsController.js"></script> 
     <script src="js/controllers/DetailsController.js"></script>
+    <script src="js/controllers/SearchController.js"></script>
+    
+    <!-- AngularJS Services -->
+    <script src="js/services/Resizing.js"></script>
+    <script src="js/services/PullDown.js"></script>
+    <script src="js/services/DatabaseTree.js"></script>
+    <script src="js/services/Connection.js"></script>
 
-    <script src="js/search.js"></script>
-	
-	
 </body>
 </html>
