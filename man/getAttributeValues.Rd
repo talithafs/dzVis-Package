@@ -2,7 +2,7 @@
 % Please edit documentation in R/getAttributeValues.R
 \name{getAttributeValues}
 \alias{getAttributeValues}
-\title{Get attribute values}
+\title{Get attribute values from a dzVis table}
 \usage{
 getAttributeValues(attribute, table, nvalues)
 }

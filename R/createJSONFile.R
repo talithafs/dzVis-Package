@@ -8,7 +8,6 @@
 #' @param data A list object to be converted to a json object
 #' @param filename The name of the output file
 #'
-#' @export
 #' @importFrom jsonlite toJSON
 
 createJSONFile <- function(data, filename = "output.json") {
@@ -20,5 +19,6 @@ createJSONFile <- function(data, filename = "output.json") {
   json <- jsonlite::toJSON(data)
   con <- file(filename, encoding="utf8")
   write(json, file = con)
+  close(con)
   return(TRUE)
 }
