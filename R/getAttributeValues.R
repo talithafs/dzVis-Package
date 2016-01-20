@@ -3,9 +3,9 @@
 #' @description Get top values of an attribute - a column - from a dzVis database table
 #' and save the results to a json file.
 #'
-#' @param attribute The name of the column to be selected
-#' @param table The name of the table to be selected
-#' @param nvalues The number of values to be selected from the top.
+#' @param attribute A \code{character} value. The name of the column to be selected
+#' @param table A \code{character} value. The name of the table to be selected
+#' @param nvalues A \code{numeric} value. The number of values to be selected from the top.
 #'
 #' @return The name of the file in which the results were written.
 #'

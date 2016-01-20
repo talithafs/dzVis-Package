@@ -2,11 +2,11 @@
 #'
 #' @description Creates a .JSON file from a list, encoded with UTF-8.
 #'
+#' @param data A \code{list} object to be converted to a json object
+#' @param filename A \code{character} value. The name of the output file
+#'
 #' @return \code{TRUE} if the file was correctly created and
 #'         \code{FALSE} otherwise
-#'
-#' @param data A list object to be converted to a json object
-#' @param filename The name of the output file
 #'
 #' @importFrom jsonlite toJSON
 

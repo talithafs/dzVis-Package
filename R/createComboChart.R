@@ -2,13 +2,13 @@
 #'
 #' @description Creates a Combo Chart using the googleVis R package
 #'
-#' @param table The name of the table from which the data should be retrieved
-#' @param targetVar The numeric value of interest: the vertical axis variable
-#' @param groupVar Variable by which \code{targetVar} should be grouped
-#' @param timeVar The horizontal axis variable
-#' @param min Lower bound for the \code{timeVar}
-#' @param max Upper bound for the \code{timeVar}
-#' @param restrictions n x 2 matrix containing the n equality restrictions that make timeVar and groupVar unique when combined.
+#' @param table A \code{character} value. The name of the table from which the data should be retrieved
+#' @param targetVar A \code{character} value. The vertical axis variable
+#' @param groupVar A \code{character} value. Variable by which \code{targetVar} should be grouped
+#' @param timeVar A \code{character} value. The horizontal axis variable
+#' @param min A \code{numeric} value or a \code{date string}. Lower bound for the \code{timeVar}
+#' @param max A \code{numeric} value or a \code{date string}. Upper bound for the \code{timeVar}
+#' @param restrictions n x 2 \code{matrix}. The n equality restrictions that make timeVar and groupVar unique when combined.
 #'
 #' @section Validation rules:
 #' \enumerate{

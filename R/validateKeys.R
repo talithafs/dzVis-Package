@@ -4,11 +4,11 @@
 #'              If more than one parameter is provided, checks if they are unique when combined.
 #'              It uses a direct connection to the dzVis database or a \code{data.frame} as the data source.
 #'
-#' @param data A \code{data.frame} or a \code{string} containing the name of the table.
-#'             If a \code{data.frame} is passed, a connection to the dzVis database will NOT be estabilished.
-#'             If a \code{string} is passed, a connection WILL be estabilished.
-#' @param keys An \code{array} of strings or a single string containing the candidate key(s)
-#' @param restrictions A n x 2 matrix containing the n equality restrictions that make \code{keys} unique.
+#' @param data A \code{data.frame} with the actual data source or a \code{character} containing the name of the table.
+#'             If a \code{data.frame} is passed, a connection to the dzVis database WILL NOT be estabilished.
+#'             If a \code{character} value is passed, a connection WILL be estabilished.
+#' @param keys An \code{character vector}. The candidate key(s)
+#' @param restrictions A n x 2 \code{matrix}. The n equality restrictions that make \code{keys} unique.
 #'
 #' @section Validation rules:
 #' \enumerate{

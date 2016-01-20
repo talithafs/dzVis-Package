@@ -1,8 +1,8 @@
 #' @title Connect to the dzVis database
 #'
-#' @description Connect to the dzVis database
+#' @description Connects to the dzVis database and provides a connection object to access it
 #'
-#' @return The connection string to access the dzVis database
+#' @return The \code{DBI} connection object to access the dzVis database
 #'
 #' @details Detailed information about the dzVis database can be found on
 #'

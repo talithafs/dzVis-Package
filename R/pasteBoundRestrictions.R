@@ -2,10 +2,10 @@
 #'
 #' @description Concatenates inequality restrictions and an existing SQL query string
 #'
-#' @param query Initial value of the query string. Restrictions are pastet after it.
-#' @param tagetVar Variable to be restricted
-#' @param min Lower bound for the \code{targetVar}. Should be set to \code{NULL} when not applicable
-#' @param max Upper bound for the \code{targetVar}. Should be set to \code{NULL} when not applicable
+#' @param query A \code{character} value. Initial value of the query string. Restrictions will be pasted after it.
+#' @param tagetVar A \code{character} value. Variable on which restrictions should apply.
+#' @param min A \code{numeric} value. Lower bound for the \code{targetVar}. Should be set to \code{NULL} when not applicable
+#' @param max A \code{numeric} value. Upper bound for the \code{targetVar}. Should be set to \code{NULL} when not applicable
 #' @param whereClause If set to \code{TRUE}, a 'where' clause is inserted before the restrictions
 #'                    If set to \code{FALSE}, an 'and' clause is inserted
 #'
