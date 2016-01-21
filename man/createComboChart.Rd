@@ -8,35 +8,40 @@ createComboChart(table, targetVar, groupVar, timeVar, min = NULL,
   max = NULL, restrictions = NULL)
 }
 \arguments{
-\item{table}{The name of the table from which the data should be retrieved}
+\item{table}{A \code{character} value. The name of the table from which the data should be retrieved}
 
-\item{targetVar}{The numeric value of interest - the vertical axis variable}
+\item{targetVar}{A \code{character} value. The vertical axis variable}
 
-\item{groupVar}{Variable by which \code{targetVar} should be grouped}
+\item{groupVar}{A \code{character} value. Variable by which \code{targetVar} should be grouped}
 
-\item{timeVar}{The horizontal axis variable}
+\item{timeVar}{A \code{character} value. The horizontal axis variable}
 
-\item{min}{Lower bound for the \code{timeVar}}
+\item{min}{A \code{numeric} value or a \code{date string} in the format 'yyyy-mm-dd'. Lower bound for the \code{timeVar}}
 
-\item{max}{Upper bound for the \code{timeVar}}
+\item{max}{A \code{numeric} value or a \code{date string} in the format 'yyyy-mm-dd'. Upper bound for the \code{timeVar}}
 
-\item{restrictions}{n x 2 matrix containing the n equality restrictions that make timeVar and groupVar unique when combined.}
+\item{restrictions}{n x 2 \code{matrix}. The n equality restrictions that make timeVar and groupVar unique when combined.}
 }
 \value{
 \code{TRUE} if the chart was successfully created and
-        \code{FALSE} otherwise
+        \code{FALSE}, otherwise.
 }
 \description{
 Creates a Combo Chart using the googleVis R package
 }
-\section{Validation of the parameters}{
+\section{Parameters validation}{
 
+The parameters are checked according to the rules estabilished in validation functions and in the following order:
 \enumerate{
-   \item Ola hahaha
-   \item Hue olaaa
+   \item targetVar: \code{\link{validateTargetVariable}}
+   \item groupVar: \code{\link{validateGroupVariables}}
+   \item timeVar: \code{\link{validateTimeVariable}}
+   \item min, max, timeVar: \code{\link{validateLimits}}
+   \item timeVar, groupVar, restrictions: \code{\link{validateKeys}}
+   \item timeVar, groupVar: \code{\link{validateConsistency}}
 }
 }
 \seealso{
-\code{googleVis}
+\code{\link[googleVis]{gvisComboChart}}
 }
 

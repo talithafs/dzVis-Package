@@ -6,7 +6,7 @@
 #' @param filename A \code{character} value. The name of the output file
 #'
 #' @return \code{TRUE} if the file was correctly created and
-#'         \code{FALSE} otherwise
+#'         \code{FALSE}, otherwise
 #'
 #' @importFrom jsonlite toJSON
 

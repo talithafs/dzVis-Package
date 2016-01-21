@@ -1,7 +1,6 @@
 #' @title Get attribute values from a dzVis table
 #'
-#' @description Get top values of an attribute - a column - from a dzVis database table
-#' and save the results to a json file.
+#' @description Get top values of an attribute - a column - from a dzVis database table and save the results to a json file.
 #'
 #' @param attribute A \code{character} value. The name of the column to be selected
 #' @param table A \code{character} value. The name of the table to be selected

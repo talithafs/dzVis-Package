@@ -7,18 +7,17 @@
 getAttributeValues(attribute, table, nvalues)
 }
 \arguments{
-\item{attribute}{The name of the column to be selected}
+\item{attribute}{A \code{character} value. The name of the column to be selected}
 
-\item{table}{The name of the table to be selected}
+\item{table}{A \code{character} value. The name of the table to be selected}
 
-\item{nvalues}{The number of values to be selected from the top.}
+\item{nvalues}{A \code{numeric} value. The number of values to be selected from the top.}
 }
 \value{
 The name of the file in which the results were written.
 }
 \description{
-Get top values of an attribute - a column - from a dzVis database table
-and save the results to a json file.
+Get top values of an attribute - a column - from a dzVis database table and save the results to a json file.
 }
 \seealso{
 \code{\link{connect}}

@@ -7,17 +7,17 @@
 pasteIdRestrictions(query, restrictions, whereClause = TRUE)
 }
 \arguments{
-\item{query}{Initial value of the query string. Restrictions are pasted after it.}
+\item{query}{A \code{character} value. Initial value of the query string. Restrictions will be pasted after it.}
 
-\item{restrictions}{n x 2 matrix with n equality restrictions}
+\item{restrictions}{A n x 2 \code{matrix} with n equality restrictions}
 
 \item{whereClause}{If set to \code{TRUE}, a 'where' clause is inserted before the restrictions.
 If set ot \code{FALSE}, an 'and' clause is inserted}
 }
 \value{
-The new query string
+A \code{character}. The new query string.
 }
 \description{
-Concatenates equality restrictions and an existing SQL query
+Concatenates equality restrictions and an existing SQL query string
 }
 

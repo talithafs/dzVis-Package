@@ -7,10 +7,10 @@
 connect()
 }
 \value{
-The connection string to access the dzVis database
+The \code{DBI} connection object to access the dzVis database
 }
 \description{
-Connect to the dzVis database
+Connects to the dzVis database and provides a connection object to access it
 }
 \details{
 Detailed information about the dzVis database can be found on

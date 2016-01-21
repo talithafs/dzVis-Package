@@ -7,13 +7,13 @@
 createJSONFile(data, filename = "output.json")
 }
 \arguments{
-\item{data}{A list object to be converted to a json object}
+\item{data}{A \code{list} object to be converted to a json object}
 
-\item{filename}{The name of the output file}
+\item{filename}{A \code{character} value. The name of the output file}
 }
 \value{
 \code{TRUE} if the file was correctly created and
-        \code{FALSE} otherwise
+        \code{FALSE}, otherwise
 }
 \description{
 Creates a .JSON file from a list, encoded with UTF-8.

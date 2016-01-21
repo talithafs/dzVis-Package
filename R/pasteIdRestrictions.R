@@ -7,7 +7,7 @@
 #' @param whereClause If set to \code{TRUE}, a 'where' clause is inserted before the restrictions.
 #'                    If set ot \code{FALSE}, an 'and' clause is inserted
 #'
-#' @return The new query string
+#' @return A \code{character}. The new query string.
 
 pasteIdRestrictions <- function(query, restrictions, whereClause = TRUE){
 

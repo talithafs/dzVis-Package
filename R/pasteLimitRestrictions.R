@@ -9,10 +9,10 @@
 #' @param whereClause If set to \code{TRUE}, a 'where' clause is inserted before the restrictions
 #'                    If set to \code{FALSE}, an 'and' clause is inserted
 #'
-#' @return The new query string
+#' @return A \code{character}. The new query string.
 
 
-pasteBoundRestrictions <- function(query, targetVar, min, max, whereClause = TRUE){
+pasteLimitRestrictions <- function(query, targetVar, min, max, whereClause = TRUE){
 
   if(whereClause){
     newQuery = paste(query, "where ")
