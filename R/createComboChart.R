@@ -8,7 +8,7 @@
 #' @param timeVar A \code{character} value. The horizontal axis variable
 #' @param min A \code{numeric} value or a \code{date string} in the format 'yyyy-mm-dd'. Lower bound for the \code{timeVar}
 #' @param max A \code{numeric} value or a \code{date string} in the format 'yyyy-mm-dd'. Upper bound for the \code{timeVar}
-#' @param restrictions n x 2 \code{matrix}. The n equality restrictions that make timeVar and groupVar unique when combined.
+#' @param restrictions n x 2 \code{matrix}. The n equality restrictions that make timeVar and groupVar values unique when combined.
 #'
 #' @return \code{TRUE} if the chart was successfully created and
 #'         \code{FALSE}, otherwise.
@@ -21,13 +21,14 @@
 #'    \item timeVar: \code{\link{validateTimeVariable}}
 #'    \item min, max, timeVar: \code{\link{validateLimits}}
 #'    \item timeVar, groupVar, restrictions: \code{\link{validateKeys}}
-#'    \item timeVar, groupVar: \code{\link{validateConsistency}}
+#'    \item timeVar, groupVar, targetVar, restrictions: \code{\link{validateConsistency}}
 #' }
 #'
 #' @seealso \code{\link[googleVis]{gvisComboChart}}
 #'
 #' @export
 #' @import DBI
+#' @import googleVis
 
 createComboChart <- function(table, targetVar, groupVar, timeVar, min = NULL, max = NULL, restrictions = NULL){
 
@@ -39,6 +40,8 @@ createComboChart <- function(table, targetVar, groupVar, timeVar, min = NULL, ma
 
   data <- dbGetQuery(connection, query)
   disconnect(connection)
+
+  print(head(data))
 
   levels <- levels(as.factor(data[,groupVar]))
   ncolumns <- length(levels) + 1
@@ -57,7 +60,9 @@ createComboChart <- function(table, targetVar, groupVar, timeVar, min = NULL, ma
     index = index + 1
   }
 
-  graph = gvisComboChart(newData, xvar= timeVar, yvar=names(newData)[2:length(levels)], options=list(seriesType="bars"))
+  print(names(newData)[1:7])
+
+  graph = gvisComboChart(newData, xvar= 'mes', yvar=names(newData)[2:ncolumns], options=list(seriesType="bars", chartArea = "{width : '65%', left: 0}", width=900))
   plot(graph)
 
   return(newData)

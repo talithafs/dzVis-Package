@@ -2,7 +2,7 @@ services.service("connection", Connection);
 
 function Connection() {
 	
-	var call = function(functionName, parameters, callback){
+	var reqFile = function(functionName, parameters, callback){
 		
 		var req = ocpu.call(functionName, parameters, function(session){
 		        
@@ -20,6 +20,19 @@ function Connection() {
     	});
 	};
 	
+	var call = function(functionName, parameters, callback){
+		
+		var req = ocpu.call(functionName, parameters, function(session){
+			
+			session.getObject(function(data){ callback(data); });
+		}) ;
+		
+		req.fail(function(){
+	      alert("Server error: " + req.responseText);
+    	});
+		
+	};
+	
 	var getAttributeValues = function(attribute, table, nvalues, callback){
 		
 		var parameters = {
@@ -28,12 +41,25 @@ function Connection() {
 			nvalues : nvalues 
 		} ;
 		
-		call("getAttributeValues", parameters, callback) ;
+		reqFile("getAttributeValues", parameters, callback) ;
 	} ;
+	
+	var validateKeys = function(table, keys, restrictions, callback){
+		
+		var parameters = {
+			data : table,
+			keys : keys,
+			restrictions : restrictions
+		};
+		
+		call("validateKeys", parameters, callback);
+		
+	};
 	
 	
 	return {
-		getAttributeValues : getAttributeValues 
+		getAttributeValues : getAttributeValues,
+		validateKeys : validateKeys 
 	};
 	
 }

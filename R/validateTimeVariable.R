@@ -9,7 +9,7 @@
 #' @param timeVar A \code{character}. The name of the column to be checked.
 #'
 #' @section Validation rule:
-#' The column \code{timeVar} values must code{integer} or \code{Date} in R and code{int} or \code{date} in the database.
+#' The column \code{timeVar} type must be \code{integer} or \code{Date} in R and \code{int} or \code{date} in the database.
 #'
 #'
 #' @return \code{TRUE} if \code{timeVar} is valid and

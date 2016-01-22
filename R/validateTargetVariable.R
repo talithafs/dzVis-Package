@@ -9,7 +9,7 @@
 #' @param groupVar A \code{character}. The name of the column to be checked.
 #'
 #' @section Validation rule:
-#' The column \code{targetVar} in \code{data} must be a \code{factor} in R and of type \code{enum} in the database.
+#' The column \code{targetVar} type in \code{data} must be \code{numeric} in R and \code{double} or \code{int} in the database.
 #'
 #' @return \code{TRUE} if \code{targetVar} is valid and
 #'         \code{FALSE}, otherwise.
