@@ -10,8 +10,8 @@
 #'
 #' @section Validation rules:
 #' \enumerate{
-#'    \item If \code{groupVar} contains only one element, the \code{groupVar} column type in \code{data} must be a \code{factor} in R and  \code{enum} in the database.
-#'    \item If \code{groupVar} contains more than one element, the corresponding columns in \code{data} must be \code{numeric} in R and \code{int} or \code{double} in the database.
+#'    \item If \code{groupVar} contains only one element, the \code{groupVar} column type must be a \code{factor} in R and  \code{enum} in the database.
+#'    \item If \code{groupVar} contains more than one element, the corresponding columns must be \code{numeric} in R and \code{int} or \code{double} in the database.
 #' }
 #'
 #' @return \code{TRUE} if \code{groupVar} is valid and
@@ -23,5 +23,45 @@
 
 
 validateGroupVariables <- function(data, groupVar){
-  return(TRUE);
+
+  if(class(data) == "character"){
+
+    types <- getDataTypes(data,groupVar)
+
+    if(length(groupVar) == 1){
+      if(types[1,"ctype"] == "enum"){
+        return(TRUE)
+      }
+      else{
+        return(FALSE)
+      }
+    }
+
+    for(type in types[,"ctype"]){
+      if(type != "int" && type != "double"){
+        return(FALSE)
+      }
+    }
+
+    return(TRUE)
+  }
+  else if(class(data) == "data.frame"){
+
+    if(length(groupVar) == 1){
+      if(is.factor(data[,groupVar])){
+        return(TRUE)
+      }
+      else{
+        return(FALSE)
+      }
+    }
+
+    for (colName in names(data)){
+      if(colName %in% groupVar){
+
+      }
+    }
+  }
+
+  stop("Parameter 'data' is not valid.");
 }
