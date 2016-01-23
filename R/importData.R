@@ -1,0 +1,75 @@
+#' @title Import data from the dzVis database
+#'
+#' @description Gets data from the dzVis database according to the specified table and columns.
+#'              Original column types are set to its equivalents in R.
+#'
+#' @params table A \code{character}. The name of the table.
+#' @params columns A \code{character vector}. The name(s) of the column(s). If all columns should be imported, this argument must be set to \code{*}.
+#' @params restrictions A n x 2 \code{matrix}. Equality restrictions. The first column must contain the names of the columns. The second, its values.
+#' @params connection A \code{DBI} Connection object if a new connection should not be estabilished.
+#'
+#' @return A \code{data.frame} with the requested data.
+#'
+#' @details Detailed information about the dzVis database can be found on
+#'
+#' @section Conversion rules (SQL -> R):
+#' \enumerate {
+#'    \item \code{enum} -> \code{factor}
+#'    \item \code{int} -> \code{integer}
+#'    \item \code{double} -> \code{numeric}
+#'    \item \code{date} or \code{datetime} -> \code{Date}
+#'    \item \code{varchar} -> \code{character}
+#' }
+#'
+#' @import DBI
+
+
+importData <- function(table, columns, restrictions = NULL, connection = NULL){
+
+  conn <- connection
+
+  if(is.null(connection)){
+    conn <- connect()
+  }
+
+  cols <- paste(columns,collapse = ", ")
+  query <- paste("select",cols,"from",table)
+
+  if(!is.null(restrictions)) {
+    query <- pasteIdRestrictions(query, restrictions)
+  }
+
+  data <- dbGetQuery(conn, query)
+  types <- getDataTypes(table, columns, conn)
+
+  for(colName in names(data)){
+    type = types[types$cod == colName,2]
+
+    if(type == "enum"){
+        data[,colName] <- as.factor(data[,colName])
+    }
+    else if(type == "int"){
+      data[,colName] <- as.integer(data[,colName])
+    }
+    else if(type == "double"){
+      data[,colName] <- as.numeric(data[,colName])
+
+    }
+    else if(type == "date" || type == "datetime"){
+      data[,colName] <- as.Date(data[,colName])
+    }
+    else if(type == "varchar"){
+      data[,colName] <- as.character(data[,colName])
+    }
+  }
+
+  if(is.null(connection)) {
+    disconnect(conn)
+  }
+
+  return(data)
+
+}
+
+
+

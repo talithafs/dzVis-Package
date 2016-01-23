@@ -16,9 +16,22 @@
 #'
 #' @export
 #' @import DBI
-#' @import sqldf
 
 
 validateTargetVariable <- function(data, targetVar){
-  return(TRUE)
+
+  if(is.character(data)){
+
+    type = getDataTypes(data, targetVar)[,"ctype"]
+
+    return(type == "int" || type == "double")
+
+  }
+  else if(is.data.frame(data)){
+
+    return(is.numeric(data[,targetVar]))
+
+  }
+
+  stop("Parameter 'data' is not valid. It should be a data.frame or a character.")
 }

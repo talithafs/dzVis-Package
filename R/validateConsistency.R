@@ -13,18 +13,32 @@
 #'
 #' @section Consistency rules:
 #' \enumerate{
-#'    \item If \code{groupVar} contains more than one element, \code{targetVar} must be identical to \code{groupVar}.
+#'    \item If \code{groupVar} contains more than one element, \code{targetVar} must be \code{NULL}.
 #'    \item Each category in \code{groupVar} must have non null \code{targetVar} values corresponding to each different \code{timeVar} value.
 #'    \item The set of different \code{timeVar} values must be the same for each category in \code{groupVar}.
 #' }
 #'
-#' @return \code{TRUE} if \code{groupVar} and \code{timeVar} are consistent and
+#' @return \code{TRUE} if variables are consistent and
 #'         \code{FALSE}, otherwise.
 #'
 #' @export
 #' @import DBI
-#' @import sqldf
 
 validateConsistency <- function(data, timeVar, groupVar, targetVar, restrictions = NULL){
+
+    if(length(groupVar) != 1 && !is.null(targetVar)){
+      return(FALSE)
+    }
+
+    if(is.character(data)){
+      data <- importData(data, c(timeVar, groupVar, targetVar), restrictions)
+    }
+    else if(is.data.frame(data)){
+
+
+    }
+
+
+
     return(TRUE)
 }

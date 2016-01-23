@@ -10,7 +10,7 @@
 #'
 #' @section Validation rules:
 #' \enumerate{
-#'    \item If \code{groupVar} contains only one element, the \code{groupVar} column type must be a \code{factor} in R and  \code{enum} in the database.
+#'    \item If \code{groupVar} contains only one element, the \code{groupVar} column type must be a \code{factor} or a \code{numeric} in R and \code{enum}, \code{int} or \code{double} in the database.
 #'    \item If \code{groupVar} contains more than one element, the corresponding columns must be \code{numeric} in R and \code{int} or \code{double} in the database.
 #' }
 #'
@@ -19,22 +19,18 @@
 #'
 #' @export
 #' @import DBI
-#' @import sqldf
 
 
 validateGroupVariables <- function(data, groupVar){
 
-  if(class(data) == "character"){
+  if(is.character(data)){
 
     types <- getDataTypes(data,groupVar)
 
     if(length(groupVar) == 1){
-      if(types[1,"ctype"] == "enum"){
-        return(TRUE)
-      }
-      else{
-        return(FALSE)
-      }
+      type <- types[1,"ctype"]
+
+      return(type == "enum" || type == "double" || type == "int")
     }
 
     for(type in types[,"ctype"]){
@@ -45,23 +41,23 @@ validateGroupVariables <- function(data, groupVar){
 
     return(TRUE)
   }
-  else if(class(data) == "data.frame"){
+  else if(is.data.frame(data)){
 
     if(length(groupVar) == 1){
-      if(is.factor(data[,groupVar])){
-        return(TRUE)
-      }
-      else{
-        return(FALSE)
-      }
+
+      return(is.factor(data[,groupVar]) || is.numeric(data[,groupVar]))
     }
 
     for (colName in names(data)){
       if(colName %in% groupVar){
-
+          if(!is.numeric(data[,colName])){
+            return(FALSE)
+          }
       }
     }
+
+    return(TRUE)
   }
 
-  stop("Parameter 'data' is not valid.");
+  stop("Parameter 'data' is not valid. It should be a data.frame or a character.");
 }

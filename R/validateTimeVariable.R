@@ -9,7 +9,7 @@
 #' @param timeVar A \code{character}. The name of the column to be checked.
 #'
 #' @section Validation rule:
-#' The column \code{timeVar} type must be \code{integer} or \code{Date} in R and \code{int} or \code{date} in the database.
+#' The column \code{timeVar} type must be \code{integer} or \code{Date} in R and \code{int}, \code{date} or \code{datetime} in the database.
 #'
 #'
 #' @return \code{TRUE} if \code{timeVar} is valid and
@@ -17,11 +17,26 @@
 #'
 #' @export
 #' @import DBI
-#' @import sqldf
 
 
 validateTimeVariable <- function(data, timeVar){
-  x%%1==0
-  all.equal(a, as.integer(a))
-  return(TRUE);
+
+  if(is.character(data)){
+
+    type = getDataTypes(data, timeVar)[,"ctype"]
+
+    return(type == "int" || type == "date" || type == "datetime")
+
+  }
+  else if(is.data.frame(data)){
+
+    return(is.integer(data[,timeVar]) || class(data[,timeVar]) == "Date")
+
+  }
+
+  stop("Parameter 'data' is not valid. It should be a data.frame or a character.")
+
+  #x%%1==0
+  #all.equal(a, as.integer(a))
+  #return(TRUE);
 }

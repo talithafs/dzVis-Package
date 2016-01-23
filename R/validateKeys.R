@@ -5,7 +5,6 @@
 #'
 #' @param table A \code{character} containing the name of the table in the dzVis database.
 #' @param keys A \code{character vector}. The column name(s) of the candidate key(s).
-#' @param restrictions A n x 2 \code{matrix}. The n equality restrictions that make \code{keys} values unique.
 #'
 #' @section Validation rules:
 #' \enumerate{
@@ -19,8 +18,35 @@
 #' @import DBI
 #' @import sqldf
 
-validateKeys <- function(table, keys, restrictions = NULL){
+validateKeys <- function(table, keys, connection = NULL){
 
-    str = class(keys)
-    return(str)
+  conn <- connection
+  restrictions <- NULL
+
+  if(is.null(connection)){
+    conn <- connect()
+  }
+
+  query = paste("describe", table)
+  info <- dbGetQuery(conn, query)
+
+  actualKeys <- info[info$Key == "PRI","Field"]
+
+  for(key in actualKeys){
+    if(!(key %in% keys)){
+      restrictions <- c(restrictions, key)
+    }
+  }
+
+  if(is.null(connection)) {
+    disconnect(conn)
+  }
+
+
+  if(is.null(restrictions)){
+    return(TRUE)
+  }
+
+  return(restrictions)
+
 }
