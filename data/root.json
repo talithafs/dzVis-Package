@@ -1,6 +1,0 @@
-[
-  { "id" : "demo_root_1", "text" : "Root 1", 
-  		"children" : [{ "text": "Second", "children":[{"text" : "Four", "type": "lvl" }], "type":"attr"}, 
-  						{"text": "Third","type":"attr"}] },
-  { "id" : "demo_root_2", "text" : "Root 2" }
-]

@@ -1,0 +1,8 @@
+<div id='search-box'>
+	<input type="text" placeholder="Buscar" id="search-field" ng-model="typedText" ng-keyup="searchOnKeyUp(typedText)">
+	<img src="img/search.png" id="btn-search" >
+</div>
+<div id='pull-search' ng-click="pull()">
+	<img ng-src="{{imgOpen}}" id="pull-down">
+	<p>{{searchHeader}}</p>
+</div>

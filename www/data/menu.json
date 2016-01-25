@@ -1,0 +1,234 @@
+[ {
+  "id": "pea_por_idade", "text": "pea por idade", "description": "População economicamente ativa classificada por grupos de idade", "children": [
+    {
+      "id": "pea_por_idade.tipo_area",
+      "type": "attr",
+      "text": "Abrangência",
+      "description": "Total de todas as áreas ou de uma Região Metropolitana.",
+      "children": [
+          {
+            "text": "Belo Horizonte - MG",
+            "type": "lvl"
+         },
+          {
+            "text": "Porto Alegre - RS",
+            "type": "lvl"
+         },
+          {
+            "text": "Recife - PE",
+            "type": "lvl"
+         },
+          {
+            "text": "Rio de Janeiro - RJ",
+            "type": "lvl"
+         },
+          {
+            "text": "Salvador - BA",
+            "type": "lvl"
+         },
+          {
+            "text": "São Paulo - SP",
+            "type": "lvl"
+         },
+          {
+            "text": "Total das áreas",
+            "type": "lvl"
+          }
+        ]
+    },
+    {
+      "id": "pea_por_idade.grupo_idade",
+      "type": "attr",
+      "text": "Grupo de Idade",
+      "description": "Grupo de idade.",
+      "children": [
+          {
+            "text": "10 a 14 anos",
+            "type": "lvl"
+         },
+          {
+            "text": "15 a 17 anos",
+            "type": "lvl"
+         },
+          {
+            "text": "18 a 24 anos",
+            "type": "lvl"
+         },
+          {
+            "text": "25 a 49 anos",
+            "type": "lvl"
+         },
+          {
+            "text": "50 anos ou mais",
+            "type": "lvl"
+         },
+          {
+            "text": "Total",
+            "type": "lvl"
+          }
+        ]
+    },
+    {
+      "id": "pea_por_idade.mes",
+      "type": "attr",
+      "text": "Mês",
+      "description": "Mês."    },
+    {
+      "id": "pea_por_idade.total_por_mil",
+      "type": "attr",
+      "text": "Total (Mil pessoas)",
+      "description": "Total de pessoas de 10 anos ou mais de idade (Mil pessoas)."    },
+    {
+      "id": "pea_por_idade.percentual_total",
+      "type": "attr",
+      "text": "Total (Percentual)",
+      "description": "Percentual de pessoas de 10 anos ou mais de idade."    },
+    {
+      "id": "pea_por_idade.coeficiente_total",
+      "type": "attr",
+      "text": "Total (Coeficiente de Variação)",
+      "description": "Coeficiente de variação de pessoas de 10 anos ou mais de idade"    },
+    {
+      "id": "pea_por_idade.ativas_por_mil",
+      "type": "attr",
+      "text": "Economicamente Ativas (Mil pessoas)",
+      "description": "Total de pessoas de 10 anos ou mais de idade, economicamente ativas na semana de referência (Mil pessoas)"    },
+    {
+      "id": "pea_por_idade.percentual_ativas",
+      "type": "attr",
+      "text": "Economicamente Ativas (Percentual)",
+      "description": "Percentual de pessoas de 10 anos ou mais de idade economicamente ativas na semana de referência"    },
+    {
+      "id": "pea_por_idade.coeficiente_ativas",
+      "type": "attr",
+      "text": "Economicamente Ativas (Coeficiente de Variação)",
+      "description": "Coeficiente de variação de pessoas de 10 anos ou mais de idade, economicamente ativas na semana de referência"    },
+    {
+      "id": "pea_por_idade.nao_ativas_por_mil",
+      "type": "attr",
+      "text": "Não Economicamente Ativas (Mil pessoas)",
+      "description": "Total de pessoas de 10 anos ou mais de idade, não economicamente ativas na semana de referência (Mil pessoas)"    },
+    {
+      "id": "pea_por_idade.percentual_nao_ativas",
+      "type": "attr",
+      "text": "Não Economicamente Ativas (Percentual)",
+      "description": "Percentual de pessoas de 10 anos ou mais de idade, não economicamente ativas na semana de referência"    },
+    {
+      "id": "pea_por_idade.coeficiente_nao_ativas",
+      "type": "attr",
+      "text": "Não Economicamente Ativas (Coeficiente de Variação)",
+      "description": "Coeficiente de variação de pessoas de 10 anos ou mais de idade, não economicamente ativas na semana de referência"    }
+  ]
+},
+{
+  "id": "pea_por_sexo", "text": "pea por sexo", "description": "População economicamente ativa classificada por sexo", "children": [
+    {
+      "id": "pea_por_sexo.tipo_area",
+      "type": "attr",
+      "text": "Abrangência",
+      "description": "Total de todas as áreas ou de uma Região Metropolitana.",
+      "children": [
+          {
+            "text": "Belo Horizonte - MG",
+            "type": "lvl"
+         },
+          {
+            "text": "Porto Alegre - RS",
+            "type": "lvl"
+         },
+          {
+            "text": "Recife - PE",
+            "type": "lvl"
+         },
+          {
+            "text": "Rio de Janeiro - RJ",
+            "type": "lvl"
+         },
+          {
+            "text": "Salvador - BA",
+            "type": "lvl"
+         },
+          {
+            "text": "São Paulo - SP",
+            "type": "lvl"
+         },
+          {
+            "text": "Total das áreas",
+            "type": "lvl"
+          }
+        ]
+    },
+    {
+      "id": "pea_por_sexo.sexo",
+      "type": "attr",
+      "text": "Sexo",
+      "description": "Sexo.",
+      "children": [
+          {
+            "text": "Homem",
+            "type": "lvl"
+         },
+          {
+            "text": "Mulher",
+            "type": "lvl"
+         },
+          {
+            "text": "Total",
+            "type": "lvl"
+          }
+        ]
+    },
+    {
+      "id": "pea_por_sexo.mes",
+      "type": "attr",
+      "text": "Mês",
+      "description": "Mês."    },
+    {
+      "id": "pea_por_sexo.total_por_mil",
+      "type": "attr",
+      "text": "Total (Mil pessoas)",
+      "description": "Total de pessoas de 10 anos ou mais de idade (Mil pessoas)."    },
+    {
+      "id": "pea_por_sexo.percentual_total",
+      "type": "attr",
+      "text": "Total (Percentual)",
+      "description": "Percentual de pessoas de 10 anos ou mais de idade."    },
+    {
+      "id": "pea_por_sexo.coeficiente_total",
+      "type": "attr",
+      "text": "Total (Coeficiente de Variação)",
+      "description": "Coeficiente de variação de pessoas de 10 anos ou mais de idade"    },
+    {
+      "id": "pea_por_sexo.ativas_por_mil",
+      "type": "attr",
+      "text": "Economicamente Ativas (Mil pessoas)",
+      "description": "Total de pessoas de 10 anos ou mais de idade, economicamente ativas na semana de referência (Mil pessoas)"    },
+    {
+      "id": "pea_por_sexo.percentual_ativas",
+      "type": "attr",
+      "text": "Economicamente Ativas (Percentual)",
+      "description": "Percentual de pessoas de 10 anos ou mais de idade economicamente ativas na semana de referência"    },
+    {
+      "id": "pea_por_sexo.coeficiente_ativas",
+      "type": "attr",
+      "text": "Economicamente Ativas (Coeficiente de Variação)",
+      "description": "Coeficiente de variação de pessoas de 10 anos ou mais de idade, economicamente ativas na semana de referência"    },
+    {
+      "id": "pea_por_sexo.nao_ativas_por_mil",
+      "type": "attr",
+      "text": "Não Economicamente Ativas (Mil pessoas)",
+      "description": "Total de pessoas de 10 anos ou mais de idade, não economicamente ativas na semana de referência (Mil pessoas)"    },
+    {
+      "id": "pea_por_sexo.percentual_nao_ativas",
+      "type": "attr",
+      "text": "Não Economicamente Ativas (Percentual)",
+      "description": "Percentual de pessoas de 10 anos ou mais de idade, não economicamente ativas na semana de referência"    },
+    {
+      "id": "pea_por_sexo.coeficiente_nao_ativas",
+      "type": "attr",
+      "text": "Não Economicamente Ativas (Coeficiente de Variação)",
+      "description": "Coeficiente de variação de pessoas de 10 anos ou mais de idade, não economicamente ativas na semana de referência"    }
+  ]
+}
+
+]

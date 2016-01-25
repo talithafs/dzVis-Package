@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	
+	<title>dzVis</title>
+	
+	<link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="css/jstree/style.min.css">
+	<link rel="stylesheet" href="css/custom-jstree.css">
+	<link rel="stylesheet" href="css/main.css">
+	
+	<!-- JQuery and AngularJS -->
+	<script src="js/shared/jquery/jquery.min.js" type="text/javascript"></script>
+    <script src="js/shared/angular/angular.min.js" type="text/javascript"></script>
+    <script src="js/shared/angular/angular-ui-router.min.js" type="text/javascript"></script>
+    
+    <!-- Plugins -->
+    <script src="js/shared/opencpu/opencpu-0.4.js" type="text/javascript"></script>
+    <script src="js/shared/jstree/jstree.min.js" type="text/javascript"></script>
+    
+</head>
+<body ng-app="dzvis-app">
+	
+	<div class="container wrapper" ng-controller="MainController">
+		<div class="row">
+			
+			<div class="col-sm-3 col-md-3" id="data" ng-mousemove="dataOnMouseMove($event)" ng-mousedown="dataOnMouseDown($event)">
+				<div id='databases'>
+					<div class='header'>
+						<p>{{databasesHeader}}</p>
+					</div>
+					
+					<div class="row col-sm-12 col-md-12 tree-panel" id="tree-panel" ng-controller ="TreeController">
+						<div class="tree-search no-selection" ng-controller="SearchController" ng-include="'views/tree-search-template.html'" > 
+							<!-- tree search -->	
+						</div>
+						<br>
+						<div id="tree" ng-click="treeClicked()">
+							<!-- tree -->
+						</div>
+					</div>
+				</div>
+				
+				<div class="row col-sm-12 col-md-12" id="details" ng-controller="DetailsController" ng-mousemove="detailsOnMouseMove($event)" ng-mousedown="detailsOnMouseDown($event)">
+					<div class='header'>
+						<p>{{detailsHeader}}</p>
+					</div>
+					<div id="details-field">
+						<div ng-include="'views/details-field-template.html'" > </div>
+					</div>
+				</div> 
+			</div>
+			
+			<div class="col-sm-9 col-md-9 panel" id="graphing-area" ng-controller="GraphsController" ng-click="test()"> 
+			<!-- <iframe src="data/rais.html" width="625px" height="550px" frameborder="0"> </iframe> -->
+				<!-- <div id="graph-options">
+					<div ng-include="'views/graphs-template.html'" > </div>
+					<div id="views" ui-view> </div>
+				</div>	 -->
+			</div>
+	</div>
+		
+	</div>
+	
+	<!-- AngularJS Modules -->
+    <script src="js/dzvis-app.js"></script>
+
+    <!-- AngularJS Main Controllers -->
+    <script src="js/controllers/MainController.js"></script>
+    <script src="js/controllers/TreeController.js"></script>
+    <script src="js/controllers/GraphsController.js"></script> 
+    <script src="js/controllers/DetailsController.js"></script>
+    <script src="js/controllers/SearchController.js"></script>
+    
+    <!-- AngularJS Services -->
+    <script src="js/services/Resizing.js"></script>
+    <script src="js/services/PullDown.js"></script>
+    <script src="js/services/DatabaseTree.js"></script>
+    <script src="js/services/Connection.js"></script>
+
+</body>
+</html>

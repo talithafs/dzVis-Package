@@ -1,13 +1,14 @@
 body {
 	background-color: rgba(128, 128, 128, 0.73);
-	margin: 0 ;
+	margin: 0;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif ;
 }
+
 
 .wrapper {
 	position: fixed ;
     width: 99.8vw ;
     height: 99.8vh;
-    border: solid 2px rgba(128, 128, 128, 0.73);
     margin: 0%;
     padding: 0%;
 }
@@ -22,17 +23,8 @@ body {
 .panel {
 	margin: 0 ;
 	padding: 0 ;
-	height: 99vh;
+	height: 99.6vh;
 	width: 70vw;
-}
-
-
-#details {
-	height: 29vh;
-	overflow-y: auto;
-	margin: 0; 
-	padding: 0;
-	border-top: solid 4px rgba(128, 128, 128, 0.73) ;
 }
 
 .header {
@@ -44,7 +36,7 @@ body {
 	position: absolute ;
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif ;
 	color: #fff ;
-	font-size: 15px;
+	font-size: 16px;
 	margin-top: 5.7px ;
 	margin-left: 5.5px ;
 	display: inline ;
@@ -52,12 +44,10 @@ body {
 }
 
 .tree-panel{
-	height: 64vh;
-	overflow-y: auto;
 	margin: 0; 
 	padding: 0;
-	/*border-bottom: solid 4px gray ;*/
 }
+
 
 .tree-search {
 	background: #beebff;
@@ -78,7 +68,7 @@ body {
 	display: inline-block ;
 	border-bottom: solid 2px #34689A  ;
 	border-radius: 0 0 8px 8px ;
-	height: 4vh ;
+	height: 30px ;
 	float: right ;
 	cursor: pointer ;
 	background: inherit ;
@@ -106,6 +96,69 @@ body {
 	text-transform: uppercase ;
 	font-size: 13px;
 	font-weight: 600 ;
+	overflow-y: auto ;
+	width: inherit ;
+	height: 53vh ;
+}
+
+#details {
+	/*height: 34vh;*/
+	margin: 0; 
+	padding: 0;
+	border-top: solid 4px rgba(128, 128, 128, 0.73) ;
+}
+
+#view-option {
+	margin-top: 10px ;
+}
+
+#view-option img {
+	display: block ;
+	margin-left: auto ;
+	margin-right: auto ;
+}
+
+#details-field {
+	padding: 0 8px 0 8px ;
+	overflow-y: auto ;
+	height: 28vh ;
+	/*height: calc(0px + 1000px);*/
+	word-wrap: break-word;
+}
+
+#details-field h1 {
+	font-size: 16px ;
+	text-transform: uppercase ;
+	font-weight: bold ;
+}
+
+#details-field h2 {
+	font-size: 14px ;
+	font-weight: bold ;
+}
+
+#details-field p {
+	font-size: 12px ;
+	display: inline-block ;
+	margin-bottom: 2px ;
+	padding: 0 ;
+}
+
+#details-field #view-data {
+	color: blue ;
+	text-decoration: underline;
+	float: right ; 
+	cursor: pointer ;
+}
+
+
+#table, #column {
+	text-transform: uppercase;
+	font-weight: bold ;
+}
+
+#graphingArea {
+	position: fixed ;
 }
 
 .on-vertical-border {
@@ -124,4 +177,15 @@ body {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+}
+
+.loading {
+	background-image: url('../img/carregando.gif') ;
+	background-position: center bottom 30px;
+	background-repeat: no-repeat ;
+}
+
+hr {
+  border: 0;
+  border-bottom: 1px dashed #000;
 }
