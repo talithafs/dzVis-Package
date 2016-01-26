@@ -8,7 +8,7 @@
 #'                    If set to \code{FALSE}, an 'and' clause is inserted
 #'
 #' @details The \code{restrictions} matrix must have the following columns:
-#' \enumerate {
+#' \enumerate{
 #'    \item targetColumn: A \code{character} value. Column on which restrictions should apply.
 #'    \item min: A \code{numeric} value. Lower bound for the \code{targetColumn}. Should be set to \code{NA} when not applicable.
 #'    \item max: A \code{numeric} value. Upper bound for the \code{targetColumn}. Should be set to \code{NA} when not applicable.

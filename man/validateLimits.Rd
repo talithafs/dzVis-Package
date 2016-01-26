@@ -2,7 +2,7 @@
 % Please edit documentation in R/validateLimits.R
 \name{validateLimits}
 \alias{validateLimits}
-\title{Validate Limits Imposed on a Column}
+\title{Validate the limits imposed on a column}
 \usage{
 validateLimits(data, columnName, min, max)
 }
@@ -13,13 +13,13 @@ If it is a \code{character}, a connection WILL be estabilished.}
 
 \item{columnName}{A \code{character}. The name of the column to be checked.}
 
-\item{min}{A \code{numeric} value or a \code{Date} in the format 'yyyy-mm-dd'. Lower bound for the column value. Should be set to \code{NULL} when not applicable.}
+\item{min}{A \code{numeric} value, a \code{character} or a \code{Date} in the format 'yyyy-mm-dd'. Lower bound for the column value. Should be set to \code{NULL} when not applicable.}
 
-\item{max}{A \code{numeric} value or a \code{Date} in the format 'yyyy-mm-dd'. Upper bound for the column value. Should be set to \code{NULL} when not applicable.}
+\item{max}{A \code{numeric} value, a \code{character} or a \code{Date} in the format 'yyyy-mm-dd'. Upper bound for the column value. Should be set to \code{NULL} when not applicable.}
 }
 \value{
-\code{TRUE} if the limits are valid and
-        \code{FALSE}, otherwise.
+The constant \code{.VALID} if the limits are valid.
+        An error message, otherwise.
 }
 \description{
 Checks the validity of inequality restrictions imposed on a column.
@@ -30,8 +30,9 @@ Checks the validity of inequality restrictions imposed on a column.
 \enumerate{
    \item \code{min} and \code{max} must be of the same type: both \code{numeric} or both \code{character}.
    \item \code{min} must be less than \code{max}
-   \item If their type is \code{numeric}, the column values must also be \code{numeric} in R and \code{int} or \code{double} in the database.
-   \item If their type is \code{character}, the column values must be \code{character} or \code{Date} in R and \code{date} in the database
+   \item If \code{min} and \code{max} type is \code{numeric}, the column values must also be \code{numeric} in R and \code{int} or \code{double} in the database.
+   \item If \code{min} and \code{max} type is \code{character}, the column values must be \code{character} in R and \code{varchar} in the database.
+   \item If \code{min} and \code{max} type is \code{Date}, the column values must be \code{Date} in R and \code{date} or \code{datetime} in the database.
 }
 }
 

@@ -23,6 +23,6 @@ Checks the validity of a time variable.
 }
 \section{Validation rule}{
 
-The column \code{timeVar} values must code{integer} or \code{Date} in R and code{int} or \code{date} in the database.
+The column \code{timeVar} type must be \code{integer} or \code{Date} in R and \code{int}, \code{date} or \code{datetime} in the database.
 }
 

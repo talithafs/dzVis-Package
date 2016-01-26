@@ -1,66 +1,66 @@
 #' @title Validate consistency between chart parameters
 #'
 #' @description Checks if the chosen parameters follows the consistency rules.
-#'              It uses a direct connection to the dzVis database or a \code{data.frame} as the data source.
+#'              It uses a \code{data.frame} as the data source.
 #'
-#' @param data A \code{data.frame} with the actual data source or a \code{character} containing the name of the table in the dzVis database.
-#'             If it is a \code{data.frame}, a connection to the dzVis database WILL NOT be estabilished.
-#'             If it is a \code{character}, a connection WILL be estabilished.
-#' @param timeVar A \code{character}. The name of the column with the time variable values.
-#' @param groupVar A \code{character vector}. The name(s) of the column(s) with the group variable(s).
-#' @param targetVar A \code{character}. The name of the column with the target variable values.
-#' @param restrictions A n x 2 \code{matrix}. The n equality restrictions that make \code{keys} unique.
-#' @param limits A n x 3 \code{matrix}. Inequality restrictions. See the details section for important information.
-#'
-#' @details The \code{limits} matrix must have the following columns:
-#' \enumerate {
-#'    \item targetColumn: A \code{character} value. Column on which restrictions should apply.
-#'    \item min: A \code{numeric} value. Lower bound for the \code{targetColumn}. Should be set to \code{NA} when not applicable.
-#'    \item max: A \code{numeric} value. Upper bound for the \code{targetColumn}. Should be set to \code{NA} when not applicable.
-#' }
+#' @param data A \code{data.frame}. The data source.
+#' @param timeVar A \code{character}. The name of the column with the time variable.
+#' @param groupVar A \code{character}. The name of the column with the group variable.
+#' @param targetVar A \code{character vector}. The name(s) of the column(s) with the target variable(s) values.
 #'
 #' @section Consistency rules:
 #' \enumerate{
-#'    \item If \code{groupVar} is a \code{factor}, \code{targetVar} must be \code{NULL}.
-#'    \item Each category in \code{groupVar} must have non null \code{targetVar} values corresponding to each different \code{timeVar} value.
-#'    \item The set of different \code{timeVar} values must be the same for each category in \code{groupVar}.
+#'    \item If \code{targetVar} has more than one element, \code{groupVar} must be \code{NULL}. Otherwise, \code{groupVar} must be a \code{factor} in R and \code{enum} in the database.
+#'    \item If \code{groupVar} IS NOT \code{NULL}, each of its categories must have non null \code{targetVar} values corresponding to each different \code{timeVar} value. Besides, the set of different \code{timeVar} values must be the same for each category in \code{groupVar}.
+#'    \item If \code{groupVar} IS \code{NULL}, each \code{targetVar} column must contain non null values corresponding to each different \code{timeVar} value. Besides, the set of different \code{timeVar} values must be the same for each \code{targetValue}.
 #' }
 #'
 #' @return \code{TRUE} if variables are consistent and
 #'         \code{FALSE}, otherwise.
 #'
 #' @export
-#' @import DBI
 
-validateConsistency <- function(data, timeVar, groupVar, targetVar, restrictions = NULL, limits = NULL){
+validateConsistency <- function(data, timeVar, groupVar, targetVar){
 
-    if(is.character(data)){
-      data <- importData(data, c(timeVar, groupVar, targetVar), restrictions, limits)
+    if(length(targetVar) != 1 && !is.null(groupVar)){
+      return(.ERROR_CONSISTENCY_1)
     }
-    else if(is.data.frame(data)){
 
-      if(!is.null(restrictions)){
-        columns <- restrictions[,1]
+    timeValues <- sort(unique(data[,timeVar]))
+    dim <- length(timeValues)
 
-        for(column in columns){
-          value <- restrictions[columns == column,2]
-          data <- data[data[,column] == value,]
+    if(!is.null(groupVar) && is.factor(data[,groupVar])){
+
+      levels <- levels(groupVar)
+
+      for(level in levels){
+        timeValuesByGroup <- data[data[,groupVar] == level,timeVar]
+
+        if(length(timeValuesByGroup) != dim){
+          return(.ERROR_CONSISTENCY_2)
+        }
+
+        if(!identical(timeValues, sort(timeValuesByGroup))){
+          return(.ERROR_CONSISTENCY_3)
         }
       }
 
-      data <- data[,c(timeVar, groupVar, targetVar)]
+      return(.VALID)
+    }
+    else if(is.null(groupVar)) {
+
+      levels <- targetVar
+
+      for(level in levels){
+        timeValuesByGroup <- data[,level]
+
+        if(length(timeValuesByGroup) != dim){
+          return(.ERROR_CONSISTENCY_2)
+        }
+      }
+
+      return(.VALID)
     }
 
-    if(is.factor(groupVar) && !is.null(targetVar)){
-      return(FALSE)
-    }
-
-    if(is.factor(groupVar)){
-
-
-
-    }
-
-
-    return(TRUE)
+    return(.ERROR_CONSISTENCY_1)
 }

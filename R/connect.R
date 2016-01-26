@@ -1,6 +1,6 @@
 #' @title Connect to the dzVis database
 #'
-#' @description Connects to the dzVis database and provides a connection object to access it
+#' @description Connects to the dzVis database and provides a connection object to access it.
 #'
 #' @return The \code{DBI} connection object to access the dzVis database
 #'
@@ -14,5 +14,5 @@
 
 
 connect <- function(){
-  dbConnect(MySQL(), db = "dzVis",  user = "dzvisuser", host = "Desktop", port=3306)
+  DBI::dbConnect(MySQL(), db = "dzVis",  user = "dzvisuser", host = "Talitha-PC", port=3306)
 }

@@ -3,23 +3,23 @@
 #' @description Gets data from the dzVis database according to the specified table and columns.
 #'              Original column types are set to its equivalents in R.
 #'
-#' @params table A \code{character}. The name of the table.
-#' @params columns A \code{character vector}. The name(s) of the column(s). If all columns should be imported, this argument must be set to \code{*}.
-#' @params restrictions A n x 2 \code{matrix}. Equality restrictions. The first column must contain the names of the columns. The second, its values.
-#' @params limits A n x 3 \code{matrix}. Inequality restrictions. See the details section for important information.
-#' @params connection A \code{DBI} Connection object if a new connection should not be estabilished.
+#' @param table A \code{character}. The name of the table.
+#' @param columns A \code{character vector}. The name(s) of the column(s). If all columns should be imported, this argument must be set to \code{*}.
+#' @param restrictions A n x 2 \code{matrix}. Equality restrictions. The first column must contain the names of the columns. The second, its values.
+#' @param limits A n x 3 \code{matrix}. Inequality restrictions. See the details section for important information.
+#' @param connection A \code{DBI} Connection object if a new connection should not be estabilished.
 #'
 #' @return A \code{data.frame} with the requested data.
 #'
-#' @details The \code{limits} matrix must have the following columns:
-#' \enumerate {
+#' @details The \code{limits} matrix must have the following columns
+#' \enumerate{
 #'    \item targetColumn: A \code{character} value. Column on which restrictions should apply.
 #'    \item min: A \code{numeric} value. Lower bound for the \code{targetColumn}. Should be set to \code{NA} when not applicable.
 #'    \item max: A \code{numeric} value. Upper bound for the \code{targetColumn}. Should be set to \code{NA} when not applicable.
 #' }
 #'
 #' @section Conversion rules (SQL -> R):
-#' \enumerate {
+#' \enumerate{
 #'    \item \code{enum} -> \code{factor}
 #'    \item \code{int} -> \code{integer}
 #'    \item \code{double} -> \code{numeric}

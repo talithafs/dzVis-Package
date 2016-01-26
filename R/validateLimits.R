@@ -1,4 +1,4 @@
-#' @title Validate Limits Imposed on a Column
+#' @title Validate the limits imposed on a column
 #'
 #' @description Checks the validity of inequality restrictions imposed on a column.
 #'              It uses a direct connection to the dzVis database or a \code{data.frame} as the data source.
@@ -19,50 +19,63 @@
 #'    \item If \code{min} and \code{max} type is \code{Date}, the column values must be \code{Date} in R and \code{date} or \code{datetime} in the database.
 #' }
 #'
-#' @return \code{TRUE} if the limits are valid and
-#'         \code{FALSE}, otherwise.
+#' @return The constant \code{.VALID} if the limits are valid.
+#'         An error message, otherwise.
 #'
 #' @export
-#' @import DBI
 
 validateLimits <- function(data, columnName, min, max){
 
   if(class(min) != class(max)){
-    return(FALSE)
+    return(.ERROR_LIMITS_1)
   }
   else if(!is.character(min) && !is.numeric(min) && class(min) != "Date"){
-    return(FALSE)
+    return(.ERROR_LIMITS_2)
   }
   else if(min >= max){
-    return(FALSE)
+    return(.ERROR_LIMITS_3)
   }
+
+  matches <- TRUE
 
   if(is.character(data)){
 
     type <- getDataTypes(data, columnName)[1,"ctype"]
 
     if(is.character(min)){
-      return(grepl("^varchar", type))
+      matches <- grepl("^varchar", type)
     }
     else if(class(min) == "Date"){
-      return(type == "date" || type == "datetime")
+      matches <- type == "date" || type == "datetime"
     }
     else if(is.numeric(min)){
-      return(type == "int" || type == "double")
+      matches <- type == "int" || type == "double"
     }
 
-
+    if(!matches){
+      return(.ERROR_LIMITS_4)
+    }
+    else{
+      return(.VALID)
+    }
   }
   else if(is.data.frame(data)){
 
     if(is.character(min)){
-      return(is.character(data[,columnName]))
+      matches <- is.character(data[,columnName])
     }
     else if(class(min) == "Date"){
-      return(class(data[,columnName]) == "Date")
+      matches <- class(data[,columnName]) == "Date"
     }
     else if(is.numeric(min)){
-      return(is.numeric(data[,columnName]))
+      matches <- is.numeric(data[,columnName])
+    }
+
+    if(!matches){
+      return(.ERROR_LIMITS_4)
+    }
+    else{
+      return(.VALID)
     }
 
   }

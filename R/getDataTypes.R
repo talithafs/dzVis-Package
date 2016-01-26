@@ -4,7 +4,7 @@
 #'
 #' @param table A \code{character}. The name of the table.
 #' @param columns A \code{character vector}. The name(s) of the column(s).
-#' @params connection A \code{DBI} Connection object if a new connection should not be estabilished.
+#' @param connection A \code{DBI} Connection object if a new connection should not be estabilished.
 #'
 #' @return A \code{data.frame}. The column \code{cod} contains the columns names. The column \code{ctype}, their types.
 #'

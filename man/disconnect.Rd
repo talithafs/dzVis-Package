@@ -10,7 +10,7 @@ disconnect(connection)
 \item{connection}{The \code{DBI} connection object to access the dzVis database}
 }
 \description{
-Disconnect from the dzVis database
+Disconnects from the dzVis database
 }
 \details{
 Detailed information about the dzVis database can be found on

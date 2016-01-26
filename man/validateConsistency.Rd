@@ -2,34 +2,33 @@
 % Please edit documentation in R/validateConsistency.R
 \name{validateConsistency}
 \alias{validateConsistency}
-\title{Validate Consistency Between the Time Variable and the Group Variable(s)}
+\title{Validate consistency between chart parameters}
 \usage{
 validateConsistency(data, timeVar, groupVar, targetVar)
 }
 \arguments{
-\item{data}{A \code{data.frame} with the actual data source or a \code{character} containing the name of the table in the dzVis database.
-If it is a \code{data.frame}, a connection to the dzVis database WILL NOT be estabilished.
-If it is a \code{character}, a connection WILL be estabilished.}
+\item{data}{A \code{data.frame}. The data source.}
 
-\item{timeVar}{A \code{character}. The name of the column with the time variable values.}
+\item{timeVar}{A \code{character}. The name of the column with the time variable.}
 
-\item{groupVar}{A \code{character vector}. The name(s) of the column(s) with the group variable(s).}
+\item{groupVar}{A \code{character}. The name of the column with the group variable.}
 
-\item{targetVar}{A \code{character}. The name of the column with the target variable values.}
+\item{targetVar}{A \code{character vector}. The name(s) of the column(s) with the target variable(s) values.}
 }
 \value{
-\code{TRUE} if \code{groupVar} and \code{timeVar} are consistent and
+\code{TRUE} if variables are consistent and
         \code{FALSE}, otherwise.
 }
 \description{
-Checks if there is a group variable value for each different time variable value.
-             It uses a direct connection to the dzVis database or a \code{data.frame} as the data source.
+Checks if the chosen parameters follows the consistency rules.
+             It uses a \code{data.frame} as the data source.
 }
-\section{Validation rule}{
+\section{Consistency rules}{
 
 \enumerate{
-   \item Each category in \code{groupVar} must have non null \code{targetVar} values corresponding to each different \code{timeVar} value.
-   \item The set of different \code{timeVar} values must be the same for each category in \code{groupVar}.
+   \item If \code{targetVar} has more than one element, \code{groupVar} must be \code{NULL}. Otherwise, \code{groupVar} must be a \code{factor} in R and \code{enum} in the database.
+   \item If \code{groupVar} IS NOT \code{NULL}, each of its categories must have non null \code{targetVar} values corresponding to each different \code{timeVar} value. Besides, the set of different \code{timeVar} values must be the same for each category in \code{groupVar}.
+   \item If \code{groupVar} IS \code{NULL}, each \code{targetVar} column must contain non null values corresponding to each different \code{timeVar} value. Besides, the set of different \code{timeVar} values must be the same for each \code{targetValue}.
 }
 }
 

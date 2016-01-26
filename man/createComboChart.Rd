@@ -4,10 +4,12 @@
 \alias{createComboChart}
 \title{Create a Google Combo Chart}
 \usage{
-createComboChart(table, targetVar, groupVar, timeVar, min = NULL,
+createComboChart(filename, table, targetVar, groupVar, timeVar, min = NULL,
   max = NULL, restrictions = NULL)
 }
 \arguments{
+\item{filename}{A \code{character}. The name of the .html file where the chart should be printed. The extension (.html) is not needed.}
+
 \item{table}{A \code{character} value. The name of the table from which the data should be retrieved}
 
 \item{targetVar}{A \code{character} value. The vertical axis variable}
@@ -20,11 +22,11 @@ createComboChart(table, targetVar, groupVar, timeVar, min = NULL,
 
 \item{max}{A \code{numeric} value or a \code{date string} in the format 'yyyy-mm-dd'. Upper bound for the \code{timeVar}}
 
-\item{restrictions}{n x 2 \code{matrix}. The n equality restrictions that make timeVar and groupVar unique when combined.}
+\item{restrictions}{A n x 2 \code{matrix}. The n equality restrictions that make timeVar and groupVar values unique when combined.}
 }
 \value{
-\code{TRUE} if the chart was successfully created and
-        \code{FALSE}, otherwise.
+\code{TRUE }if the chart was successfully created.
+        Otherwise, an error string returned by one of validation functions listed under the 'Parameters validation' section.
 }
 \description{
 Creates a Combo Chart using the googleVis R package
@@ -33,12 +35,9 @@ Creates a Combo Chart using the googleVis R package
 
 The parameters are checked according to the rules estabilished in validation functions and in the following order:
 \enumerate{
-   \item targetVar: \code{\link{validateTargetVariable}}
-   \item groupVar: \code{\link{validateGroupVariables}}
-   \item timeVar: \code{\link{validateTimeVariable}}
    \item min, max, timeVar: \code{\link{validateLimits}}
    \item timeVar, groupVar, restrictions: \code{\link{validateKeys}}
-   \item timeVar, groupVar: \code{\link{validateConsistency}}
+   \item timeVar, groupVar, targetVar, restrictions: \code{\link{validateConsistency}}
 }
 }
 \seealso{

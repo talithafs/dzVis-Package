@@ -36,7 +36,4 @@ validateTimeVariable <- function(data, timeVar){
 
   stop("Parameter 'data' is not valid. It should be a data.frame or a character.")
 
-  #x%%1==0
-  #all.equal(a, as.integer(a))
-  #return(TRUE);
 }

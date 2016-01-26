@@ -1,6 +1,6 @@
 #' @title Disconnect from the dzVis database
 #'
-#' @description Disconnect from the dzVis database
+#' @description Disconnects from the dzVis database
 #'
 #' @param connection The \code{DBI} connection object to access the dzVis database
 #'
