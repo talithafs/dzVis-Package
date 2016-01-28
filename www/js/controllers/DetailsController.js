@@ -56,7 +56,7 @@ application.controller("DetailsController",["$scope", "databasetree", "connectio
 				});
 			};
 		
-			connection.getAttributeValues(currentAttr.id, currentTable.id, $scope.nValues, callback) ;
+			connection.getColumnValues(currentAttr.id, currentTable.id, $scope.nValues, callback) ;
 		}
 		else {
 			$scope.viewData = STR_VIEW_DATA ;

@@ -157,9 +157,24 @@ body {
 	font-weight: bold ;
 }
 
-#graphingArea {
-	position: fixed ;
+#chart-list {
+	vertical-align: top;
 }
+
+#chart-selection, #chart-info {
+	display: inline-block ;
+}
+
+#chart-selection {
+	margin-right: 20px ;
+}
+
+
+#chart-image {
+	display: block ;
+	margin: 0 auto ;
+}
+
 
 .on-vertical-border {
 	cursor: ew-resize;
@@ -179,11 +194,11 @@ body {
 	user-select: none;
 }
 
-.loading {
+/*.loading {
 	background-image: url('../img/carregando.gif') ;
 	background-position: center bottom 30px;
 	background-repeat: no-repeat ;
-}
+}*/
 
 hr {
   border: 0;

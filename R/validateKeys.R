@@ -12,12 +12,12 @@
 #'    \item If \code{keys} has more than one column name, a subset of those columns must have unique values when combined.
 #' }
 #'
-#' @return The constant \code{.VALID} if the parameters are valid.
+#' @return A \code{character}. The constant \code{.VALID} if the parameters are valid.
 #'         Otherwise, a \code{vector} containing the names of the columns that should be restricted to make \code{keys} values unique when combined.
 #'
 #' @export
 
-validateKeys <- function(table, keys, connection = NULL){
+validateKeys <- function(table, candidateKeys, connection = NULL){
 
   conn <- connection
   restrictions <- NULL
@@ -32,7 +32,7 @@ validateKeys <- function(table, keys, connection = NULL){
   actualKeys <- info[info$Key == "PRI","Field"]
 
   for(key in actualKeys){
-    if(!(key %in% keys)){
+    if(!(key %in% candidateKeys)){
       restrictions <- c(restrictions, key)
     }
   }

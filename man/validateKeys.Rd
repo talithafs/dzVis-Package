@@ -4,7 +4,7 @@
 \alias{validateKeys}
 \title{Validate key parameters}
 \usage{
-validateKeys(table, keys, connection = NULL)
+validateKeys(table, candidateKeys, connection = NULL)
 }
 \arguments{
 \item{table}{A \code{character}. The name of the table in the dzVis database.}
@@ -12,7 +12,7 @@ validateKeys(table, keys, connection = NULL)
 \item{keys}{A \code{character vector}. The column name(s) of the candidate key(s).}
 }
 \value{
-The constant \code{.VALID} if the parameters are valid.
+A \code{character}. The constant \code{.VALID} if the parameters are valid.
         Otherwise, a \code{vector} containing the names of the columns that should be restricted to make \code{keys} values unique when combined.
 }
 \description{

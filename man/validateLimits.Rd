@@ -18,8 +18,8 @@ If it is a \code{character}, a connection WILL be estabilished.}
 \item{max}{A \code{numeric} value, a \code{character} or a \code{Date} in the format 'yyyy-mm-dd'. Upper bound for the column value. Should be set to \code{NULL} when not applicable.}
 }
 \value{
-The constant \code{.VALID} if the limits are valid.
-        An error message, otherwise.
+A \code{character}. The constant \code{.VALID} if the limits are valid and
+        an error message, otherwise.
 }
 \description{
 Checks the validity of inequality restrictions imposed on a column.

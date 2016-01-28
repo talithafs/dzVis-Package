@@ -16,8 +16,8 @@ validateConsistency(data, timeVar, groupVar, targetVar)
 \item{targetVar}{A \code{character vector}. The name(s) of the column(s) with the target variable(s) values.}
 }
 \value{
-\code{TRUE} if variables are consistent and
-        \code{FALSE}, otherwise.
+A \code{character}. The constant \code{.VALID} if variables are consistent and
+        an error message, otherwise.
 }
 \description{
 Checks if the chosen parameters follows the consistency rules.

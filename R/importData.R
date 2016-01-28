@@ -52,6 +52,8 @@ importData <- function(table, columns, restrictions = NULL, limits = NULL, conne
     query <- pasteIdRestrictions(query, restrictions)
   }
 
+  print(query)
+
   data <- dbGetQuery(conn, query)
   types <- getDataTypes(table, columns, conn)
 

@@ -4,17 +4,17 @@ services = angular.module("dzvis-services", []);
 
 application.config(function($stateProvider){
 	
-	// $stateProvider.state("one", {
-		// url: "",
-		// templateUrl: "views/test1.html",
-		// controller: "Test1Controller"
-	// });
-// 	
-	// $stateProvider.state("two", {
-		// url: "",
-		// templateUrl: "views/test2.html",
-		// controller: "Test2Controller"
-	// });
+	$stateProvider.state("Google Combo Chart", {
+		url: "",
+		templateUrl: "views/combo-chart-template.html",
+		controller: "GoogleComboChartController"
+	});
+	
+	$stateProvider.state("Google Motion Chart", {
+		url: "",
+		templateUrl: "views/motion-chart-template.html",
+		controller: "GoogleMotionChartController"
+	});
 	
 });
 

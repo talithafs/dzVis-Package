@@ -9,7 +9,7 @@ function DatabaseTree(){
 	var $tree = $("#tree") ;
 	
 	var create = function(jsonFile){
-		
+
 		// Read JSON file
 		$.getJSON(jsonFile, function(data) {
 			

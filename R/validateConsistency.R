@@ -15,8 +15,8 @@
 #'    \item If \code{groupVar} IS \code{NULL}, each \code{targetVar} column must contain non null values corresponding to each different \code{timeVar} value. Besides, the set of different \code{timeVar} values must be the same for each \code{targetValue}.
 #' }
 #'
-#' @return \code{TRUE} if variables are consistent and
-#'         \code{FALSE}, otherwise.
+#' @return A \code{character}. The constant \code{.VALID} if variables are consistent and
+#'         an error message, otherwise.
 #'
 #' @export
 

@@ -19,8 +19,8 @@
 #'    \item If \code{min} and \code{max} type is \code{Date}, the column values must be \code{Date} in R and \code{date} or \code{datetime} in the database.
 #' }
 #'
-#' @return The constant \code{.VALID} if the limits are valid.
-#'         An error message, otherwise.
+#' @return A \code{character}. The constant \code{.VALID} if the limits are valid and
+#'         an error message, otherwise.
 #'
 #' @export
 

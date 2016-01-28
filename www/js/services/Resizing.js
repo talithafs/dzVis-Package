@@ -3,7 +3,7 @@ services.service("resizing", Resizing);
 function Resizing(){
 	
 	var $data = $("#data") ;
-	var $graphingArea = $("#graphing-area") ;
+	var $chartingArea = $("#charting-area") ;
 	var $tree = $("#tree") ;
 	var $details = $("#details") ;
 	var $treePanel = $(".tree-panel") ;
@@ -33,9 +33,9 @@ function Resizing(){
 			vPressed = true;
 			dataX = event.pageX;
 			dataWidth = $data.width();
-			gAreaWidth = $graphingArea.width();
+			gAreaWidth = $chartingArea.width();
 			$data.addClass("no-selection");
-			$graphingArea.addClass("no-selection");
+			$chartingArea.addClass("no-selection");
 		}
 	};
 
@@ -72,7 +72,7 @@ function Resizing(){
 
 		if(vPressed) {
 			$data.width(dataWidth+(event.pageX-dataX));
-			$graphingArea.width(gAreaWidth - (event.pageX-dataX));
+			$chartingArea.width(gAreaWidth - (event.pageX-dataX));
 		}
 		if(mPressed){
 			$tree.height(treeHeight + (event.pageY-treeY));
@@ -85,7 +85,7 @@ function Resizing(){
 	var documentOnMouseUp = function(event){
 
 		if(vPressed) {
-			$graphingArea.removeClass("no-selection");
+			$chartingArea.removeClass("no-selection");
 			$data.removeClass("no-selection");
 			vPressed = false;
 		}

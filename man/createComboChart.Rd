@@ -25,7 +25,7 @@ createComboChart(filename, table, targetVar, groupVar, timeVar, min = NULL,
 \item{restrictions}{A n x 2 \code{matrix}. The n equality restrictions that make timeVar and groupVar values unique when combined.}
 }
 \value{
-\code{TRUE }if the chart was successfully created.
+A \code{character}. The constant \code{.SUCCESS} if the chart was successfully created.
         Otherwise, an error string returned by one of validation functions listed under the 'Parameters validation' section.
 }
 \description{

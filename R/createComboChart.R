@@ -11,7 +11,7 @@
 #' @param max A \code{numeric} value or a \code{date string} in the format 'yyyy-mm-dd'. Upper bound for the \code{timeVar}
 #' @param restrictions A n x 2 \code{matrix}. The n equality restrictions that make timeVar and groupVar values unique when combined.
 #'
-#' @return \code{TRUE }if the chart was successfully created.
+#' @return A \code{character}. The constant \code{.SUCCESS} if the chart was successfully created.
 #'         Otherwise, an error string returned by one of validation functions listed under the 'Parameters validation' section.
 #'
 #' @section Parameters validation:
@@ -29,12 +29,37 @@
 
 createComboChart <- function(filename, table, targetVar, groupVar, timeVar, min = NULL, max = NULL, restrictions = NULL){
 
-  limits <- t(as.matrix(c(timeVar, min, max)))
+  #-- Import data
+  limits <- t(as.data.frame(c(timeVar, min, max)))
   data <- importData(table, c(targetVar, groupVar, timeVar), restrictions, limits)
 
+  #-- Validate parameters
+  if(!is.null(min) || !is.null(max)){
+    validationMessage <- validateLimits(data,timeVar,as.Date(min),as.Date(max))
+
+    if(validationMessage != .VALID){
+      return(validationMessage)
+    }
+  }
+
+  validationMessage <- validateKeys(table, c(timeVar,groupVar,restrictions[,1]))
+
+  if(validationMessage != .VALID){
+    return(validationMessage)
+  }
+
+  validationMessage <- validateConsistency(data, timeVar, groupVar, targetVar)
+
+
+  if(validationMessage != .VALID){
+    return(validationMessage)
+  }
+
+  #-- Create a dataset in which each column is either a time variable or a category with target values
   if(!is.null(groupVar)) {
 
     levels <- levels(data[,groupVar])
+
     ncolumns <- length(levels) + 1
     nrows <- length(unique(data[,timeVar]))
 
@@ -49,6 +74,7 @@ createComboChart <- function(filename, table, targetVar, groupVar, timeVar, min 
       newData[,index] <- data[data[,groupVar] == level, targetVar]
       index = index + 1
     }
+
   }
   else { #groupVar == NULL
 
@@ -65,8 +91,9 @@ createComboChart <- function(filename, table, targetVar, groupVar, timeVar, min 
     disconnect(connection)
   }
 
+  #-- Creat the combo chart and print it
   chartObj = gvisComboChart(newData, xvar=timeVar, yvar=names(newData)[2:ncolumns], options=list(seriesType="bars", chartArea = "{width : '65%', left: 30}", width=900))
   printGoogleChart(filename,chartObj)
 
-  return(TRUE)
+  return(.SUCCESS)
 }

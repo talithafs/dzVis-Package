@@ -51,12 +51,9 @@
 				</div> 
 			</div>
 			
-			<div class="col-sm-9 col-md-9 panel" id="graphing-area" ng-controller="GraphsController" ng-click="test()"> 
-			<iframe src="data/rais.html" width="625px" height="550px" frameborder="0"> </iframe> 
-				<!-- <div id="graph-options">
-					<div ng-include="'views/graphs-template.html'" > </div>
-					<div id="views" ui-view> </div>
-				</div>	 -->
+			<div class="col-sm-9 col-md-9 panel" id="charting-area" ng-controller="ChartsController"> 
+				<div ng-include="'views/chart-selection-template.html'" > </div>
+				<!-- <iframe src="data/rais.html" width="625px" height="550px" frameborder="0"> </iframe> --> 
 			</div>
 	</div>
 		
@@ -68,9 +65,13 @@
     <!-- AngularJS Main Controllers -->
     <script src="js/controllers/MainController.js"></script>
     <script src="js/controllers/TreeController.js"></script>
-    <script src="js/controllers/GraphsController.js"></script> 
+    <script src="js/controllers/ChartsController.js"></script> 
     <script src="js/controllers/DetailsController.js"></script>
     <script src="js/controllers/SearchController.js"></script>
+    
+    <!-- AngularJS Chart Controllers -->
+    <script src="js/controllers/charts/GoogleComboChartController.js"></script>
+    <script src="js/controllers/charts/GoogleMotionChartController.js"></script>
     
     <!-- AngularJS Services -->
     <script src="js/services/Resizing.js"></script>

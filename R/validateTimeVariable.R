@@ -21,16 +21,26 @@
 
 validateTimeVariable <- function(data, timeVar){
 
+  message <- .ERROR_TIME
+
   if(is.character(data)){
 
     type = getDataTypes(data, timeVar)[,"ctype"]
 
-    return(type == "int" || type == "date" || type == "datetime")
+    if(type == "int" || type == "date" || type == "datetime"){
+      message <- .VALID
+    }
+
+    return(message)
 
   }
   else if(is.data.frame(data)){
 
-    return(is.integer(data[,timeVar]) || class(data[,timeVar]) == "Date")
+    if(is.integer(data[,timeVar]) || class(data[,timeVar]) == "Date"){
+      message <- .VALID
+    }
+
+    return(message)
 
   }
 
