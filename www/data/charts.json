@@ -1,0 +1,12 @@
+[
+    {
+        "name" : "Google Combo Chart",
+        "description" : "This is the Combo Chart description.",
+        "image" : "img/combo-chart.png"
+    },
+    {
+        "name" : "Google Motion Chart",
+        "description" : "This is the Motion Chart description.",
+        "image" : "img/motion-chart.png"
+    }
+]
