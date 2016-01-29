@@ -4,6 +4,10 @@ body {
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif ;
 }
 
+hr {
+  border: 0;
+  border-bottom: 1px dashed #000;
+}
 
 .wrapper {
 	position: fixed ;
@@ -48,6 +52,7 @@ body {
 	padding: 0;
 }
 
+/* Tree search */
 
 .tree-search {
 	background: #beebff;
@@ -92,6 +97,8 @@ body {
 	margin-left: 1vw;
 }
 
+/* Database tree */
+
 #tree {
 	text-transform: uppercase ;
 	font-size: 13px;
@@ -101,8 +108,9 @@ body {
 	height: 53vh ;
 }
 
+/* Details view */
+
 #details {
-	/*height: 34vh;*/
 	margin: 0; 
 	padding: 0;
 	border-top: solid 4px rgba(128, 128, 128, 0.73) ;
@@ -122,7 +130,6 @@ body {
 	padding: 0 8px 0 8px ;
 	overflow-y: auto ;
 	height: 28vh ;
-	/*height: calc(0px + 1000px);*/
 	word-wrap: break-word;
 }
 
@@ -144,23 +151,23 @@ body {
 	padding: 0 ;
 }
 
-#details-field #view-data {
-	float: right ; 
-}
-
-
-
 #table, #column {
 	text-transform: uppercase;
 	font-weight: bold ;
 }
+
+/* Charts list */
 
 #chart-list {
 	margin-left: 5px ;
 	margin-right: 5px ;
 }
 
-#chart-selection{
+#chart-list h3, h4 {
+	margin-top: 20px ;
+}
+
+#chart-selection {
 	padding: 0;
 }
 
@@ -172,19 +179,22 @@ body {
 	display: block ;
 }
 
-#chart-list h3, h4 {
-	margin-top: 20px ;
+
+#go-back {
+	margin-top: 5px ;
+	margin-right: 10px ;
 }
+
+#use-chart {
+	float: left ;
+}
+
+/* Chart options */ 
 
 #chart-options {
 	height: 200px ;
 	overflow: hidden ;
 	border-bottom: 1px dashed #000 ;
-}
-
-#go-back {
-	margin-top: 5px ;
-	float: right ;
 }
 
 #chart-options h4 {
@@ -194,22 +204,84 @@ body {
 	display: block ;
 }
 
+/* Data options view */ 
+
 .selection-input * {
 	vertical-align: top ;
-	margin-top: 3px ;
+	margin-bottom: 4px ;
 	width: 100% ;
 }
 
-.date-input * {
-	margin-bottom: 3px ;
-	display: inline-block ;
-	width: 45% ;
+.selection-input label {
+	margin-top: 3px ;
+	margin-bottom: 2px ;
 }
+
+.date-input * {
+	vertical-align: top ;
+	margin-top: 3px ;
+}
+
+.date-input input {
+	height: 23px ;
+}
+
+.date-input label {
+	display: inline-block;
+    width: 50px;
+}
+
+.no-option * {
+	margin-top: 3px ;
+	display: inline-block ;
+}
+
+.no-option p {
+	margin: 0px ;
+}
+
+.list-input {
+	margin-top: 3px ;
+}
+
+
+.list-input td {
+	padding: 0 3px 0 3px ;
+	border-bottom: 0.2px solid #d3d3d3 ;
+}
+
+.list-input table {
+	width: 100% ;
+}
+
+.table-scroll {
+	overflow-y: auto ;
+	height: 70px;
+	border: 0.5px solid #d3d3d3  ;
+}
+
+.radio-input label {
+	margin-top: 3px ;
+	display: block ;
+}
+
+.radio-input .inline {
+	display: inline-block ;
+	margin: 0 6px 0 6px ;
+}
+
+.text-input textarea {
+	resize: none ;
+	width: 100% ;
+}
+
+/* General classes */ 
 
 .switch {
 	color: blue ;
 	text-decoration: underline;
 	cursor: pointer ;
+	float: right ;
 }
 
 .on-vertical-border {
@@ -219,7 +291,6 @@ body {
 .on-horizontal-border {
 	cursor: ns-resize;
 }
-
 
 .no-selection {
 	-webkit-touch-callout: none;
@@ -236,7 +307,3 @@ body {
 	background-repeat: no-repeat ;
 }*/
 
-hr {
-  border: 0;
-  border-bottom: 1px dashed #000;
-}

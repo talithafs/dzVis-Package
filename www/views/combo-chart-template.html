@@ -3,14 +3,14 @@
 	<div class="col-md-4 col-sm-4">
 		
 		<div class="selection-input">
-			<label for="sth">{{targetVarLabel}}</label>
-			<select id="sth" ng-model="targetSelection" ng-options="opt as opt for opt in targetOptions" multiple> 		
+			<label>{{targetVarLabel}}</label>
+			<select ng-model="targetSelection" ng-options="opt as opt.text for opt in targetOptions" multiple> 		
 			</select>
 		</div>
 	
 		<div class="selection-input">
 			<label>{{groupVarLabel}}</label>
-			<select ng-model="groupSelection" ng-options="opt as opt for opt in groupOptions"> 
+			<select ng-model="groupSelection" ng-options="opt as opt.text for opt in groupOptions"> 
 			</select>
 		</div>
 
@@ -18,48 +18,59 @@
 	
 	<div class="col-md-4 col-sm-4">
 		
-		<div class="no-option">
-			<label>{{timeVarLabel}}</label>
-			<p>{{timeVar}}</p>
-		</div>
-		
-		<div class="date-input">
-			<label>{{minLabel}}</label>
-			<input type="date">
-			
-			<label>{{maxLabel}}</label>
-			<input type="date"> 
-		</div>
-		
-		
-		<p class="switch" ng-click="selectMultipleDates()">{{selectMultipleDatesLabel}}</p>
-		
 		<div class="selection-input">
 			<label>{{lineVarLabel}}</label>
-			<select ng-model="timeSelection" ng-options="opt as opt for opt in timeOptions"> 
+			<select ng-model="lineSelection" ng-options="opt as opt.text for opt in lineOptions"> 
 			</select>
+		</div>
+		
+		<div class="no-option"> 
+				<label>{{timeVarLabel}}:</label>
+				<p>{{timeVar.text}}</p> 
+		</div>
+		
+		<div ng-show="!multipleDatesMode">
+			<div class="date-input">
+				<label>{{minLabel}}</label>
+				<input type="date">
+			</div>
+				
+			<div class="date-input">
+				<label>{{maxLabel}}</label>
+				<input type="date"> 
+			</div>
+		</div>
+		
+		<div class="text-input" ng-show="multipleDatesMode">
+			<textarea ng-model="multipleDates" rows="1" placeholder="{{placeholder}}"> </textarea>
+		</div>
+		
+		<div class = "no-option">
+			<p class="switch" ng-click="selectMultipleDates()">{{selectMultipleDatesLabel}}</p>
 		</div>
 		
 	</div>
 	
 	<div class="col-md-4 col-sm-4">
 		
-		<div class="selection-form">
-			<label>{{timeVar}}</label>
-			<select ng-model="timeSelection" ng-options="opt as opt for opt in timeOptions"> 
-			</select>
+		<div class="radio-input">
+			<label>{{operationLabel}}</label>
+			<div class="inline" ng-repeat="operation in operations">
+				<input name="ops" type="radio" ng-model="operationSelection" ng-change="operationSelecetionChanged(operationSelection)" value="{{operation.value}}">{{operation.name}}
+			</div>
 		</div>
 		
-		<div class="selection-form">
-			<label>{{timeVar}}</label>
-			<select ng-model="timeSelection" ng-options="opt as opt for opt in timeOptions"> 
-			</select>
-		</div>
-		
-		<div class="selection-form">
-			<label>{{timeVar}}</label>
-			<select ng-model="timeSelection" ng-options="opt as opt for opt in timeOptions"> 
-			</select>
+		<div class="list-input">
+			<label>{{filtersLabel}}</label>
+			<div class="table-scroll">
+					<table ng-repeat="filter in filters">
+						<tr ng-model="filter">
+							<td>{{filter.column}}</td>
+							<td>----</td>
+							<td>{{filter.value}}</td>
+						</tr>
+					</table>
+			</div>
 		</div>
 		
 	</div>
