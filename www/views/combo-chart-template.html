@@ -1,1 +1,67 @@
-<h1>COMBO CHART</h1>
+<div class"row">
+	
+	<div class="col-md-4 col-sm-4">
+		
+		<div class="selection-input">
+			<label for="sth">{{targetVarLabel}}</label>
+			<select id="sth" ng-model="targetSelection" ng-options="opt as opt for opt in targetOptions" multiple> 		
+			</select>
+		</div>
+	
+		<div class="selection-input">
+			<label>{{groupVarLabel}}</label>
+			<select ng-model="groupSelection" ng-options="opt as opt for opt in groupOptions"> 
+			</select>
+		</div>
+
+	</div> 
+	
+	<div class="col-md-4 col-sm-4">
+		
+		<div class="no-option">
+			<label>{{timeVarLabel}}</label>
+			<p>{{timeVar}}</p>
+		</div>
+		
+		<div class="date-input">
+			<label>{{minLabel}}</label>
+			<input type="date">
+			
+			<label>{{maxLabel}}</label>
+			<input type="date"> 
+		</div>
+		
+		
+		<p class="switch" ng-click="selectMultipleDates()">{{selectMultipleDatesLabel}}</p>
+		
+		<div class="selection-input">
+			<label>{{lineVarLabel}}</label>
+			<select ng-model="timeSelection" ng-options="opt as opt for opt in timeOptions"> 
+			</select>
+		</div>
+		
+	</div>
+	
+	<div class="col-md-4 col-sm-4">
+		
+		<div class="selection-form">
+			<label>{{timeVar}}</label>
+			<select ng-model="timeSelection" ng-options="opt as opt for opt in timeOptions"> 
+			</select>
+		</div>
+		
+		<div class="selection-form">
+			<label>{{timeVar}}</label>
+			<select ng-model="timeSelection" ng-options="opt as opt for opt in timeOptions"> 
+			</select>
+		</div>
+		
+		<div class="selection-form">
+			<label>{{timeVar}}</label>
+			<select ng-model="timeSelection" ng-options="opt as opt for opt in timeOptions"> 
+			</select>
+		</div>
+		
+	</div>
+	
+</div>

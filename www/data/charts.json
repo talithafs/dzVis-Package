@@ -1,12 +1,48 @@
 [
     {
         "name" : "Google Combo Chart",
-        "description" : "This is the Combo Chart description.",
+        "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur pellentesque lorem ut bibendum. Quisque vestibulum nec turpis in fermentum. Fusce ultricies mauris ac tellus condimentum, in fermentum lacus iaculis. Maecenas ut hendrerit lacus. Etiam eros enim, malesuada at efficitur at, maximus in dolor. Vestibulum fermentum, purus eu porttitor placerat, mi velit accumsan lorem, elementum ullamcorper velit nisi sed purus.\n\nSuspendisse ultricies cursus iaculis. Maecenas vel mauris est. In hac habitasse platea dictumst. Integer id bibendum ligula, a vulputate nunc. Nunc sit amet viverra lorem. Sed fermentum vel elit et dapibus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras facilisis lectus tortor, ut pulvinar purus vehicula sit amet. Praesent consectetur blandit augue, eget finibus mauris imperdiet sed. ",
         "image" : "img/combo-chart.png"
     },
     {
         "name" : "Google Motion Chart",
-        "description" : "This is the Motion Chart description.",
+        "description" : "T Ut iaculis lorem finibus, fringilla quam at, ultricies metus. Aliquam erat volutpat. Integer malesuada aliquam convallis. Morbi sit amet commodo neque, id pharetra orci. Curabitur suscipit mollis massa, sit amet hendrerit mi semper commodo. Pellentesque massa metus, pulvinar eget lectus at, egestas lacinia justo. Donec nec faucibus elit. Fusce scelerisque mauris quis vehicula ornare. Etiam viverra lacinia nisl, quis accumsan ligula interdum id.\n\nVestibulum eget massa in urna tempor ultrices ac eget sapien. Vestibulum eu malesuada leo, id congue sem. Integer non tortor lobortis, vestibulum lorem vitae, ultricies orci. In hac habitasse platea dictumst. Aliquam vel blandit leo. Mauris in nisl enim. Sed condimentum, ex et blandit dictum, dolor arcu vehicula leo, ac dictum ex risus quis eros. Nulla in faucibus ligula, id convallis enim.",
         "image" : "img/motion-chart.png"
+    },
+    {
+        "name" : "Test Chart 1",
+        "description" : "foo"
+    },
+    {
+        "name" : "Test Chart 2",
+        "description" : "foo"
+    },
+    {
+        "name" : "Test Chart 3",
+        "description" : "foo"
+    },
+    {
+        "name" : "Test Chart 4",
+        "description" : "foo"
+    },
+    {
+        "name" : "Test Chart 5",
+        "description" : "foo"
+    },
+    {
+        "name" : "Test Chart 6",
+        "description" : "foo"
+    },
+    {
+        "name" : "Test Chart 7",
+        "description" : "foo"
+    },
+    {
+        "name" : "Test Chart 8",
+        "description" : "foo"
+    },
+    {
+        "name" : "Test Chart 9",
+        "description" : "foo"
     }
 ]

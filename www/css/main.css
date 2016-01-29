@@ -145,11 +145,9 @@ body {
 }
 
 #details-field #view-data {
-	color: blue ;
-	text-decoration: underline;
 	float: right ; 
-	cursor: pointer ;
 }
+
 
 
 #table, #column {
@@ -158,23 +156,61 @@ body {
 }
 
 #chart-list {
-	vertical-align: top;
+	margin-left: 5px ;
+	margin-right: 5px ;
 }
 
-#chart-selection, #chart-info {
-	display: inline-block ;
+#chart-selection{
+	padding: 0;
 }
 
-#chart-selection {
-	margin-right: 20px ;
+#chart-selection select {
+	margin-top: 10px ;
 }
-
 
 #chart-image {
 	display: block ;
-	margin: 0 auto ;
 }
 
+#chart-list h3, h4 {
+	margin-top: 20px ;
+}
+
+#chart-options {
+	height: 200px ;
+	overflow: hidden ;
+	border-bottom: 1px dashed #000 ;
+}
+
+#go-back {
+	margin-top: 5px ;
+	float: right ;
+}
+
+#chart-options h4 {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+	margin-top: 8px ;
+	margin-left: 10px ;
+	display: block ;
+}
+
+.selection-input * {
+	vertical-align: top ;
+	margin-top: 3px ;
+	width: 100% ;
+}
+
+.date-input * {
+	margin-bottom: 3px ;
+	display: inline-block ;
+	width: 45% ;
+}
+
+.switch {
+	color: blue ;
+	text-decoration: underline;
+	cursor: pointer ;
+}
 
 .on-vertical-border {
 	cursor: ew-resize;

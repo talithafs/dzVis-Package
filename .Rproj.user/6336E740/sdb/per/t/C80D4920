@@ -1,0 +1,17 @@
+{
+    "contents" : "library(RMySQL)\nlibrary(zoo)\nlibrary(googleVis)\nconnection <- dbConnect(MySQL(), db=\"dzVis\",  user = \"dzvisuser\", host = \"Talitha-PC\", port=3306)\n\ndbGetQuery(connection, \"show databases;\")\ndbGetQuery(connection, \"describe pea_por_idade ;\")\ndbListTables(connection)\n\n## old locale: \"English_United States.1252\"\nSys.getlocale(category = \"LC_TIME\")\nSys.setlocale(\"LC_TIME\",\"Portuguese_Brazil.1252\")\n\ndados <- dbReadTable(connection,\"pea_por_idade\")\ndados$mes <- as.Date(as.yearmon(dados$mes))\ndados <- dados[dados$tipo_area == \"Total das áreas\",]\n\nhead(dados)\n\n## Validar ID - deve haver uma combinacao unica entre a TIMEVAR e o ID\n## Validar formato TIMEVAR - no SQL ?\n## Validar COLOVAR - nao pode ser a mesma que ID\n\nlabor = gvisMotionChart(dados, idvar='grupo_idade', timevar='mes', yvar=\"total_por_mil\", date.format = \"%Y\")\nplot(labor)\n\ndados <- dbGetQuery(connection, \"select * from pea_por_idade where year(mes) = 2010\")\n\nlabor = gvisComboChart(dados, xvar='mes', yvar='total_por_mil', options=list(seriesType=\"bars\"))\nplot(labor)\n",
+    "created" : 1454029805852.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3484138476",
+    "id" : "C80D4920",
+    "lastKnownWriteTime" : 1453830633,
+    "path" : "~/Projeto Final/Código/Tests/R/gvis.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

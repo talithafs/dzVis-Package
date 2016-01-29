@@ -1,15 +1,15 @@
-application.controller("ChartsController",["$scope", "$state", "connection", function($scope, $state, connection){
+application.controller("ChartsController",["$scope", "$state", "charts", "connection", function($scope, $state, charts, connection){
+	
+	charts.success(function(data){
+		$scope.options = data ;
+		$scope.selection = $scope.options[0] ;
+	});
 	
 	$scope.chartListVisible = true ;
 	$scope.selectChartText = "Escolha um tipo de gráfico";
 	$scope.useChartText = "Usar este gráfico >>";
 	$scope.goBackText = "<< Escolher outro gráfico" ;
 	
-	$.getJSON("data/charts.json", function(data) {
-			
-		$scope.options = data ;
-		$scope.selection = $scope.options[0] ;
-	});
 	
 	$scope.chartSelectionChanged = function(value){
 		
@@ -19,6 +19,7 @@ application.controller("ChartsController",["$scope", "$state", "connection", fun
 	$scope.selectChart = function(){
 		
 		$scope.chartListVisible = false ;
+		$scope.chartName = $scope.selection.name ;
 		$state.go($scope.selection.name) ;
 	};
 	

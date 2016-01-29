@@ -1,19 +1,22 @@
-<div id="chart-list" ng-show="chartListVisible">
-	<div id="chart-selection">
-		<p>{{selectChartText}}</p>
+<div id="chart-list" ng-show="chartListVisible" class="row">
+	
+	<div id="chart-selection" class="col-sm-3 col-md-3 col-lg-3">
+		<h4>{{selectChartText}}</h4>
 		<select ng-model="selection" ng-change="chartSelectionChanged(selection)" ng-options="opt as opt.name for opt in options"> </select>
-		<p ng-click="selectChart()">{{useChartText}}</p>
 	</div>
 	
-	<div id="chart-info">
+	<div id="chart-info" class="col-sm-9 col-md-9 col-lg-9">
 		<h3>{{selection.name}}</h3>
-		<p>{{selection.description}}</p>
+		<p ng-bind-html="selection.description">{{selection.description}}</p>
+		<img id="chart-image" ng-src="{{selection.image}}">
+		<p class="switch" id="use-chart" ng-click="selectChart()">{{useChartText}}</p>
 	</div>
-	
-	<img id="chart-image" ng-src="{{selection.image}}">
+
 </div>
 
 <div ng-show = "!chartListVisible" id="chart-options">
+	<h4>{{chartName}}</h4>
 	<div id="views" ui-view> </div>
-	<p ng-click="goBack()">{{goBackText}}</p>
 </div>
+
+<p ng-show = "!chartListVisible" class="switch" id="go-back" ng-click="goBack()">{{goBackText}}</p>

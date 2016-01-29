@@ -1,4 +1,4 @@
-application = angular.module("dzvis-app",["ui.router", "dzvis-services"]);
+application = angular.module("dzvis-app",["ui.router", "dzvis-services", "ngSanitize"]);
 
 services = angular.module("dzvis-services", []);
 
