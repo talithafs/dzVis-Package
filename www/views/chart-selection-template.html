@@ -19,4 +19,8 @@
 	<div id="views" ui-view> </div>
 </div>
 
-<p ng-show = "!chartListVisible" class="switch" id="go-back" ng-click="goBack()">{{goBackText}}</p>
+<div ng-show = "!chartListVisible">
+	<button id="btn-create-chart" ng-click="createChart()">{{btnCreateChartText}}</button>
+	<p class="switch" id="go-back" ng-click="goBack()">{{goBackText}}</p>
+</div>
+

@@ -32,12 +32,12 @@
 		<div ng-show="!multipleDatesMode">
 			<div class="date-input">
 				<label>{{minLabel}}</label>
-				<input type="date">
+				<input type="date" value="{{minDate}}">
 			</div>
 				
 			<div class="date-input">
 				<label>{{maxLabel}}</label>
-				<input type="date"> 
+				<input type="date" value="{{maxDate}}"> 
 			</div>
 		</div>
 		
@@ -63,13 +63,13 @@
 		<div class="list-input">
 			<label>{{filtersLabel}}</label>
 			<div class="table-scroll">
-					<table ng-repeat="filter in filters">
-						<tr ng-model="filter">
-							<td>{{filter.column}}</td>
-							<td>----</td>
-							<td>{{filter.value}}</td>
-						</tr>
-					</table>
+				<table ng-repeat="filter in filters">
+					<tr ng-model="filter">
+						<td>{{filter.column}}</td>
+						<td>----</td>
+						<td>{{filter.value}}</td>
+					</tr>
+				</table>
 			</div>
 		</div>
 		

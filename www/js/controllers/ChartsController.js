@@ -9,6 +9,7 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
 	$scope.selectChartText = "Escolha um tipo de gráfico";
 	$scope.useChartText = "Usar este gráfico >>";
 	$scope.goBackText = "<< Escolher outro gráfico" ;
+	$scope.btnCreateChartText = "Gerar gráfico" ;
 	
 	
 	$scope.chartSelectionChanged = function(value){

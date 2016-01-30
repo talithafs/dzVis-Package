@@ -182,7 +182,8 @@ hr {
 
 #go-back {
 	margin-top: 5px ;
-	margin-right: 10px ;
+	margin-left: 10px ;
+	float: left ;
 }
 
 #use-chart {
@@ -202,6 +203,14 @@ hr {
 	margin-top: 8px ;
 	margin-left: 10px ;
 	display: block ;
+	border-bottom: 1px solid #d3d3d3 ;
+	padding-bottom: 3px ;
+}
+
+#btn-create-chart {
+	margin-right: 10px ;
+	margin-top: 3px ;
+	float: right ;
 }
 
 /* Data options view */ 
@@ -247,17 +256,14 @@ hr {
 
 .list-input td {
 	padding: 0 3px 0 3px ;
-	border-bottom: 0.2px solid #d3d3d3 ;
-}
-
-.list-input table {
-	width: 100% ;
 }
 
 .table-scroll {
 	overflow-y: auto ;
 	height: 70px;
-	border: 0.5px solid #d3d3d3  ;
+	border: 1px solid #d3d3d3  ;
+	border-top: 1px solid gray ;
+	border-radius: 2px ;
 }
 
 .radio-input label {
@@ -268,6 +274,7 @@ hr {
 .radio-input .inline {
 	display: inline-block ;
 	margin: 0 6px 0 6px ;
+	padding-top: 0 ;
 }
 
 .text-input textarea {

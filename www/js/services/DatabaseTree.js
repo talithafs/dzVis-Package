@@ -31,6 +31,9 @@ function DatabaseTree(){
 			      "valid_children" : []
 			    }
 			  },
+			  "checkbox" : {
+            	"tie_selection" : false
+        	  },
 			  "plugins" : [
 			    "types", "wholerow","checkbox", "search"
 			  ]
@@ -65,6 +68,13 @@ function DatabaseTree(){
 		var dim = itens.length ;
 		var searchId = 0 ;
 		
+		if(itens instanceof Array){
+			item = itens[dim-1] ;
+		}
+		else {
+			item = itens ;
+		} 
+		
 		// Return an error if 'itens' is empty
 		// If the last selected node is a leaf, meaning it's not an attribute, get its parent id 
 		// If the last selected node is an atributte, get its own id
@@ -72,11 +82,11 @@ function DatabaseTree(){
 		if(dim == 0){
 			return "Error: parameter is empty." ;
 		}
-		else if(itens[dim-1].type == "lvl") { 
-			searchId = itens[dim-1].parent ; 
+		else if(item.type == "lvl") { 
+			searchId = item.parent ; 
 		}
 		else {
-			searchId = itens[dim-1].id ;
+			searchId = item.id ;
 		}
 	
 		// For each top node in the whole tree (json object 'source'), 
