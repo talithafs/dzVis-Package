@@ -22,13 +22,13 @@
 </head>
 <body ng-app="dzvis-app">
 	
-	<div class="container wrapper" ng-controller="MainController">
+	<div class="container wrapper" ng-controller="MainController as main">
 		<div class="row">
 			
-			<div class="col-sm-3 col-md-3" id="data" ng-mousemove="dataOnMouseMove($event)" ng-mousedown="dataOnMouseDown($event)">
+			<div class="col-sm-3 col-md-3" id="data" ng-mousemove="main.dataOnMouseMove($event)" ng-mousedown="main.dataOnMouseDown($event)">
 				<div id='databases'>
 					<div class='header'>
-						<p>{{databasesHeader}}</p>
+						<p>{{main.databasesHeader}}</p>
 					</div>
 					
 					<div class="row col-sm-12 col-md-12 tree-panel" id="tree-panel" ng-controller ="TreeController">
@@ -42,9 +42,9 @@
 					</div>
 				</div>
 				
-				<div class="row col-sm-12 col-md-12" id="details" ng-controller="DetailsController" ng-mousemove="detailsOnMouseMove($event)" ng-mousedown="detailsOnMouseDown($event)">
+				<div class="row col-sm-12 col-md-12" id="details" ng-controller="DetailsController" ng-mousemove="main.detailsOnMouseMove($event)" ng-mousedown="main.detailsOnMouseDown($event)">
 					<div class='header'>
-						<p>{{detailsHeader}}</p>
+						<p>{{main.detailsHeader}}</p>
 					</div>
 					<div id="details-field">
 						<div ng-include="'views/details-field-template.html'" > </div>

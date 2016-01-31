@@ -1,14 +1,14 @@
-application.controller("MainController",["$scope", "$document", "resizing", function($scope, $document, resizing){
+application.controller("MainController",["$document", "resizing", function($document, resizing){
 	
 	// Static headers
-	$scope.databasesHeader = "[bases de dados]";
-	$scope.detailsHeader = "[detalhes]" ;
+	this.databasesHeader = "[bases de dados]";
+	this.detailsHeader = "[detalhes]" ;
 	
 	// Resizing events 
-	$scope.dataOnMouseMove = resizing.dataOnMouseMove ;
-	$scope.dataOnMouseDown = resizing.dataOnMouseDown ;
-	$scope.detailsOnMouseMove = resizing.detailsOnMouseMove ;
-	$scope.detailsOnMouseDown = resizing.detailsOnMouseDown ;
+	this.dataOnMouseMove = resizing.dataOnMouseMove ;
+	this.dataOnMouseDown = resizing.dataOnMouseDown ;
+	this.detailsOnMouseMove = resizing.detailsOnMouseMove ;
+	this.detailsOnMouseDown = resizing.detailsOnMouseDown ;
 	$document.on('mousemove', resizing.documentOnMouseMove);
 	$document.on('mouseup', resizing.documentOnMouseUp);
 	

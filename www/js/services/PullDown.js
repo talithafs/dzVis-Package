@@ -26,6 +26,7 @@ function PullDown() {
 		else {
 			$pullDown.attr('src',imgOpen);
 		}
+	
 		
 		$searchBox.slideToggle({duration: 'slow', queue: false});
 		$tree.animate({ height: tHeight + sHeight, queue: false, duration: 'slow' }, 
@@ -34,7 +35,9 @@ function PullDown() {
 					  		$treePanel.height(pHeight);
 					  		// If text has overflown, set overflow-y to scroll while animating 
 						  	if ($tree[0].scrollHeight >  $tree.innerHeight())
-						  		$tree.css("overflow-y", "scroll"); }}
+						  		$tree.css("overflow-y", "scroll");
+					  }}
+						  	
 		);
 		
 	};
