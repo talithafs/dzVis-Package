@@ -4,6 +4,10 @@ body {
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif ;
 }
 
+body::-webkit-scrollbar {
+	border: 0px 
+}
+
 hr {
   border: 0;
   border-bottom: 1px dashed #000;
@@ -126,10 +130,19 @@ hr {
 	margin-right: auto ;
 }
 
+/* this.height = .panel.height 
+	 * - #tree.height 
+	 * - 2*.header.height 
+	 * - #pull-search.height 
+	 * - #pull-search.margin-bottom 
+	 * - #pull-search.border-bottom 
+	 * - #details.border-top-width 
+	 *  = 99.8vh - 53vh - 2*39px - 30px - 10px - 2px - 4px */
+
 #details-field {
 	padding: 0 8px 0 8px ;
 	overflow-y: auto ;
-	height: 28vh ;
+	height: calc(46.6vh - 124px) ; 
 	word-wrap: break-word;
 }
 
@@ -169,6 +182,7 @@ hr {
 
 #chart-selection {
 	padding: 0;
+	margin-left: 20px ;
 }
 
 #chart-selection select {
@@ -205,6 +219,10 @@ hr {
 	display: block ;
 	border-bottom: 1px solid #d3d3d3 ;
 	padding-bottom: 3px ;
+}
+
+#chart-description {
+	text-align: justify ;
 }
 
 #btn-create-chart {
@@ -269,6 +287,10 @@ hr {
 .radio-input label {
 	margin-top: 3px ;
 	display: block ;
+}
+
+.radio-input input {
+	margin-right: 4px ;
 }
 
 .radio-input .inline {

@@ -5,9 +5,9 @@
 		<select ng-model="selection" ng-change="chartSelectionChanged(selection)" ng-options="opt as opt.name for opt in options"> </select>
 	</div>
 	
-	<div id="chart-info" class="col-sm-9 col-md-9 col-lg-9">
+	<div id="chart-info" class="col-sm-8 col-md-8 col-lg-8">
 		<h3>{{selection.name}}</h3>
-		<p ng-bind-html="selection.description">{{selection.description}}</p>
+		<p id="chart-description" ng-bind-html="selection.description">{{selection.description}}</p>
 		<img id="chart-image" ng-src="{{selection.image}}">
 		<p class="switch" id="use-chart" ng-click="selectChart()">{{useChartText}}</p>
 	</div>

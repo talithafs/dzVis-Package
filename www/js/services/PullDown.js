@@ -26,7 +26,11 @@ function PullDown() {
 		}
 		
 		$searchBox.slideToggle({duration: 'slow', queue: false});
-		$tree.animate({height: tHeight + sHeight, queue: false});
+		$tree.animate({ height: tHeight + sHeight, queue: false }, 
+					  { step: function() { 
+						  	if ($tree[0].scrollHeight >  $tree.innerHeight())
+						  		$tree.css("overflow-y", "scroll"); }}
+		);
 		
 	};
 	
