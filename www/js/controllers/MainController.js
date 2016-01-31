@@ -13,4 +13,3 @@ application.controller("MainController",["$scope", "$document", "resizing", func
 	$document.on('mouseup', resizing.documentOnMouseUp);
 	
 }]);
-

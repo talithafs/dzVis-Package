@@ -26,6 +26,8 @@ hr {
 	padding-right: 0;
 	border-right: solid 8px rgba(128, 128, 128, 0.73) ;
 	background-color: #F1F1F1;
+	
+	height: 964px ;
 }
 
 .panel {

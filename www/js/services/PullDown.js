@@ -11,10 +11,12 @@ function PullDown() {
 		var $searchBox = $("#search-box") ;
 		var $tree = $("#tree");
 		var $pullDown = $("#pull-down") ;
+		var $treePanel = $(".tree-panel");
 		
 		var sHeight = $searchBox.outerHeight();
 		var tHeight = $tree.innerHeight();
-		
+		var pHeight = $treePanel.height();
+
 		isOpen = !isOpen ;
 		
 		if(isOpen){
@@ -26,8 +28,11 @@ function PullDown() {
 		}
 		
 		$searchBox.slideToggle({duration: 'slow', queue: false});
-		$tree.animate({ height: tHeight + sHeight, queue: false }, 
-					  { step: function() { 
+		$tree.animate({ height: tHeight + sHeight, queue: false, duration: 'slow' }, 
+					  { step: function() {
+					  		// Prevent tree-panel height from changing 
+					  		$treePanel.height(pHeight);
+					  		// If text has overflown, set overflow-y to scroll while animating 
 						  	if ($tree[0].scrollHeight >  $tree.innerHeight())
 						  		$tree.css("overflow-y", "scroll"); }}
 		);
