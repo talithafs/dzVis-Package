@@ -1,4 +1,4 @@
-application.controller("GoogleMotionChartController", [ "$scope", function($scope){
+application.controller("GoogleMotionChartController", [ "$scope", "googlecharts", function($scope, gCharts){
 	
 	
 }]);
