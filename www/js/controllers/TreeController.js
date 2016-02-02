@@ -5,7 +5,7 @@ application.controller("TreeController",["$scope", "databasetree", function($sco
 	databaseTree.create('data/menu.json');
 
 	$scope.treeClicked = function(){		
-		$scope.$parent.$broadcast("treeClicked", databaseTree.getInstance());
+		$scope.$parent.$broadcast("treeClicked", databaseTree.properties.treeInstance);
 	} ;
 	
 	databaseTree.$tree.on("uncheck_node.jstree", function(event, data){

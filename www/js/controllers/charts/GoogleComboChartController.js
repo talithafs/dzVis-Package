@@ -1,5 +1,7 @@
 application.controller("GoogleComboChartController", [ "$scope", "connection", "googlecharts", function($scope, connection, base){
 	
+	var features = new ComboChartFeatures() ;
+	
 	// Google Charts labels
 	$scope.targetVarLabel =  base.LABEL.TARGET;
 	$scope.groupVarLabel = base.LABEL.GROUP ;
@@ -18,35 +20,13 @@ application.controller("GoogleComboChartController", [ "$scope", "connection", "
 	$scope.targetSelection = $scope.targetOptions[0] ;
 	$scope.groupSelection = $scope.groupOptions[0] ;
 	
-	// New features defaults
-	var DEFAULT = {
-		get LINE(){
-			return [{id : null, text : "Não desenhar linha"}] ;
-		},
-		get OPERATIONS(){
-			return [
-				{name: "Nenhuma", value: "none"},
-				{name: "Desvio Padrão", value: "std"},
-				{name: "Média", value: "mean"}
-			];
-		}
-	};
 	
-	// New features labels
-	var LABEL = {
-		get LINE() {
-			return "Desenhar linha com" ;
-		},
-		get OPERATIONS(){
-			return "Operador" ;
-		}
-	};
+	// New features
+	$scope.lineVarLabel = features.LABEL.LINE ;
+	$scope.operationLabel = features.LABEL.OPERATIONS ;
 	
-	$scope.lineVarLabel = LABEL.LINE ;
-	$scope.operationLabel = LABEL.OPERATIONS ;
-	
-	$scope.lineOptions = DEFAULT.LINE ;
-	$scope.operations = DEFAULT.OPERATIONS ;
+	$scope.lineOptions = features.DEFAULT.LINE ;
+	$scope.operations = features.DEFAULT.OPERATIONS ;
 	$scope.lineSelection = $scope.lineOptions[0];
 	$scope.operationSelection = $scope.operations[0].value ;
 
@@ -83,3 +63,31 @@ application.controller("GoogleComboChartController", [ "$scope", "connection", "
 	// $scope.minDate = "2010-01-01" ;
 	// $scope.maxDate = "2011-01-01" ;
 }]);
+
+
+function ComboChartFeatures(){
+	
+	// New features defaults
+	this.DEFAULT = {
+		get LINE(){
+			return [{id : null, text : "Não desenhar linha"}] ;
+		},
+		get OPERATIONS(){
+			return [
+				{name: "Nenhuma", value: "none"},
+				{name: "Desvio Padrão", value: "std"},
+				{name: "Média", value: "mean"}
+			];
+		}
+	};
+	
+	// New features labels
+	this.LABEL = {
+		get LINE() {
+			return "Desenhar linha com" ;
+		},
+		get OPERATIONS(){
+			return "Operador" ;
+		}
+	};
+}

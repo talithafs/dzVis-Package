@@ -1,7 +1,13 @@
-services.service("resizing", Resizing);
+services.service("resizing", function(){ 
+	return Resizing.getInstance() ;
+});
 
-function Resizing(){
+var Resizing = (function(){
 	
+	// Single instance
+	var instance ;
+	
+	// Private variables
 	var $data = $("#data") ;
 	var $chartingArea = $("#charting-area") ;
 	var $tree = $("#tree") ;
@@ -13,7 +19,17 @@ function Resizing(){
 
 	var onLeftBorder, onMiddleBorder = false ;
 	var vPressed, mPressed = false;
+	
+	// Constuctor
+	function Resizing(){ }
+	
+	// Private function
+	function createInstance() {
+        var object = new Resizing();
+        return object;
+    }
 
+	// Protected functions
 	var dataOnMouseMove = function(event){
 
 		if(event.offsetX > $data.innerWidth()){
@@ -96,13 +112,37 @@ function Resizing(){
 		}
 	};
 	
+	// Resizing public API
+	Resizing.prototype.dataOnMouseMove = function(event){
+		dataOnMouseMove.call(this,event);
+	};
+	
+	Resizing.prototype.dataOnMouseDown = function(event){
+		dataOnMouseDown.call(this,event);
+	};
+	
+	Resizing.prototype.detailsOnMouseMove = function(event){
+		detailsOnMouseMove.call(this,event);
+	};
+	
+	Resizing.prototype.detailsOnMouseDown = function(event){
+		detailsOnMouseDown.call(this,event);
+	};
+	
+	Resizing.prototype.documentOnMouseMove = function(event){
+		documentOnMouseMove.call(this,event);
+	};
+	
+	Resizing.prototype.documentOnMouseUp = function(event){
+		documentOnMouseUp.call(this,event);
+	};
 	
 	return {
-		dataOnMouseMove : dataOnMouseMove,
-		dataOnMouseDown : dataOnMouseDown,
-		detailsOnMouseMove : detailsOnMouseMove,
-		detailsOnMouseDown : detailsOnMouseDown,
-		documentOnMouseMove : documentOnMouseMove,
-		documentOnMouseUp : documentOnMouseUp
-	};
-}
+        getInstance: function () {
+            if (!instance) {
+                instance = createInstance();
+            }
+            return instance;
+        }
+    };
+}());

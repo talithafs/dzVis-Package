@@ -2,7 +2,6 @@ services.service("googlecharts", ["databasetree", "connection", function(databas
 	return GoogleChartsBase.getInstance(databaseTree, connection);
 }]);
 
-
 var GoogleChartsBase = (function() {
 	
 	// Single instance
@@ -17,7 +16,7 @@ var GoogleChartsBase = (function() {
 	var validationMatrix = undefined ;
 	var lastCheckedId = "" ;
 	
-	// Protected constants: Default Values
+	// Protected constants: Fields default values
 	var DEFAULT = {
 		get TARGET() {
 			return [{id : null, text : "Nenhuma"}] ;
@@ -87,7 +86,7 @@ var GoogleChartsBase = (function() {
     }
 	
 	// Protected functions 
-	function treeClicked(e, instance){
+	function onTreeClicked(e, instance){
 		
 		var checked = instance.get_checked(true);
 		var dim = checked.length ; 
@@ -117,8 +116,8 @@ var GoogleChartsBase = (function() {
 			});
 			
 			if(justChecked.id != lastCheckedId && colNames.indexOf(column) == -1 ){
-				validationMatrix.push([column, 'heey']);
-				alert(validationMatrix);
+				//validationMatrix.push([column, 'heey']);
+				//alert(validationMatrix);
 			}
 			
 			lastCheckedId = justChecked.id ;
@@ -131,7 +130,10 @@ var GoogleChartsBase = (function() {
 	GoogleChartsBase.prototype.LABEL = LABEL ;
 	GoogleChartsBase.prototype.PLACEHOLDER = PLACEHOLDER ;
 	GoogleChartsBase.prototype.properties = properties ;
-	GoogleChartsBase.prototype.onTreeClicked = function(e,instance){ treeClicked.call(this,e,instance); };
+	
+	GoogleChartsBase.prototype.onTreeClicked = function(e,instance){ 
+		onTreeClicked.call(this,e,instance); 
+	};
 	
 	return {
         getInstance: function (databaseTree, connection) {

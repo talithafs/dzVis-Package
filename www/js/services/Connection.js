@@ -1,6 +1,20 @@
-services.service("connection", Connection);
+services.service("connection", function(){ 
+	return Connection.getInstance(); 
+});
 
-function Connection() {
+var Connection = (function() {
+	
+	//Single instance
+	var instance ;
+	
+	// Constructor 
+	function Connection(){ }
+	
+	// Private functions 
+	function createInstance() {
+        var object = new Connection();
+        return object;
+    }
 	
 	var getQuery = function(functionName, parameters, callback){
 		
@@ -45,10 +59,11 @@ function Connection() {
     	});
 	};
 	
-	var getColumnValues = function(attribute, table, nvalues, callback){
+	// Protected functions
+	var getColumnValues = function(column, table, nvalues, callback){
 		
 		var parameters = {
-			attribute : attribute,
+			column : column,
 			table : table,
 			nvalues : nvalues 
 		} ;
@@ -76,7 +91,6 @@ function Connection() {
 		};
 		
 		call("validateKeys", parameters, callback);
-		
 	};
 	
 	var createComboChart = function(filename, table, targetVar, groupVar, timeVar, min, max, restrictions, callback){
@@ -95,11 +109,29 @@ function Connection() {
 		createChart("createComboChart", parameters, callback);
 	};
 	
-	return {
-		getColumnValues : getColumnValues,
-		validateKeys : validateKeys,
-		mapChartVariables : mapChartVariables,
-		createComboChart : createComboChart 
+	//Connection public API
+	Connection.prototype.getColumnValues = function(column, table, nvalues, callback){ 
+		getColumnValues.call(this, column, table, nvalues, callback);
 	};
 	
-}
+	Connection.prototype.mapChartVariables = function(table, variables, restrictions, callback){ 
+		mapChartVariables.call(this, table, variables, restrictions, callback);
+	};
+	
+	Connection.prototype.validateKeys = function(table, keys, restrictions, callback){ 
+		validateKeys.call(this, table, keys, restrictions, callback);
+	};
+	
+	Connection.prototype.createComboChart = function(filename, table, targetVar, groupVar, timeVar, min, max, restrictions, callback){ 
+		createComboChart.call(this, filename, table, targetVar, groupVar, timeVar, min, max, restrictions, callback);
+	};
+	
+	return {
+        getInstance: function () {
+            if (!instance) {
+                instance = createInstance();
+            }
+            return instance;
+        }
+    };
+}());

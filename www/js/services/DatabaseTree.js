@@ -1,68 +1,44 @@
-services.service("databasetree", DatabaseTree);
+services.service("databasetree", function(){ 
+	return DatabaseTree.getInstance(); 
+});
 
-function DatabaseTree(){
+var DatabaseTree = (function(){
 	
+	// Single instance
+	var instance ;
+	
+	// Private variables
 	var source = undefined ;
-	var instance = undefined ;
+	var treeInstance = undefined ;
 	var currentAttr = undefined ;
 	var currentTable = undefined ;
+	
+	// Public variable
 	var $tree = $("#tree") ;
 	
-	var create = function(jsonFile){
-
-		// Read JSON file
-		$.getJSON(jsonFile, function(data) {
-			
-			// Save the JSON object 'data' in a private variable
-			source = data ;
-			
-			// AJAX call to create a jstree instance
-			$tree.jstree({
-			  "core" : {
-				 'data' : source
-			  },
-			  "types" : {
-			    "attr" : {
-			      "icon" : "img/attr.png",
-			      "valid_children" : ["lvl"]
-			    },
-			    "lvl" : {
-			      "icon" : "img/level.png",
-			      "valid_children" : []
-			    }
-			  },
-			  "checkbox" : {
-            	"tie_selection" : false
-        	  },
-			  "plugins" : [
-			    "types", "wholerow","checkbox", "search"
-			  ]
-			});
-			
-			// Save the jstree instance in a private variable
-			instance = $tree.jstree(true) ;
-		});
+	// Protected variables
+	var properties = {
+		get source(){
+			return source ;
+		},
+		get treeInstance(){
+			return treeInstance ;
+		},
+		get domElement(){
+			return $tree ;
+		}
 	};
 	
-	var getSource = function() {
-		return source ;
-	};
+	//Constructor 
+	function DatabaseTree(){ };
 	
-	var getInstance = function() {
-		return instance;
-	};
-	
-	var getCurrentAttr = function(itens){
-		currentAttr = findAttr(itens);
-		return currentAttr ;
-	};
-	
-	var getCurrentTable = function(itens){
-		currentTable = findTable(itens);
-		return currentTable ;
-	};
-	
-	var findAttr = function(itens) {
+	// Private functions 
+	function createInstance() {
+        var object = new DatabaseTree();
+        return object;
+    }
+    
+    function findAttr(itens) {
 		var index = 0 ;
 		var nodes, found = [] ;
 		var dim = itens.length ;
@@ -109,7 +85,7 @@ function DatabaseTree(){
 		return found[0] ;
 	};
 
-	var findTable = function(node){
+	function findTable(node){
 		var found = [] ;
 		var tableId = "" ;
 		
@@ -122,10 +98,10 @@ function DatabaseTree(){
 		// Else, the node is an attribute, so get its parent id
 		if(node.type == "lvl"){
 			var attrNode = findAttr(node);
-			tableId = instance.get_parent(attrNode);
+			tableId = treeInstance.get_parent(attrNode);
 		} 
 		else {
-			tableId = instance.get_parent(node);
+			tableId = treeInstance.get_parent(node);
 		}
 
 		// Map root nodes (tables) to retrieve the entire root node object
@@ -140,13 +116,75 @@ function DatabaseTree(){
 		return found[0] ;
 	} ;
 	
-	return {
-		$tree : $tree,
-		create : create,
-		getInstance : getInstance,
-		getSource : getSource,
-		getCurrentAttr : getCurrentAttr,
-		getCurrentTable : getCurrentTable 
+	// Protected functions
+	function create(jsonFile) {
+
+		// Read JSON file
+		$.getJSON(jsonFile, function(data) {
+			
+			// Save the JSON object 'data' in a private variable
+			source = data ;
+			
+			// AJAX call to create a jstree treeInstance
+			$tree.jstree({
+			  "core" : {
+				 'data' : source
+			  },
+			  "types" : {
+			    "attr" : {
+			      "icon" : "img/attr.png",
+			      "valid_children" : ["lvl"]
+			    },
+			    "lvl" : {
+			      "icon" : "img/level.png",
+			      "valid_children" : []
+			    }
+			  },
+			  "checkbox" : {
+            	"tie_selection" : false
+        	  },
+			  "plugins" : [
+			    "types", "wholerow","checkbox", "search"
+			  ]
+			});
+			
+			// Save the jstree treeInstance in a private variable
+			treeInstance = $tree.jstree(true) ;
+		});
 	};
 	
-}
+	function getCurrentAttr(itens){
+		currentAttr = findAttr(itens);
+		return currentAttr ;
+	};
+	
+	function getCurrentTable(itens){
+		currentTable = findTable(itens);
+		return currentTable ;
+	};
+	
+	// DatabaseTree public API
+	DatabaseTree.prototype.properties = properties ;
+	DatabaseTree.prototype.$tree = $tree ;
+	
+	DatabaseTree.prototype.create = function(jsonFile){ 
+		create.call(this, jsonFile);
+	};
+	
+	DatabaseTree.prototype.getCurrentAttr = function(itens){ 
+		return getCurrentAttr.call(this,itens); 
+	};
+	
+	DatabaseTree.prototype.getCurrentTable = function(itens){ 
+		return getCurrentTable.call(this,itens); 
+	};
+
+	return {
+        getInstance: function () { 
+            if (!instance) {
+                instance = createInstance();
+            }
+            return instance;
+        }
+    };
+}());

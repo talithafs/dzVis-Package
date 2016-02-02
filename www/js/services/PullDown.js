@@ -1,11 +1,43 @@
-services.service("pulldown", PullDown);
+services.service("pulldown", function(){
+	return PullDown.getInstance();
+});
 
-function PullDown() {
-
+var PullDown = (function() {
+	
+	//Single instance
+	var instance ;
+	
+	// Private variables
 	var isOpen = false ;
 	var imgOpen = "" ;
 	var imgClose = "" ;
+	
+	// Protected variables
+	var properties = {
+		get openImage() {
+			return imgOpen ;
+		},
+		set openImage(source){
+			imgOpen = source ;
+		},
+		get closeImage(){
+			return imgClose ;
+		},
+		set closeImage(source){
+			imgClose = source ;
+		}
+	};
+	
+	//Constructor 
+	function PullDown(){}
+	
+	// Private function
+	function createInstance() {
+        var object = new PullDown();
+        return object;
+    }
 
+	// Protected functions 
 	var move = function(){
 		
 		var $searchBox = $("#search-box") ;
@@ -42,17 +74,19 @@ function PullDown() {
 		
 	};
 	
-	var setOpenImage = function(imageSource) {
-		imgOpen = imageSource ;
-	};
+	//PullDown public API 
+	PullDown.prototype.properties = properties ;
 	
-	var setCloseImage = function(imageSource) {
-		imgClose = imageSource ;
+	PullDown.prototype.move = function(){
+		move.call(this);
 	};
 	
 	return {
-		move : move,
-		setOpenImage : setOpenImage,
-		setCloseImage : setCloseImage 
-	} ;
-}
+        getInstance: function () {
+            if (!instance) {
+                instance = createInstance();
+            }
+            return instance;
+        }
+    };
+}()); 

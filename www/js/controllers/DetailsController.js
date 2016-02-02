@@ -81,7 +81,7 @@ application.controller("DetailsController",["$scope", "databasetree", "connectio
 			$scope.loading = true ;
 			$scope.sampleData = STR_EMPTY ;
 			
-			connection.getAttributeValues(currentAttr.id, currentTable.id, $scope.nValues, callback) ;
+			connection.getColumnValues(currentAttr.id, currentTable.id, $scope.nValues, callback) ;
 		}
 	};
 	

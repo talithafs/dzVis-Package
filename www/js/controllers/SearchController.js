@@ -4,14 +4,14 @@ application.controller("SearchController",["$scope", "$timeout", "pulldown", "da
 	$scope.imgClose = "img/arrow-up-small.png" ;
 	$scope.imgOpen = "img/arrow-down-small.png" ;
 	
-	pulldown.setOpenImage($scope.imgOpen);
-	pulldown.setCloseImage($scope.imgClose);
+	pulldown.properties.openImage = $scope.imgOpen;
+	pulldown.properties.closeImage = $scope.imgClose;
 	$scope.pull = pulldown.move ;
 	
 	var searchOnKeyUp = function(text){
 		
 		$timeout(function(){
-			databaseTree.getInstance().search(text);
+			databaseTree.properties.treeInstance.search(text);
 		}, 250);
 	} ;
 	
