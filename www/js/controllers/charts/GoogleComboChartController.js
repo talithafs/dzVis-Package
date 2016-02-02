@@ -18,28 +18,42 @@ application.controller("GoogleComboChartController", [ "$scope", "connection", "
 	$scope.targetSelection = $scope.targetOptions[0] ;
 	$scope.groupSelection = $scope.groupOptions[0] ;
 	
+	// New features defaults
+	var DEFAULT = {
+		get LINE(){
+			return [{id : null, text : "Não desenhar linha"}] ;
+		},
+		get OPERATIONS(){
+			return [
+				{name: "Nenhuma", value: "none"},
+				{name: "Desvio Padrão", value: "std"},
+				{name: "Média", value: "mean"}
+			];
+		}
+	};
+	
 	// New features labels
-	$scope.lineVarLabel = "Desenhar linha com" ;
-	$scope.operationLabel = "Operador" ;
+	var LABEL = {
+		get LINE() {
+			return "Desenhar linha com" ;
+		},
+		get OPERATIONS(){
+			return "Operador" ;
+		}
+	};
 	
-	// New features defaults	
-	var DEFAULT_LINE = [{id : null, text : "Não desenhar linha"}] ;
+	$scope.lineVarLabel = LABEL.LINE ;
+	$scope.operationLabel = LABEL.OPERATIONS ;
 	
-	var DEFAULT_OPERATIONS = [
-		{name: "Nenhuma", value: "none"},
-		{name: "Desvio Padrão", value: "std"},
-		{name: "Média", value: "mean"}
-	];
-	
-	$scope.lineOptions = DEFAULT_LINE ;
-	$scope.operations = DEFAULT_OPERATIONS ;
-	$scope.lineSelection = DEFAULT_LINE[0];
-	$scope.operationSelection = DEFAULT_OPERATIONS[0].value ;
+	$scope.lineOptions = DEFAULT.LINE ;
+	$scope.operations = DEFAULT.OPERATIONS ;
+	$scope.lineSelection = $scope.lineOptions[0];
+	$scope.operationSelection = $scope.operations[0].value ;
 
 	
 	$scope.$on("treeClicked", function(e, instance){
 		
-		//base.onTreeClicked(e, instance) ;
+		base.onTreeClicked(e, instance) ;
 	});
 	
 	$scope.selectMultipleDates = function(){
