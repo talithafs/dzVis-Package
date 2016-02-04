@@ -19,8 +19,7 @@ application.controller("GoogleComboChartController", [ "$scope", "connection", "
 	
 	$scope.targetSelection = $scope.targetOptions[0] ;
 	$scope.groupSelection = $scope.groupOptions[0] ;
-	
-	
+
 	// New features
 	$scope.lineVarLabel = features.LABEL.LINE ;
 	$scope.operationLabel = features.LABEL.OPERATIONS ;
@@ -53,7 +52,17 @@ application.controller("GoogleComboChartController", [ "$scope", "connection", "
 		$scope.operationSelection = value ;
 	};
 	
-	
+	$scope.$on("nodeUnchecked", function(e, node){
+		
+		var categories = base.getCategories(node.original.name) ;
+
+		if(categories.length != 0){
+		
+			//alert(categories.TARGET == true);
+			
+			//remove from fields 	
+		}
+	});
 	
 	// $scope.filters = [
 		// {column : "Abrangência", value : "Total das áreas"},

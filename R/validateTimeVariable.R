@@ -9,7 +9,7 @@
 #' @param timeVar A \code{character}. The name of the column to be checked.
 #'
 #' @section Validation rule:
-#' The column \code{timeVar} type must be \code{integer} or \code{Date} in R and \code{int}, \code{date} or \code{datetime} in the database.
+#' The column \code{timeVar} type must be \code{Date} in R and \code{date} or \code{datetime} in the database.
 #'
 #'
 #' @return \code{TRUE} if \code{timeVar} is valid and
@@ -27,7 +27,7 @@ validateTimeVariable <- function(data, timeVar){
 
     type = getDataTypes(data, timeVar)[,"ctype"]
 
-    if(type == "int" || type == "date" || type == "datetime"){
+    if(type == "date" || type == "datetime"){
       message <- .VALID
     }
 
@@ -36,7 +36,7 @@ validateTimeVariable <- function(data, timeVar){
   }
   else if(is.data.frame(data)){
 
-    if(is.integer(data[,timeVar]) || class(data[,timeVar]) == "Date"){
+    if(class(data[,timeVar]) == "Date"){
       message <- .VALID
     }
 

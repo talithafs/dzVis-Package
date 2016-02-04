@@ -86,17 +86,14 @@ var GoogleChartsBase = (function() {
     }
 	
 	// Protected functions 
-	function onTreeClicked(e, instance){
+	function onTreeClicked(e, checked){
 		
-		var checked = instance.get_checked(true);
 		var dim = checked.length ; 
 		
 		if(checked[dim-1] != undefined){
 			
 			var justChecked = checked[dim-1] ;
-			var table = this.databaseTree.getCurrentTable(justChecked) ;
-			var column = "" ;
-			var colNames = "" ;
+			var table = this.databaseTree.getTable(justChecked) ;
 			
 			if(table != currentTable){
 				currentTable = table ;
@@ -104,26 +101,43 @@ var GoogleChartsBase = (function() {
 				lastCheckedId = "" ;
 			}
 			
-			if(justChecked.type == "lvl"){
-				column = instance.get_parent(justChecked);
-			}
-			else {
-				column = justChecked.id ;
-			}
-			
-			var colNames = validationMatrix.map(function(value,index) { 
-				return value[0] ; 
-			});
-			
-			if(justChecked.id != lastCheckedId && colNames.indexOf(column) == -1 ){
-				//validationMatrix.push([column, 'heey']);
-				//alert(validationMatrix);
+			if(justChecked.id != lastCheckedId){
+				
+				var column = this.databaseTree.getColumn(justChecked).name ;
+				var found = [] ;
+				
+				found = jQuery.map(validationMatrix, function(obj){
+					if(obj.column === column){ return obj ; }
+				});
+				
+				if(found.length == 0){
+					
+					var callback = function(data){
+						validationMatrix.push(data[0]);
+						//alert(JSON.stringify(validationMatrix));
+					};
+					
+					this.connection.mapChartVariables(table.id, column, callback) ;
+				}
+				
 			}
 			
 			lastCheckedId = justChecked.id ;
 		}	
-		
 	};
+	
+	function getCategories(column){
+		
+		if(column == undefined){
+			return "Error: Column name is undefined.";
+		}
+		
+		var found = jQuery.map(validationMatrix, function(obj){
+						if(obj.column === column){ return obj ; }
+					});
+					
+		return found[0];
+	}
 	
 	// GoogleChartsBase public API
 	GoogleChartsBase.prototype.DEFAULT = DEFAULT ;
@@ -133,6 +147,10 @@ var GoogleChartsBase = (function() {
 	
 	GoogleChartsBase.prototype.onTreeClicked = function(e,instance){ 
 		onTreeClicked.call(this,e,instance); 
+	};
+	
+	GoogleChartsBase.prototype.getCategories = function(column){
+		return getCategories.call(this,column);
 	};
 	
 	return {

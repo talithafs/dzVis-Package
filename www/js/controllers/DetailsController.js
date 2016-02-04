@@ -17,14 +17,12 @@ application.controller("DetailsController",["$scope", "databasetree", "connectio
 	$scope.nValues = DEF_NVALUES ;
 	
 	
-	$scope.$on("treeClicked", function(e, instance){
-
-		var checked = instance.get_checked(true);
+	$scope.$on("treeClicked", function(e, checked){
 		var dim = checked.length ;
 		
 		if(dim != 0){
-			currentAttr = databaseTree.getCurrentAttr(checked);
-			currentTable = databaseTree.getCurrentTable(currentAttr);
+			currentAttr = databaseTree.getLastColumn();
+			currentTable = databaseTree.getLastTable();
 
 			$scope.table = currentTable.text ;
 			$scope.column = currentAttr.text ;

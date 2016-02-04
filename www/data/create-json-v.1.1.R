@@ -73,13 +73,15 @@ for(dbName in names(dbAD)){
   dbDesc[[dbName]]$children = newCol
 
   # Change column names to be compatible with jstree
-  names(dbDesc[[dbName]])[1] <- "id"
+  names(dbDesc[[dbName]])[1] <- "name"
   names(dbDesc[[dbName]])[2] <- "type"
   names(dbDesc[[dbName]])[3] <- "text"
 
-  dbDesc[[dbName]]["id"] <- lapply(dbDesc[[dbName]]["id"], function(x){paste(dbName,".",x,sep="")})
+  col <- lapply(dbDesc[[dbName]]["name"], function(x){paste(dbName,".",x,sep="")})
 
   dbDesc[[dbName]][2] <- rep("attr",nrow(dbDesc[[dbName]][2]))
+  dbDesc[[dbName]] = cbind(col, dbDesc[[dbName]])
+  names(dbDesc[[dbName]])[1] <- "id"
 }
 
 

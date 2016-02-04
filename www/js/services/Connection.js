@@ -71,12 +71,11 @@ var Connection = (function() {
 		getQuery("getColumnValues", parameters, callback) ;
 	} ;
 	
-	var mapChartVariables = function(table, variables, restrictions, callback){
+	var mapChartVariables = function(table, variables, callback){
 		
 		var parameters = {
 			table : table,
-			variables : variables,
-			restrictions : restrictions 
+			variables : variables
 		};
 		
 		call("mapChartVariables", parameters, callback);
@@ -114,8 +113,8 @@ var Connection = (function() {
 		getColumnValues.call(this, column, table, nvalues, callback);
 	};
 	
-	Connection.prototype.mapChartVariables = function(table, variables, restrictions, callback){ 
-		mapChartVariables.call(this, table, variables, restrictions, callback);
+	Connection.prototype.mapChartVariables = function(table, variables, callback){ 
+		mapChartVariables.call(this, table, variables, callback);
 	};
 	
 	Connection.prototype.validateKeys = function(table, keys, restrictions, callback){ 
