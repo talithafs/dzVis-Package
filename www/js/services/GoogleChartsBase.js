@@ -13,19 +13,22 @@ var GoogleChartsBase = (function() {
 	
 	// Private variables
 	var currentTable = undefined ;
+	var currentColumns = undefined ;
 	var validationMatrix = undefined ;
+	var currentTimeVariable = undefined ;
+	
 	var lastCheckedId = "" ;
 	
 	// Protected constants: Fields default values
 	var DEFAULT = {
 		get TARGET() {
-			return [{id : null, text : "Nenhuma"}] ;
+			return [{id : null, name: null, text : "Nenhuma"}] ;
 		},
 		get GROUP() {
-			return [{id : null, text : "Não agrupar"}] ;
+			return [{id : null, name: null, text : "Não agrupar"}] ;
 		},
 		get TIME() {
-			return {id : null, text : "Nenhuma"} ;
+			return {id : null, name: null, text : "Nenhuma"} ;
 		}
 	};
 	
@@ -66,14 +69,20 @@ var GoogleChartsBase = (function() {
 	
 	// Protected variables
 	var properties = {
-		get validationMatrix(){
-			return validationMatrix ;
+		get timeVariable(){
+			return currentTimeVariable ;
+		},
+		get table(){
+			return currentTable ;
+		},
+		get columns(){
+			return currentColumns ;
 		}
 	};
 	
 	// Constructor
 	function GoogleChartsBase(databaseTree, connection) {
-
+		
 		// Initialize instance variables
 		this.databaseTree = databaseTree ;
 		this.connection = connection ;
@@ -86,45 +95,70 @@ var GoogleChartsBase = (function() {
     }
 	
 	// Protected functions 
-	function onTreeClicked(e, checked){
+	function onNodeChecked(node, callback){
 		
-		var dim = checked.length ; 
-		
-		if(checked[dim-1] != undefined){
-			
-			var justChecked = checked[dim-1] ;
-			var table = this.databaseTree.getTable(justChecked) ;
+		if(node != undefined){
+
+			var table = this.databaseTree.getTable(node) ;
 			
 			if(table != currentTable){
 				currentTable = table ;
-				validationMatrix = [] ;
+				currentTimeVariable = undefined ;
+				currentColumns = [] ;
 				lastCheckedId = "" ;
-			}
-			
-			if(justChecked.id != lastCheckedId){
 				
-				var column = this.databaseTree.getColumn(justChecked).name ;
+			}
+
+			if(node.id != lastCheckedId){
+				
+				var colName = this.databaseTree.getColumn(node).name ;
 				var found = [] ;
 				
-				found = jQuery.map(validationMatrix, function(obj){
-					if(obj.column === column){ return obj ; }
+				found = jQuery.map(currentColumns, function(obj){
+					if(obj.name === colName){ return obj ; }
 				});
 				
 				if(found.length == 0){
 					
-					var callback = function(data){
-						validationMatrix.push(data[0]);
-						//alert(JSON.stringify(validationMatrix));
+					var addCols = function(data){
+
+						node.categories = data[0];
+						currentColumns.push(node);
+						callback();
 					};
 					
-					this.connection.mapChartVariables(table.id, column, callback) ;
+					this.connection.mapChartVariables(table.id, colName, addCols) ;
 				}
-				
 			}
 			
-			lastCheckedId = justChecked.id ;
+			lastCheckedId = node.id ;
 		}	
 	};
+	
+	
+	function findTimeVariable(callback){
+		
+		var dbTree = this.databaseTree ;
+		
+		if(currentTable != undefined){
+
+			this.connection.getColumnsByCategory(currentTable.id, "TIME", function(timeVar){
+				
+				var treeNode = dbTree.getNode(currentTable.id + "." + timeVar) ;
+				dbTree.properties.treeInstance.disable_node(treeNode);
+
+				// have to uncheck tree node and change its icon when disabled (it wont count as checked, if it was checked by the user before)
+				// have to find a way of re-enableing it when changing views, in case its not a google chart
+				// have enrich the databaseTree interface
+				// the null thing in fillOptions is not working
+				
+				// alert(JSON.stringify(treeNode));
+				
+				currentTimeVariable = treeNode.original ;
+				callback(currentTimeVariable);
+			});
+		}
+	}
 	
 	function getCategories(column){
 		
@@ -138,6 +172,7 @@ var GoogleChartsBase = (function() {
 					
 		return found[0];
 	}
+
 	
 	// GoogleChartsBase public API
 	GoogleChartsBase.prototype.DEFAULT = DEFAULT ;
@@ -145,8 +180,12 @@ var GoogleChartsBase = (function() {
 	GoogleChartsBase.prototype.PLACEHOLDER = PLACEHOLDER ;
 	GoogleChartsBase.prototype.properties = properties ;
 	
-	GoogleChartsBase.prototype.onTreeClicked = function(e,instance){ 
-		onTreeClicked.call(this,e,instance); 
+	GoogleChartsBase.prototype.onNodeChecked = function(node, callback){ 
+		onNodeChecked.call(this,node,callback); 
+	};
+	
+	GoogleChartsBase.prototype.findTimeVariable = function(callback){
+		findTimeVariable.call(this,callback); 
 	};
 	
 	GoogleChartsBase.prototype.getCategories = function(column){

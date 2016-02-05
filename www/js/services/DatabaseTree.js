@@ -155,6 +155,10 @@ var DatabaseTree = (function(){
 
 	} ;
 	
+	function getNode(id){
+		return treeInstance.get_node(id) ;
+	}
+	
 	// DatabaseTree public API
 	DatabaseTree.prototype.properties = properties ;
 	DatabaseTree.prototype.$tree = $tree ;
@@ -177,6 +181,10 @@ var DatabaseTree = (function(){
 	
 	DatabaseTree.prototype.getLastTable = function(){ 
 		return getLastTable.call(this); 
+	};
+	
+	DatabaseTree.prototype.getNode = function(id){ 
+		return getNode.call(this,id); 
 	};
 
 	return {

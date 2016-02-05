@@ -24,8 +24,19 @@
 #-- validateTimeVariable
 .ERROR_TIME = "Error: Invalid parameters. This variable does not represent a date."
 
+#-- getColumnsByCategory
+.ERROR_CATEGORY = "Error: Category does not exist."
+
 
 ## Chart variables categories
 .TARGET = "TARGET"
 .GROUP = "GROUP"
 .TIME = "TIME"
+
+## Database types
+.DB_INT = "int"
+.DB_DOUBLE = "double"
+.DB_ENUM = "enum"
+.DB_VARCHAR = "varchar"
+.DB_DATE = "date"
+.DB_DATETIME = "datetime"

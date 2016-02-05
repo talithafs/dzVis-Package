@@ -26,7 +26,7 @@ validateGroupVariable <- function(data, groupVar){
 
     type <- getDataTypes(data,groupVar)[,"ctype"]
 
-    if(type == "enum"){
+    if(type == .DB_ENUM){
       message <- .VALID
     }
 

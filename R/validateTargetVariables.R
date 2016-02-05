@@ -24,7 +24,7 @@ validateTargetVariables <- function(data, targetVar){
     types <- getDataTypes(data,targetVar)
 
     for(type in types[,"ctype"]){
-      if(type != "int" && type != "double"){
+      if(type != .DB_INT && type != .DB_DOUBLE){
         return(.ERROR_TARGET)
       }
     }

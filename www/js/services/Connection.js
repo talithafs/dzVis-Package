@@ -44,7 +44,7 @@ var Connection = (function() {
 		req.fail(function(){
 	      alert("Server error: " + req.responseText);
     	});
-		
+	
 	};
 	
 	var createChart = function(functionName, parameters, callback){
@@ -69,6 +69,16 @@ var Connection = (function() {
 		} ;
 		
 		getQuery("getColumnValues", parameters, callback) ;
+	} ;
+	
+	var getColumnsByCategory = function(table, category, callback){
+		
+		var parameters = {
+			table : table,
+			category : category
+		} ;
+		
+		return call("getColumnsByCategory", parameters, callback) ;
 	} ;
 	
 	var mapChartVariables = function(table, variables, callback){
@@ -111,6 +121,10 @@ var Connection = (function() {
 	//Connection public API
 	Connection.prototype.getColumnValues = function(column, table, nvalues, callback){ 
 		getColumnValues.call(this, column, table, nvalues, callback);
+	};
+	
+	Connection.prototype.getColumnsByCategory = function(table, category, callback){ 
+		getColumnsByCategory.call(this, table, category, callback);
 	};
 	
 	Connection.prototype.mapChartVariables = function(table, variables, callback){ 

@@ -27,7 +27,7 @@ validateTimeVariable <- function(data, timeVar){
 
     type = getDataTypes(data, timeVar)[,"ctype"]
 
-    if(type == "date" || type == "datetime"){
+    if(type == .DB_DATE || type == .DB_DATETIME){
       message <- .VALID
     }
 

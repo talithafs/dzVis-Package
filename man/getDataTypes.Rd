@@ -2,7 +2,7 @@
 % Please edit documentation in R/getDataTypes.R
 \name{getDataTypes}
 \alias{getDataTypes}
-\title{Get columns types}
+\title{Get column types}
 \usage{
 getDataTypes(table, columns, connection = NULL)
 }

@@ -46,10 +46,10 @@ validateLimits <- function(data, columnName, min, max){
       matches <- grepl("^varchar", type)
     }
     else if(class(min) == "Date"){
-      matches <- type == "date" || type == "datetime"
+      matches <- type == .DB_DATE || type == .DB_DATETIME
     }
     else if(is.numeric(min)){
-      matches <- type == "int" || type == "double"
+      matches <- type == .DB_INT || type == .DB_DOUBLE
     }
 
     if(!matches){

@@ -1,4 +1,4 @@
-#' @title Get columns types
+#' @title Get column types
 #'
 #' @description Gets the data types of table columns. This information is retrieved from the corresponding description table in the dzVis database.
 #'

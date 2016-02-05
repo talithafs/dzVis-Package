@@ -1,4 +1,4 @@
-application.controller("GoogleComboChartController", [ "$scope", "connection", "googlecharts", function($scope, connection, base){
+application.controller("GoogleComboChartController", ["$scope", "$state", "connection", "databasetree", "googlecharts", function($scope, $state, connection, databaseTree, base){
 	
 	var features = new ComboChartFeatures() ;
 	
@@ -30,9 +30,27 @@ application.controller("GoogleComboChartController", [ "$scope", "connection", "
 	$scope.operationSelection = $scope.operations[0].value ;
 
 	
-	$scope.$on("treeClicked", function(e, instance){
+	$scope.$on("$stateChangeSuccess", function(){
+		findTimeVariable(addOption, null);
+	});
+	
+	$scope.$on("nodeChecked", function(e, node){
 		
-		base.onTreeClicked(e, instance) ;
+		var callback = function(){
+		
+			if($scope.timeVar.text == base.DEFAULT.TIME.text){
+				findTimeVariable(addOption, node);
+			}
+			else {
+				addOption(node);
+			}
+		};
+		
+		base.onNodeChecked(node, callback) ;
+	});
+	
+	$scope.$on("nodeUnchecked", function(e, node){
+		// remove form option
 	});
 	
 	$scope.selectMultipleDates = function(){
@@ -52,17 +70,38 @@ application.controller("GoogleComboChartController", [ "$scope", "connection", "
 		$scope.operationSelection = value ;
 	};
 	
-	$scope.$on("nodeUnchecked", function(e, node){
+	
+	function findTimeVariable(callback, param){
 		
-		var categories = base.getCategories(node.original.name) ;
-
-		if(categories.length != 0){
-		
-			//alert(categories.TARGET == true);
+		if(base.properties.timeVariable == undefined){			
 			
-			//remove from fields 	
+			base.findTimeVariable(function(timeVar){
+				
+				$scope.$apply(function(){
+					$scope.timeVar = timeVar ;
+					callback(param) ;
+				});
+			});
 		}
-	});
+		else if($scope.timeVar.text == base.DEFAULT.TIME.text) {
+			
+			$scope.$apply(function(){
+					$scope.timeVar = base.properties.timeVariable ;
+					callback(param);
+			});
+		}
+	}
+	
+	function addOption(node){
+		
+		if(node != null){
+			
+		}
+		else {
+			
+			alert("node null");	
+		}
+	}
 	
 	// $scope.filters = [
 		// {column : "Abrangência", value : "Total das áreas"},

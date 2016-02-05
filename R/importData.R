@@ -58,20 +58,20 @@ importData <- function(table, columns, restrictions = NULL, limits = NULL, conne
   for(colName in names(data)){
     type = types[types$cod == colName,2]
 
-    if(type == "enum"){
+    if(type == .DB_ENUM){
         data[,colName] <- as.factor(data[,colName])
     }
-    else if(type == "int"){
+    else if(type == .DB_INT){
       data[,colName] <- as.integer(data[,colName])
     }
-    else if(type == "double"){
+    else if(type == .DB_DOUBLE){
       data[,colName] <- as.numeric(data[,colName])
 
     }
-    else if(type == "date" || type == "datetime"){
+    else if(type == .DB_DATE || type == .DB_DATETIME){
       data[,colName] <- as.Date(data[,colName])
     }
-    else if(type == "varchar"){
+    else if(type == .DB_VARCHAR){
       data[,colName] <- as.character(data[,colName])
     }
   }
