@@ -25,6 +25,7 @@
   opacity: 0.6 ;
   background-position: center;
 }
+
 .jstree-default .jstree-anchor > .jstree-undetermined {
   background-image: url("../img/checkbox-partial.png");
   background-position: center;
@@ -33,6 +34,14 @@
 	background-image: url("../img/checkbox-partial.png");
 	opacity: 0.6 ;
   	background-position: center;
+}
+
+.jstree-default .jstree-checkbox-disabled {
+	background-image: url("../img/checkbox-partial.png");
+}
+
+.jstree-default .jstree-disabled > .jstree-checkbox:hover {
+  background-image: url("../img/checkbox-unchecked.png");
 }
 
 .jstree-default .jstree-wholerow-clicked {

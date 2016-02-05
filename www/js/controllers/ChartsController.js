@@ -13,7 +13,7 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
 	
 	
 	$scope.chartSelectionChanged = function(value){
-		
+
 		$scope.selection = value ;
 	};
 	

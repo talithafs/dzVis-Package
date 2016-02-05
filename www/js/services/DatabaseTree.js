@@ -18,16 +18,6 @@ var DatabaseTree = (function(){
 	// Public variable
 	var $tree = $("#tree") ;
 	
-	// Protected variables
-	var properties = {
-		get source(){
-			return source ;
-		},
-		get treeInstance(){
-			return treeInstance ;
-		}
-	};
-	
 	//Constructor 
 	function DatabaseTree(){ };
 	
@@ -155,12 +145,63 @@ var DatabaseTree = (function(){
 
 	} ;
 	
-	function getNode(id){
+	function getTreeNode(id){
 		return treeInstance.get_node(id) ;
 	}
 	
+	function getOriginalNode(id){
+		return treeInstance.get_node(id).original ;
+	}
+	
+	function enableNode(node){
+		
+		if(typeof node === "string"){
+			node = getTreeNode(node);
+		}
+		
+		treeInstance.enable_node(node);
+	}
+	
+	function disableNode(node){
+		
+		if(typeof node === "string"){
+			node = getTreeNode(node);
+		}
+		
+		treeInstance.uncheck_node(node);
+		treeInstance.disable_node(node);
+	}
+	
+	function enableCheckbox(node){
+		
+		if(typeof node === "string"){
+			node = getTreeNode(node);
+		}
+		
+		treeInstance.enable_checkbox(node);
+	}
+	
+	function disableCheckbox(node){
+		
+		if(typeof node === "string"){
+			node = getTreeNode(node);
+		}
+		
+		treeInstance.uncheck_node(node);
+		treeInstance.disable_checkbox(node);
+	}
+	
+	function search(text){
+		
+		treeInstance.search(text);
+	}
+	
+	function getCheckedNodes(){
+		
+		return treeInstance.get_checked(true);
+	}
+	
 	// DatabaseTree public API
-	DatabaseTree.prototype.properties = properties ;
 	DatabaseTree.prototype.$tree = $tree ;
 	
 	DatabaseTree.prototype.create = function(jsonFile){ 
@@ -183,8 +224,36 @@ var DatabaseTree = (function(){
 		return getLastTable.call(this); 
 	};
 	
-	DatabaseTree.prototype.getNode = function(id){ 
-		return getNode.call(this,id); 
+	DatabaseTree.prototype.getOriginalNode = function(id){ 
+		return getOriginalNode.call(this,id); 
+	};
+	
+	DatabaseTree.prototype.getTreeNode = function(id){ 
+		return getTreeNode.call(this,id); 
+	};
+	
+	DatabaseTree.prototype.enableNode = function(node){ 
+		enableNode.call(this, node);
+	};
+	
+	DatabaseTree.prototype.disableNode = function(node){ 
+		disableNode.call(this, node);
+	};
+	
+	DatabaseTree.prototype.enableCheckbox = function(node){ 
+		enableCheckbox.call(this, node);
+	};
+	
+	DatabaseTree.prototype.disableCheckbox = function(node){ 
+		disableCheckbox.call(this, node);
+	};
+	
+	DatabaseTree.prototype.search = function(text){ 
+		search.call(this, text);
+	};
+	
+	DatabaseTree.prototype.getCheckedNodes = function(){ 
+		return getCheckedNodes.call(this); 
 	};
 
 	return {

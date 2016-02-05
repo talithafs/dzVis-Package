@@ -1,5 +1,5 @@
-services.service("googlecharts", ["databasetree", "connection", function(databaseTree, connection){
-	return GoogleChartsBase.getInstance(databaseTree, connection);
+services.service("googlecharts", ["$state", "databasetree", "connection", function(state, databaseTree, connection){
+	return GoogleChartsBase.getInstance(state, databaseTree, connection);
 }]);
 
 var GoogleChartsBase = (function() {
@@ -14,7 +14,6 @@ var GoogleChartsBase = (function() {
 	// Private variables
 	var currentTable = undefined ;
 	var currentColumns = undefined ;
-	var validationMatrix = undefined ;
 	var currentTimeVariable = undefined ;
 	
 	var lastCheckedId = "" ;
@@ -81,20 +80,53 @@ var GoogleChartsBase = (function() {
 	};
 	
 	// Constructor
-	function GoogleChartsBase(databaseTree, connection) {
+	function GoogleChartsBase(state, databaseTree, connection) {
 		
 		// Initialize instance variables
 		this.databaseTree = databaseTree ;
 		this.connection = connection ;
+		this.state = state ;
 	}
 	
 	// Private functions
-	function createInstance(databaseTree, connection) {
-        var object = new GoogleChartsBase(databaseTree, connection);
+	function createInstance(state, databaseTree, connection) {
+        var object = new GoogleChartsBase(state, databaseTree, connection);
         return object;
     }
 	
-	// Protected functions 
+	// Protected functions
+	function onLoad(callback){
+		
+		if(currentColumns != undefined){
+			callback(currentColums);
+		}
+		else {
+			
+			// implementar getCheckedColumns
+			var checked = this.databaseTree.getCheckedColumns() ;
+
+			if(checked.length != 0){
+				
+				// pegar o nome da tabela e preencher currentTable
+			
+				for(index in checked){
+					
+					// fazer uma lista com os NOMES das colunas
+					// pegar os nós enquanto isso e preencher currentColumns com eles
+				}
+				
+				// chamar mapChartVariables com a lista de colunas e o nome da tabela
+				// preencher currentColumns[x].categories com o resultado do mapping, via callback
+				
+				// pegar a variavel temporal e prencher currentTimeVar
+				
+				// chamar o callback passando currentColumns - callback do getTimeVar
+			}
+		}
+		
+	}
+	
+	 
 	function onNodeChecked(node, callback){
 		
 		if(node != undefined){
@@ -135,43 +167,52 @@ var GoogleChartsBase = (function() {
 		}	
 	};
 	
+	function onDestroy(){
+		
+		if(this.state.current.data.type != "googlevis"){
+			
+			currentTable = undefined ;
+			currentColumns = undefined ;
+			lastCheckedId = "" ;
+			
+			if(currentTimeVariable != undefined){
+				this.databaseTree.enableCheckbox(currentTimeVariable.id);
+			}
+			
+			currentTimeVariable = undefined ;
+		}
+	}
+	
 	
 	function findTimeVariable(callback){
 		
 		var dbTree = this.databaseTree ;
 		
 		if(currentTable != undefined){
-
+			
 			this.connection.getColumnsByCategory(currentTable.id, "TIME", function(timeVar){
 				
-				var treeNode = dbTree.getNode(currentTable.id + "." + timeVar) ;
-				dbTree.properties.treeInstance.disable_node(treeNode);
-
-				// have to uncheck tree node and change its icon when disabled (it wont count as checked, if it was checked by the user before)
-				// have to find a way of re-enableing it when changing views, in case its not a google chart
-				// have enrich the databaseTree interface
-				// the null thing in fillOptions is not working
+				var id = currentTable.id + "." + timeVar ;
+				dbTree.disableCheckbox(id) ;
 				
-				// alert(JSON.stringify(treeNode));
-				
-				currentTimeVariable = treeNode.original ;
+				currentTimeVariable = dbTree.getOriginalNode(id) ;
 				callback(currentTimeVariable);
 			});
 		}
 	}
 	
-	function getCategories(column){
-		
-		if(column == undefined){
-			return "Error: Column name is undefined.";
-		}
-		
-		var found = jQuery.map(validationMatrix, function(obj){
-						if(obj.column === column){ return obj ; }
-					});
-					
-		return found[0];
-	}
+	// function getCategories(column){
+// 		
+		// if(column == undefined){
+			// return "Error: Column name is undefined.";
+		// }
+// 		
+		// var found = jQuery.map(currentColumns, function(obj){
+						// if(obj.name === column){ return obj ; }
+					// });
+// 					
+		// return found[0];
+	// }
 
 	
 	// GoogleChartsBase public API
@@ -184,18 +225,23 @@ var GoogleChartsBase = (function() {
 		onNodeChecked.call(this,node,callback); 
 	};
 	
+	GoogleChartsBase.prototype.onDestroy = function(){
+		onDestroy.call(this);
+	};
+	
 	GoogleChartsBase.prototype.findTimeVariable = function(callback){
 		findTimeVariable.call(this,callback); 
 	};
 	
-	GoogleChartsBase.prototype.getCategories = function(column){
-		return getCategories.call(this,column);
-	};
+	// GoogleChartsBase.prototype.getCategories = function(column){
+		// return getCategories.call(this,column);
+	// };
+	
 	
 	return {
-        getInstance: function (databaseTree, connection) {
+        getInstance: function (state, databaseTree, connection) {
             if (!instance) {
-                instance = createInstance(databaseTree, connection);
+                instance = createInstance(state, databaseTree, connection);
             }
             return instance;
         }

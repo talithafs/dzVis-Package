@@ -11,7 +11,7 @@ application.controller("SearchController",["$scope", "$timeout", "pulldown", "da
 	var searchOnKeyUp = function(text){
 		
 		$timeout(function(){
-			databaseTree.properties.treeInstance.search(text);
+			databaseTree.search(text);
 		}, 250);
 	} ;
 	

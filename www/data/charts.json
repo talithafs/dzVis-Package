@@ -10,39 +10,8 @@
         "image" : "img/motion-chart.png"
     },
     {
-        "name" : "Test Chart 1",
-        "description" : "foo"
-    },
-    {
-        "name" : "Test Chart 2",
-        "description" : "foo"
-    },
-    {
-        "name" : "Test Chart 3",
-        "description" : "foo"
-    },
-    {
-        "name" : "Test Chart 4",
-        "description" : "foo"
-    },
-    {
-        "name" : "Test Chart 5",
-        "description" : "foo"
-    },
-    {
-        "name" : "Test Chart 6",
-        "description" : "foo"
-    },
-    {
-        "name" : "Test Chart 7",
-        "description" : "foo"
-    },
-    {
-        "name" : "Test Chart 8",
-        "description" : "foo"
-    },
-    {
-        "name" : "Test Chart 9",
-        "description" : "foo"
+        "name" : "Ggplot Geo Map",
+        "description" : "Vivamus volutpat at eros nec sodales. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin enim nunc, blandit quis volutpat eu, ornare ut ligula. Nulla facilisis ac lectus eget ultricies. Integer ante neque, sagittis at imperdiet in, varius sed sem. In tincidunt porttitor pretium. Morbi eget pretium dui, vel lacinia nulla. Morbi pellentesque egestas nunc. Pellentesque quis tempor nunc. \n\nProin ultrices eros id lacinia pretium. Quisque elementum dolor sit amet sapien malesuada dapibus. Morbi euismod pellentesque vehicula. Aenean elementum vestibulum erat at malesuada. Nullam lectus nisl, faucibus id facilisis at, fringilla at nunc. Maecenas elementum tellus id ullamcorper porta.",
+        "image" : "img/geo-map.png"
     }
 ]

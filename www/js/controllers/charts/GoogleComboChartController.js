@@ -1,4 +1,4 @@
-application.controller("GoogleComboChartController", ["$scope", "$state", "connection", "databasetree", "googlecharts", function($scope, $state, connection, databaseTree, base){
+application.controller("GoogleComboChartController", ["$scope", "$state", "connection", "googlecharts", function($scope, $state, connection, base){
 	
 	var features = new ComboChartFeatures() ;
 	
@@ -31,7 +31,8 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 
 	
 	$scope.$on("$stateChangeSuccess", function(){
-		findTimeVariable(addOption, null);
+		
+		base.onLoad(fillOptions);
 	});
 	
 	$scope.$on("nodeChecked", function(e, node){
@@ -50,8 +51,13 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	});
 	
 	$scope.$on("nodeUnchecked", function(e, node){
-		// remove form option
+		
+		
 	});
+	
+	$scope.$on("$destroy", function(){
+        base.onDestroy();
+    });
 	
 	$scope.selectMultipleDates = function(){
 		
@@ -73,17 +79,18 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	
 	function findTimeVariable(callback, param){
 		
-		if(base.properties.timeVariable == undefined){			
-			
-			base.findTimeVariable(function(timeVar){
-				
-				$scope.$apply(function(){
-					$scope.timeVar = timeVar ;
-					callback(param) ;
-				});
-			});
-		}
-		else if($scope.timeVar.text == base.DEFAULT.TIME.text) {
+		// if(base.properties.timeVariable == undefined){	
+// 
+			// base.findTimeVariable(function(timeVar){
+// 				
+				// $scope.$apply(function(){
+					// $scope.timeVar = timeVar ;
+					// callback(param) ;
+				// });
+			// });
+		// }
+		
+		if($scope.timeVar.text == base.DEFAULT.TIME.text) {
 			
 			$scope.$apply(function(){
 					$scope.timeVar = base.properties.timeVariable ;
@@ -94,13 +101,11 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	
 	function addOption(node){
 		
-		if(node != null){
-			
-		}
-		else {
-			
-			alert("node null");	
-		}
+	
+	}
+	
+	function fillOptions(){
+		
 	}
 	
 	// $scope.filters = [
