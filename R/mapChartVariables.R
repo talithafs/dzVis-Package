@@ -12,6 +12,7 @@
 #'    \item \code{TARGET} Numeric variables. They are typcally represented on the axis of the chart.
 #'    \item \code{GROUP} Character variables. Represent categories by which the \code{TARGET} variables are classified.
 #'    \item \code{TIME} Date variable. Indicates when the \code{TARGET} were observed.
+#'    \item \code{KEY} Variables of any type. When combined, they represent the primary key - the id variable - of the table.
 #' }
 #'
 #' @section Validation rules:
@@ -20,6 +21,7 @@
 #'    \item targetVar: \code{\link{validateTargetVariables}}
 #'    \item groupVar: \code{\link{validateGroupVariable}}
 #'    \item timeVar: \code{\link{validateTimeVariable}}
+#'    \item key: \code{\link{validateKeys}}
 #' }
 #'
 #' @export
@@ -29,8 +31,9 @@ mapChartVariables <- function(table, variables, restrictions = NULL){
   data <- importData(table, variables, restrictions = restrictions)
   nrows <- ncol(data)
 
-  categories <- as.data.frame(matrix(nrow = nrows, ncol = 4))
-  names(categories) <- c("column", .TARGET, .GROUP, .TIME)
+  categories <- as.data.frame(matrix(nrow = nrows, ncol = 5))
+  names(categories) <- c("column", .TARGET, .GROUP, .TIME, .KEY)
+  keys <- validateKeys(table,"")
 
   for(row in 1:nrows){
     colName <- names(data)[row]
@@ -55,6 +58,13 @@ mapChartVariables <- function(table, variables, restrictions = NULL){
     }
     else {
       categories[row,.GROUP] <- FALSE
+    }
+
+    if(colName %in% keys){
+      categories[row,.KEY] <- TRUE
+    }
+    else {
+      categories[row,.KEY] <- FALSE
     }
 
   }

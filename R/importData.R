@@ -53,8 +53,6 @@ importData <- function(table, columns, restrictions = NULL, limits = NULL, conne
     query <- pasteIdRestrictions(query, restrictions)
   }
 
-  print(query)
-
   data <- dbGetQuery(conn, query)
   types <- getDataTypes(table, columns, conn)
 
@@ -77,6 +75,7 @@ importData <- function(table, columns, restrictions = NULL, limits = NULL, conne
     else if(type == .DB_VARCHAR){
       data[,colName] <- as.character(data[,colName])
     }
+
   }
 
   if(is.null(connection)) {

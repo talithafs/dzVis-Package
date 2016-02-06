@@ -150,12 +150,40 @@ var DatabaseTree = (function(){
 		
 		var checked = getCheckedNodes();
 		var columns = [] ;
+		var node = undefined ;
+		var child = undefined ;
+		var col = undefined ;
+		var id ;
+		var index ;
 		
 		for(index in checked){
-			if(checked[index].type == "attr"){
-				columns.push(checked[index]);
+			node = checked[index] ;
+			alert("original node " + JSON.stringify(node));
+			
+			if(node.type == "lvl"){
+				child = node ;
+				node = treeInstance.get_node(node.parent) ;
+				alert("child " + JSON.stringify(child));
+				alert("parent " + JSON.stringify(node));
+			}
+			
+			col = jQuery.map(columns, function(obj){
+									if(obj.id === node.id){ return obj ; } 
+						 	 })[0] ;
+						 	 
+			if(col == undefined){
+				node.children = [] ;
+				columns.push(node);
+			}
+			else {
+				if(child != undefined){
+					index = columns.indexOf(col);
+					columns[index].children.push(child);
+				}
 			}
 		}
+		
+		alert(JSON.stringify(columns));
 		
 		return columns ;
 	}

@@ -32,6 +32,7 @@
 .TARGET = "TARGET"
 .GROUP = "GROUP"
 .TIME = "TIME"
+.KEY = "KEY"
 
 ## Database types
 .DB_INT = "int"

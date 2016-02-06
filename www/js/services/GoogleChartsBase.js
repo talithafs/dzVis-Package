@@ -99,42 +99,44 @@ var GoogleChartsBase = (function() {
 	
 	// Protected functions
 	function onLoad(callback){
-
-		var checked = ref.databaseTree.getCheckedColumns() ;
-	
-		if(checked.length != 0){
-				
-			currentTable = ref.databaseTree.getTable(checked[0]);
 		
-			for(index in checked){
-				var node = checked[index].original ;
-				currentColumns.push(node);
+		var onLoadFinish = function(timeVar){
+						   		callback(currentColumns, timeVar);
+						   };
+		
+		if(currentColumns.length == 0){
+			
+			var checked = ref.databaseTree.getCheckedColumns() ;
+		
+			if(checked.length != 0){
+					
+				currentTable = ref.databaseTree.getTable(checked[0]);	
+				
+				for(index in checked){
+					currentColumns.push(checked[index].original);
+				}	
+	
+				var bindCategories = function(data){
+	
+					categories = data ;
+					
+					for(index in currentColumns){
+						
+						var info  = jQuery.map(data, function(obj){
+										if(obj.column === currentColumns[index].name){ return obj ; } 
+									});
+						
+						currentColumns[index].categories = info[0];
+					}
+					
+					findTimeVariable(onLoadFinish);
+				};
+				
+				ref.connection.mapChartVariables(currentTable.id, "*", bindCategories) ;
 			}
-			
-			
-			var finish = function(timeVar){
-				callback(currentColumns, timeVar);
-			};
-			
-			var bindCategories = function(data){
-				
-				categories = data ;
-				
-				for(index in currentColumns){
-					
-					var name = currentColumns[index].name ;
-					
-					var found = jQuery.map(data, function(obj){
-						if(obj.column === name){ return obj ; } 
-					});
-					
-					currentColumns[index].categories = found[0];
-				}
-				
-				findTimeVariable(finish);
-			};
-			
-			ref.connection.mapChartVariables(currentTable.id, "*", bindCategories) ;
+		}
+		else {
+			onLoadFinish(currentColumns, currentTimeVariable);
 		}
 	}
 	
@@ -158,15 +160,21 @@ var GoogleChartsBase = (function() {
 		else {
 			
 			node = ref.databaseTree.getColumn(node) ;
-			var name = node.name ;
-			
-			var info = jQuery.map(categories, function(obj){
-							if(obj.column === name){ return obj ; } 
+
+			var isRepeated = jQuery.map(currentColumns, function(obj){
+								if(obj.id === node.id){ return true ; } 
+							 })[0] ;
+							 
+			if(!isRepeated){
+				
+				var info = jQuery.map(categories, function(obj){
+							if(obj.column === node.name){ return obj ; } 
 						});
 			
-			node.categories = info[0] ;
-			currentColumns.push(node);
-			callback(node);
+				node.categories = info[0] ;
+				currentColumns.push(node);
+				callback(node);
+			} 
 		}
 	};
 	
