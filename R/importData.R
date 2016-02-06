@@ -41,6 +41,7 @@ importData <- function(table, columns, restrictions = NULL, limits = NULL, conne
   cols <- paste(columns,collapse = ", ")
   query <- paste("select",cols,"from",table)
 
+
   if(!is.null(restrictions) && !is.null(limits)) {
     query <- pasteIdRestrictions(query, restrictions)
     query <- pasteLimitRestrictions(query, limits, whereClause = FALSE)
@@ -51,6 +52,8 @@ importData <- function(table, columns, restrictions = NULL, limits = NULL, conne
   else if(!is.null(restrictions)){
     query <- pasteIdRestrictions(query, restrictions)
   }
+
+  print(query)
 
   data <- dbGetQuery(conn, query)
   types <- getDataTypes(table, columns, conn)

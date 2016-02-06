@@ -63,6 +63,7 @@ var DatabaseTree = (function(){
 			treeInstance = $tree.jstree(true) ;
 		});
 	};
+	
 	 
     function getLastColumn(){
     	var items = treeInstance.get_checked(true) ;
@@ -145,6 +146,20 @@ var DatabaseTree = (function(){
 
 	} ;
 	
+	function getCheckedColumns(){
+		
+		var checked = getCheckedNodes();
+		var columns = [] ;
+		
+		for(index in checked){
+			if(checked[index].type == "attr"){
+				columns.push(checked[index]);
+			}
+		}
+		
+		return columns ;
+	}
+	
 	function getTreeNode(id){
 		return treeInstance.get_node(id) ;
 	}
@@ -201,6 +216,7 @@ var DatabaseTree = (function(){
 		return treeInstance.get_checked(true);
 	}
 	
+	
 	// DatabaseTree public API
 	DatabaseTree.prototype.$tree = $tree ;
 	
@@ -254,6 +270,10 @@ var DatabaseTree = (function(){
 	
 	DatabaseTree.prototype.getCheckedNodes = function(){ 
 		return getCheckedNodes.call(this); 
+	};
+	
+	DatabaseTree.prototype.getCheckedColumns = function(){ 
+		return getCheckedColumns.call(this); 
 	};
 
 	return {

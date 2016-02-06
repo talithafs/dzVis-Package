@@ -19,8 +19,12 @@ getDataTypes <- function(table, columns, connection = NULL){
   }
 
   descTable <- paste("desc_", table, sep="")
-  vars <- paste("'", columns, "'", collapse = ", ", sep = "")
-  query <- paste("select cod, ctype from", descTable, "where cod in (", vars, ")")
+  query <- paste("select cod, ctype from", descTable)
+
+  if(columns != .DB_ALL){
+    vars <- paste("'", columns, "'", collapse = ", ", sep = "")
+    query <- paste("select cod, ctype from", descTable, "where cod in (", vars, ")")
+  }
 
   types <- dbGetQuery(conn, query)
 

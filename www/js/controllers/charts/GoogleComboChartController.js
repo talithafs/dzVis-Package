@@ -17,7 +17,7 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	$scope.groupOptions = base.DEFAULT.GROUP ;
 	$scope.timeVar = base.DEFAULT.TIME ;
 	
-	$scope.targetSelection = $scope.targetOptions[0] ;
+	$scope.targetSelection = [] ;
 	$scope.groupSelection = $scope.groupOptions[0] ;
 
 	// New features
@@ -37,17 +37,17 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	
 	$scope.$on("nodeChecked", function(e, node){
 		
-		var callback = function(){
+		// var callback = function(){
+// 		
+			// if($scope.timeVar.text == base.DEFAULT.TIME.text){
+				// findTimeVariable(addOption, node);
+			// }
+			// else {
+				// addOption(node);
+			// }
+		// };
 		
-			if($scope.timeVar.text == base.DEFAULT.TIME.text){
-				findTimeVariable(addOption, node);
-			}
-			else {
-				addOption(node);
-			}
-		};
-		
-		base.onNodeChecked(node, callback) ;
+		base.onNodeChecked(node, addOption) ;
 	});
 	
 	$scope.$on("nodeUnchecked", function(e, node){
@@ -77,35 +77,37 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	};
 	
 	
-	function findTimeVariable(callback, param){
-		
-		// if(base.properties.timeVariable == undefined){	
-// 
-			// base.findTimeVariable(function(timeVar){
-// 				
-				// $scope.$apply(function(){
-					// $scope.timeVar = timeVar ;
-					// callback(param) ;
-				// });
-			// });
-		// }
-		
-		if($scope.timeVar.text == base.DEFAULT.TIME.text) {
-			
-			$scope.$apply(function(){
-					$scope.timeVar = base.properties.timeVariable ;
-					callback(param);
-			});
-		}
-	}
-	
 	function addOption(node){
 		
+		if(node instanceof Array){
+			node = node[0];
+		}
+		
+		$scope.$apply(function(){
+			
+			if(node.categories.TARGET === true){
+				$scope.targetOptions.push(node);
+				$scope.lineOptions.push(node);
+				$scope.targetSelection.push(node);
+				$scope.lineSelection = node ;
+			}
+			else if(node.categories.GROUP === true){
+				$scope.groupOptions.push(node);
+				$scope.groupSelection = node ;
+			}
+		});
 	
 	}
 	
-	function fillOptions(){
+	function fillOptions(nodes, timeVar){
+
+		$scope.$apply(function(){
+			$scope.timeVar = timeVar ;
+		});
 		
+		for(index in nodes){
+			addOption(nodes[index]);
+		}
 	}
 	
 	// $scope.filters = [

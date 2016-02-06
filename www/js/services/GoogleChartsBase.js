@@ -7,16 +7,18 @@ var GoogleChartsBase = (function() {
 	// Single instance
 	var instance ;
 	
+	// Reference
+	var ref ;
+	
 	// Instance variables 
 	this.databaseTree = undefined ;
 	this.connection = undefined ;
 	
 	// Private variables
 	var currentTable = undefined ;
-	var currentColumns = undefined ;
+	var currentColumns = [] ;
 	var currentTimeVariable = undefined ;
-	
-	var lastCheckedId = "" ;
+	var categories = [] ;
 	
 	// Protected constants: Fields default values
 	var DEFAULT = {
@@ -86,6 +88,7 @@ var GoogleChartsBase = (function() {
 		this.databaseTree = databaseTree ;
 		this.connection = connection ;
 		this.state = state ;
+		ref = this ;
 	}
 	
 	// Private functions
@@ -96,75 +99,75 @@ var GoogleChartsBase = (function() {
 	
 	// Protected functions
 	function onLoad(callback){
-		
-		if(currentColumns != undefined){
-			callback(currentColums);
-		}
-		else {
-			
-			// implementar getCheckedColumns
-			var checked = this.databaseTree.getCheckedColumns() ;
 
-			if(checked.length != 0){
+		var checked = ref.databaseTree.getCheckedColumns() ;
+	
+		if(checked.length != 0){
 				
-				// pegar o nome da tabela e preencher currentTable
+			currentTable = ref.databaseTree.getTable(checked[0]);
+		
+			for(index in checked){
+				var node = checked[index].original ;
+				currentColumns.push(node);
+			}
 			
-				for(index in checked){
+			
+			var finish = function(timeVar){
+				callback(currentColumns, timeVar);
+			};
+			
+			var bindCategories = function(data){
+				
+				categories = data ;
+				
+				for(index in currentColumns){
 					
-					// fazer uma lista com os NOMES das colunas
-					// pegar os nós enquanto isso e preencher currentColumns com eles
+					var name = currentColumns[index].name ;
+					
+					var found = jQuery.map(data, function(obj){
+						if(obj.column === name){ return obj ; } 
+					});
+					
+					currentColumns[index].categories = found[0];
 				}
 				
-				// chamar mapChartVariables com a lista de colunas e o nome da tabela
-				// preencher currentColumns[x].categories com o resultado do mapping, via callback
-				
-				// pegar a variavel temporal e prencher currentTimeVar
-				
-				// chamar o callback passando currentColumns - callback do getTimeVar
-			}
+				findTimeVariable(finish);
+			};
+			
+			ref.connection.mapChartVariables(currentTable.id, "*", bindCategories) ;
 		}
-		
 	}
+	
 	
 	 
 	function onNodeChecked(node, callback){
 		
-		if(node != undefined){
-
-			var table = this.databaseTree.getTable(node) ;
+		var table = ref.databaseTree.getTable(node) ;
+		
+		if(table != currentTable){
 			
-			if(table != currentTable){
-				currentTable = table ;
-				currentTimeVariable = undefined ;
-				currentColumns = [] ;
-				lastCheckedId = "" ;
-				
-			}
-
-			if(node.id != lastCheckedId){
-				
-				var colName = this.databaseTree.getColumn(node).name ;
-				var found = [] ;
-				
-				found = jQuery.map(currentColumns, function(obj){
-					if(obj.name === colName){ return obj ; }
-				});
-				
-				if(found.length == 0){
-					
-					var addCols = function(data){
-
-						node.categories = data[0];
-						currentColumns.push(node);
-						callback();
-					};
-					
-					this.connection.mapChartVariables(table.id, colName, addCols) ;
-				}
-			}
+			currentTable = table ;
+			currentTimeVariable = undefined ;
+			currentColumns = [] ;
+			categories = [];
+		}
+		
+		if(categories.length == 0){
+			onLoad(callback);
+		}
+		else {
 			
-			lastCheckedId = node.id ;
-		}	
+			node = ref.databaseTree.getColumn(node) ;
+			var name = node.name ;
+			
+			var info = jQuery.map(categories, function(obj){
+							if(obj.column === name){ return obj ; } 
+						});
+			
+			node.categories = info[0] ;
+			currentColumns.push(node);
+			callback(node);
+		}
 	};
 	
 	function onDestroy(){
@@ -172,9 +175,9 @@ var GoogleChartsBase = (function() {
 		if(this.state.current.data.type != "googlevis"){
 			
 			currentTable = undefined ;
-			currentColumns = undefined ;
-			lastCheckedId = "" ;
-			
+			currentColumns = [] ;
+			categories = [] ;
+
 			if(currentTimeVariable != undefined){
 				this.databaseTree.enableCheckbox(currentTimeVariable.id);
 			}
@@ -185,41 +188,30 @@ var GoogleChartsBase = (function() {
 	
 	
 	function findTimeVariable(callback){
-		
-		var dbTree = this.databaseTree ;
-		
+
 		if(currentTable != undefined){
 			
-			this.connection.getColumnsByCategory(currentTable.id, "TIME", function(timeVar){
+			var timeVar = jQuery.map(categories, function(obj){
+							if(obj.TIME === true){ return obj.column ; } 
+						});	
 				
-				var id = currentTable.id + "." + timeVar ;
-				dbTree.disableCheckbox(id) ;
+			var id = currentTable.id + "." + timeVar ;
+			ref.databaseTree.disableCheckbox(id) ;
 				
-				currentTimeVariable = dbTree.getOriginalNode(id) ;
-				callback(currentTimeVariable);
-			});
+			currentTimeVariable = ref.databaseTree.getOriginalNode(id) ;
+			callback(currentTimeVariable);
 		}
 	}
-	
-	// function getCategories(column){
-// 		
-		// if(column == undefined){
-			// return "Error: Column name is undefined.";
-		// }
-// 		
-		// var found = jQuery.map(currentColumns, function(obj){
-						// if(obj.name === column){ return obj ; }
-					// });
-// 					
-		// return found[0];
-	// }
-
 	
 	// GoogleChartsBase public API
 	GoogleChartsBase.prototype.DEFAULT = DEFAULT ;
 	GoogleChartsBase.prototype.LABEL = LABEL ;
 	GoogleChartsBase.prototype.PLACEHOLDER = PLACEHOLDER ;
 	GoogleChartsBase.prototype.properties = properties ;
+	
+	GoogleChartsBase.prototype.onLoad = function(callback){
+		onLoad.call(this,callback);
+	};
 	
 	GoogleChartsBase.prototype.onNodeChecked = function(node, callback){ 
 		onNodeChecked.call(this,node,callback); 
@@ -232,10 +224,6 @@ var GoogleChartsBase = (function() {
 	GoogleChartsBase.prototype.findTimeVariable = function(callback){
 		findTimeVariable.call(this,callback); 
 	};
-	
-	// GoogleChartsBase.prototype.getCategories = function(column){
-		// return getCategories.call(this,column);
-	// };
 	
 	
 	return {

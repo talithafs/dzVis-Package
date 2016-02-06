@@ -40,3 +40,4 @@
 .DB_VARCHAR = "varchar"
 .DB_DATE = "date"
 .DB_DATETIME = "datetime"
+.DB_ALL = "*"
