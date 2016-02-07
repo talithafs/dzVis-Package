@@ -100,6 +100,17 @@ var DatabaseTree = (function(){
 			return "Error: Leaf node has no parent.";
 		}
 		
+		var children = [] ;
+		
+		for(index in node.children){
+			child = treeInstance.get_node(node.children[index]);
+			if(child.state.checked){
+				children.push(child);
+			}
+		}
+		
+		node.original.children = children ;
+
 		// Return the original node
 		return node.original ;
 	};
@@ -158,13 +169,10 @@ var DatabaseTree = (function(){
 		
 		for(index in checked){
 			node = checked[index] ;
-			alert("original node " + JSON.stringify(node));
 			
 			if(node.type == "lvl"){
 				child = node ;
-				node = treeInstance.get_node(node.parent) ;
-				alert("child " + JSON.stringify(child));
-				alert("parent " + JSON.stringify(node));
+				node = treeInstance.get_node(node.parent).orignal ;
 			}
 			
 			col = jQuery.map(columns, function(obj){
@@ -172,18 +180,18 @@ var DatabaseTree = (function(){
 						 	 })[0] ;
 						 	 
 			if(col == undefined){
-				node.children = [] ;
+				node.children = [];
 				columns.push(node);
+				index = columns.indexOf(node);
 			}
 			else {
-				if(child != undefined){
-					index = columns.indexOf(col);
-					columns[index].children.push(child);
-				}
+				index = columns.indexOf(col);
+			}
+	
+			if(child != undefined){
+				columns[index].children.push(child);
 			}
 		}
-		
-		alert(JSON.stringify(columns));
 		
 		return columns ;
 	}
@@ -194,6 +202,14 @@ var DatabaseTree = (function(){
 	
 	function getOriginalNode(id){
 		return treeInstance.get_node(id).original ;
+	}
+	
+	function checkNode(id){	
+		treeInstance.check_node(treeInstance.get_node(id)) ;
+	}
+	
+	function uncheckNode(id){	
+		treeInstance.uncheck_node(treeInstance.get_node(id)) ;
 	}
 	
 	function enableNode(node){

@@ -4,13 +4,13 @@
 		
 		<div class="selection-input">
 			<label>{{targetVarLabel}}</label>
-			<select ng-model="targetSelection" ng-options="opt as opt.text for opt in targetOptions" multiple> 		
+			<select ng-model="targetSelection" ng-change="targetSelectionChanged(targetSelection)" ng-options="opt as opt.text for opt in targetOptions" multiple> 		
 			</select>
 		</div>
 	
 		<div class="selection-input">
 			<label>{{groupVarLabel}}</label>
-			<select ng-model="groupSelection" ng-options="opt as opt.text for opt in groupOptions"> 
+			<select ng-model="groupSelection" ng-change="groupSelectionChanged(groupSelection)" ng-options="opt as opt.text for opt in groupOptions"> 
 			</select>
 		</div>
 
@@ -42,7 +42,7 @@
 		</div>
 		
 		<div class="text-input" ng-show="multipleDatesMode">
-			<textarea ng-model="multipleDates" rows="1" placeholder="{{placeholder}}"> </textarea>
+			<textarea ng-model="multipleDates" rows="2" placeholder="{{placeholder}}"> </textarea>
 		</div>
 		
 		<div class = "no-option">

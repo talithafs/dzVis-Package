@@ -107,6 +107,7 @@ var GoogleChartsBase = (function() {
 		if(currentColumns.length == 0){
 			
 			var checked = ref.databaseTree.getCheckedColumns() ;
+			//controlLevels(checked) ;
 		
 			if(checked.length != 0){
 					
@@ -160,6 +161,11 @@ var GoogleChartsBase = (function() {
 		else {
 			
 			node = ref.databaseTree.getColumn(node) ;
+			
+			/* gambiarra - ver como funciona o polimorfismo */
+			// var nodes = [] ;
+			// nodes.push(node) ;
+			// controlLevels(nodes) ;
 
 			var isRepeated = jQuery.map(currentColumns, function(obj){
 								if(obj.id === node.id){ return true ; } 
@@ -209,6 +215,12 @@ var GoogleChartsBase = (function() {
 			currentTimeVariable = ref.databaseTree.getOriginalNode(id) ;
 			callback(currentTimeVariable);
 		}
+	}
+	
+	function controlLevels(nodes){
+		
+		var index ;
+		
 	}
 	
 	// GoogleChartsBase public API

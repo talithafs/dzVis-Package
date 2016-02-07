@@ -18,6 +18,7 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	$scope.timeVar = base.DEFAULT.TIME ;
 	
 	$scope.targetSelection = [] ;
+	$scope.targetSelection.push($scope.targetOptions[0]) ;	
 	$scope.groupSelection = $scope.groupOptions[0] ;
 
 	// New features
@@ -37,16 +38,6 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	
 	$scope.$on("nodeChecked", function(e, node){
 		
-		// var callback = function(){
-// 		
-			// if($scope.timeVar.text == base.DEFAULT.TIME.text){
-				// findTimeVariable(addOption, node);
-			// }
-			// else {
-				// addOption(node);
-			// }
-		// };
-		
 		base.onNodeChecked(node, addOption) ;
 	});
 	
@@ -56,10 +47,11 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	});
 	
 	$scope.$on("$destroy", function(){
+		
         base.onDestroy();
     });
-	
-	$scope.selectMultipleDates = function(){
+    
+    $scope.selectMultipleDates = function(){
 		
 		$scope.multipleDatesMode = !$scope.multipleDatesMode ;
 		
@@ -70,11 +62,37 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 			$scope.selectMultipleDatesLabel = base.LABEL.MULTIPLE_DATES ;
 		}
 	};
-	
+    
+    $scope.targetSelectionChanged = function(value){
+    	
+    	$scope.targetSelection = value ;
+    	
+    	changeTarget();
+    };
+    
+    $scope.groupSelectionChanged = function(value){
+    	
+    	$scope.groupSelection = value ;
+    	
+    	changeGroup();
+    	
+    };
+
 	$scope.operationSelectionChanged = function(value){
 		
 		$scope.operationSelection = value ;
 	};
+	
+	function fillOptions(nodes, timeVar){
+
+		$scope.$apply(function(){
+			$scope.timeVar = timeVar ;
+		});
+		
+		for(index in nodes){
+			addOption(nodes[index]);
+		}
+	}
 	
 	
 	function addOption(node){
@@ -86,27 +104,44 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 		$scope.$apply(function(){
 			
 			if(node.categories.TARGET === true){
-				$scope.targetOptions.push(node);
+				
+				changeTarget();
+				
+				$scope.targetOptions.push(node);				
 				$scope.lineOptions.push(node);
 				$scope.targetSelection.push(node);
 				$scope.lineSelection = node ;
 			}
 			else if(node.categories.GROUP === true){
+				
 				$scope.groupOptions.push(node);
 				$scope.groupSelection = node ;
+				
+				changeGroup();
 			}
 		});
 	
 	}
 	
-	function fillOptions(nodes, timeVar){
-
-		$scope.$apply(function(){
-			$scope.timeVar = timeVar ;
-		});
+	function changeTarget(){
 		
-		for(index in nodes){
-			addOption(nodes[index]);
+		if($scope.targetSelection[0] == $scope.targetOptions[0]){
+			$scope.targetSelection.splice(0,1);
+		}
+		
+		if($scope.groupSelection != $scope.groupSelection[0]){
+			$scope.groupSelection = $scope.groupOptions[0] ;
+		}
+	}
+	
+	function changeGroup(){
+		
+		if($scope.groupSelection != $scope.groupOptions[0]){
+					
+			if($scope.targetSelection[0] != $scope.targetOptions[0]){
+				$scope.targetSelection = [] ;
+				$scope.targetSelection.push($scope.targetOptions[0]) ;
+			}
 		}
 	}
 	
