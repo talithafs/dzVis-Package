@@ -26,8 +26,8 @@ application.controller("DetailsController",["$scope", "databasetree", "connectio
 
 			$scope.table = currentTable.text ;
 			$scope.column = currentAttr.text ;
-			$scope.tableDescription = currentTable.description ;
-			$scope.columnDescription = currentAttr.description ;
+			$scope.tableDescription = currentTable.original.description ;
+			$scope.columnDescription = currentAttr.original.description ;
 			$scope.showDefault = false ;
         }
 		else {

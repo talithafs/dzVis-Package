@@ -88,7 +88,7 @@ var DatabaseTree = (function(){
 		
 		// If the last selected node is an atributte, return its original
 		if(item.type == "attr") { 
-			return item.original ;
+			return item ;
 		}
 
 		// If the last selected node is a leaf, meaning it's not an attribute, but a level, get its parent through its id  
@@ -102,17 +102,18 @@ var DatabaseTree = (function(){
 		
 		var children = [] ;
 		
-		for(index in node.children){
-			child = treeInstance.get_node(node.children[index]);
+		for(index in node.children_d){
+			child = treeInstance.get_node(node.children_d[index]);
+
 			if(child.state.checked){
 				children.push(child);
 			}
 		}
 		
-		node.original.children = children ;
-
-		// Return the original node
-		return node.original ;
+		node.children = children ;
+		
+		// Return node
+		return node ;
 	};
 	
 	function getLastTable(){
@@ -137,7 +138,7 @@ var DatabaseTree = (function(){
 		
 		// If 'item' is already a root node, return its original
 		if(item.type != "attr" && item.type != "lvl"){
-			return item.original ;
+			return item ;
 		} 
 
 		// Get 'item's parent. If it is an attribute, get its parent, a table node. 
@@ -153,7 +154,7 @@ var DatabaseTree = (function(){
 		}
 		
 		// Return the original node
-		return node.original ;
+		return node ;
 
 	} ;
 	
@@ -161,38 +162,22 @@ var DatabaseTree = (function(){
 		
 		var checked = getCheckedNodes();
 		var columns = [] ;
-		var node = undefined ;
-		var child = undefined ;
-		var col = undefined ;
-		var id ;
 		var index ;
+		var col = undefined ;
+
 		
 		for(index in checked){
 			node = checked[index] ;
 			
-			if(node.type == "lvl"){
-				child = node ;
-				node = treeInstance.get_node(node.parent).orignal ;
-			}
-			
 			col = jQuery.map(columns, function(obj){
-									if(obj.id === node.id){ return obj ; } 
-						 	 })[0] ;
-						 	 
+					 if(obj.id === node.id){ return obj ; } 
+				  })[0] ;
+ 						 	 
 			if(col == undefined){
-				node.children = [];
-				columns.push(node);
-				index = columns.indexOf(node);
-			}
-			else {
-				index = columns.indexOf(col);
-			}
-	
-			if(child != undefined){
-				columns[index].children.push(child);
+				columns.push(getColumn(node));
 			}
 		}
-		
+
 		return columns ;
 	}
 	
@@ -231,22 +216,29 @@ var DatabaseTree = (function(){
 		treeInstance.disable_node(node);
 	}
 	
-	function enableCheckbox(node){
+	function enableCheckbox(node, check){
 		
 		if(typeof node === "string"){
 			node = getTreeNode(node);
 		}
 		
 		treeInstance.enable_checkbox(node);
+		
+		if(check){
+			treeInstance.check_node(node);
+		}
 	}
 	
-	function disableCheckbox(node){
+	function disableCheckbox(node, uncheck){
 		
 		if(typeof node === "string"){
 			node = getTreeNode(node);
 		}
 		
-		treeInstance.uncheck_node(node);
+		if(uncheck){
+			treeInstance.uncheck_node(node);
+		}
+		
 		treeInstance.disable_checkbox(node);
 	}
 	
@@ -300,12 +292,12 @@ var DatabaseTree = (function(){
 		disableNode.call(this, node);
 	};
 	
-	DatabaseTree.prototype.enableCheckbox = function(node){ 
-		enableCheckbox.call(this, node);
+	DatabaseTree.prototype.enableCheckbox = function(node, check){ 
+		enableCheckbox.call(this, node, check);
 	};
 	
-	DatabaseTree.prototype.disableCheckbox = function(node){ 
-		disableCheckbox.call(this, node);
+	DatabaseTree.prototype.disableCheckbox = function(node, uncheck){ 
+		disableCheckbox.call(this, node, uncheck);
 	};
 	
 	DatabaseTree.prototype.search = function(text){ 

@@ -138,13 +138,14 @@ hr {
 	 * - #pull-search.height 
 	 * - #pull-search.margin-bottom 
 	 * - #pull-search.border-bottom 
-	 * - #details.border-top-width 
-	 *  = 99.8vh - 53vh - 2*39px - 30px - 10px - 2px - 4px */
+	 * - #details.border-top-width
+	 * - this.border-bottom-width 
+	 *  = 99.8vh - 53vh - 2*39px - 30px - 10px - 2px - 4px - 4px */
 
 #details-field {
 	padding: 0 8px 0 8px ;
 	overflow-y: auto ;
-	height: calc(46.6vh - 124px) ; 
+	height: calc(46.6vh - 128px) ; 
 	word-wrap: break-word;
 }
 

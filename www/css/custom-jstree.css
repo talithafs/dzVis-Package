@@ -40,6 +40,12 @@
 	background-image: url("../img/checkbox-partial.png");
 }
 
+.jstree-default.jstree-checkbox-selection .jstree-clicked > .jstree-checkbox,
+.jstree-default .jstree-checked > .jstree-checkbox-disabled {
+  background-image: url("../img/checkbox-partial.png");
+  background-position: center;
+}
+
 .jstree-default .jstree-disabled > .jstree-checkbox:hover {
   background-image: url("../img/checkbox-unchecked.png");
 }

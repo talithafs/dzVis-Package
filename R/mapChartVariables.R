@@ -1,6 +1,6 @@
 #' @title Map chart variables
 #'
-#' @description Maps which categories chart variables can be assigned to.
+#' @description Maps which categories chart variables can be assigned to. Minimum and maximum values are also provided when applicable.
 #'
 #' @param table A \code{character} The name of a dzVis database table containing the variables - the columns - to be analysed.
 #' @param variables A \code{character vector} The name(s) of the column(s).
@@ -12,7 +12,7 @@
 #'    \item \code{TARGET} Numeric variables. They are typcally represented on the axis of the chart.
 #'    \item \code{GROUP} Character variables. Represent categories by which the \code{TARGET} variables are classified.
 #'    \item \code{TIME} Date variable. Indicates when the \code{TARGET} were observed.
-#'    \item \code{KEY} Variables of any type. When combined, they represent the primary key - the id variable - of the table.
+#'    \item \code{KEY} Variables of any type. When combined, they represent the primary key - the id - of the table.
 #' }
 #'
 #' @section Validation rules:

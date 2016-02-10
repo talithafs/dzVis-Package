@@ -23,6 +23,7 @@ Maps which categories chart variables can be assigned to.
    \item \code{TARGET} Numeric variables. They are typcally represented on the axis of the chart.
    \item \code{GROUP} Character variables. Represent categories by which the \code{TARGET} variables are classified.
    \item \code{TIME} Date variable. Indicates when the \code{TARGET} were observed.
+   \item \code{KEY} Variables of any type. When combined, they represent the primary key - the id variable - of the table.
 }
 }
 
@@ -33,6 +34,7 @@ The variables are checked according to the rules estabilished in validation func
    \item targetVar: \code{\link{validateTargetVariables}}
    \item groupVar: \code{\link{validateGroupVariable}}
    \item timeVar: \code{\link{validateTimeVariable}}
+   \item key: \code{\link{validateKeys}}
 }
 }
 

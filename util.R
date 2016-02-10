@@ -1,6 +1,9 @@
+.WAMP_DIR = "C:\\Users\\Talitha\\Dropbox\\Economia\\Projeto Final\\R Package\\dzVis\\www\\"
+.PACKAGE_DIR = "C:\\Users\\Talitha\\Documents\\R\\win-library\\3.2\\dzVis\\"
+
 updateFrontEnd <- function(run = TRUE){
-  wamp <- "C:\\Users\\Talitha\\Dropbox\\Economia\\Projeto Final\\R Package\\dzVis\\www\\"
-  dzvis <- "C:\\Users\\Talitha\\Documents\\R\\win-library\\3.2\\dzVis\\"
+  wamp <- "C:\\Users\\Alex\\Desktop\\Projetos\\Projeto Final\\R Package\\www\\"
+  dzvis <- "C:\\Users\\Alex\\Documents\\R\\win-library\\3.2\\dzVis\\"
   www <- paste(dzvis, "\\www", sep="")
 
   if(file.exists(www)) {
@@ -15,8 +18,8 @@ updateFrontEnd <- function(run = TRUE){
 }
 
 rebuild <- function(run = TRUE, install = TRUE, doc = TRUE){
-  wamp <- "C:\\Users\\Talitha\\Dropbox\\Economia\\Projeto Final\\R Package\\dzVis\\www\\"
-  dzvis <- "C:\\Users\\Talitha\\Documents\\R\\win-library\\3.2\\dzVis\\"
+  wamp <- "C:\\Users\\Alex\\Desktop\\Projetos\\Projeto Final\\R Package\\www\\"
+  dzvis <- "C:\\Users\\Alex\\Documents\\R\\win-library\\3.2\\dzVis\\"
   www <- paste(dzvis, "\\www", sep="")
 
   if(file.exists(www)) {
@@ -46,7 +49,7 @@ rebuild <- function(run = TRUE, install = TRUE, doc = TRUE){
 run <- function(){
   require(opencpu)
   if(is.null(opencpu$url())){
-    opnecpu$start()
+    opencpu$start()
   }
   else{
     opencpu$restart()

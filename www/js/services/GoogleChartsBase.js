@@ -19,6 +19,8 @@ var GoogleChartsBase = (function() {
 	var currentColumns = [] ;
 	var currentTimeVariable = undefined ;
 	var categories = [] ;
+	var filters = [] ;
+	var keys ;
 	
 	// Protected constants: Fields default values
 	var DEFAULT = {
@@ -30,6 +32,9 @@ var GoogleChartsBase = (function() {
 		},
 		get TIME() {
 			return {id : null, name: null, text : "Nenhuma"} ;
+		},
+		get NO_VALUE(){
+			return "Nenhum valor selecionado" ;
 		}
 	};
 	
@@ -78,6 +83,9 @@ var GoogleChartsBase = (function() {
 		},
 		get columns(){
 			return currentColumns ;
+		},
+		get filters(){
+			return filters ;
 		}
 	};
 	
@@ -101,20 +109,20 @@ var GoogleChartsBase = (function() {
 	function onLoad(callback){
 		
 		var onLoadFinish = function(timeVar){
+								updateFilters();
 						   		callback(currentColumns, timeVar);
 						   };
 		
 		if(currentColumns.length == 0){
 			
 			var checked = ref.databaseTree.getCheckedColumns() ;
-			//controlLevels(checked) ;
 		
 			if(checked.length != 0){
 					
-				currentTable = ref.databaseTree.getTable(checked[0]);	
+				currentTable = ref.databaseTree.getTable(checked[0]);
 				
 				for(index in checked){
-					currentColumns.push(checked[index].original);
+					currentColumns.push(checked[index]);
 				}	
 	
 				var bindCategories = function(data){
@@ -124,10 +132,10 @@ var GoogleChartsBase = (function() {
 					for(index in currentColumns){
 						
 						var info  = jQuery.map(data, function(obj){
-										if(obj.column === currentColumns[index].name){ return obj ; } 
-									});
+										if(obj.column === currentColumns[index].original.name){ return obj ; } 
+									})[0];
 						
-						currentColumns[index].categories = info[0];
+						currentColumns[index].categories = info ;
 					}
 					
 					findTimeVariable(onLoadFinish);
@@ -153,6 +161,7 @@ var GoogleChartsBase = (function() {
 			currentTimeVariable = undefined ;
 			currentColumns = [] ;
 			categories = [];
+			filters = [] ;
 		}
 		
 		if(categories.length == 0){
@@ -160,29 +169,48 @@ var GoogleChartsBase = (function() {
 		}
 		else {
 			
-			node = ref.databaseTree.getColumn(node) ;
+			var info ;
+			var column ;
 			
-			/* gambiarra - ver como funciona o polimorfismo */
-			// var nodes = [] ;
-			// nodes.push(node) ;
-			// controlLevels(nodes) ;
+			node = ref.databaseTree.getColumn(node) ;
 
-			var isRepeated = jQuery.map(currentColumns, function(obj){
-								if(obj.id === node.id){ return true ; } 
+			column = jQuery.map(currentColumns, function(obj){
+								if(obj.id === node.id){ return obj ; } 
 							 })[0] ;
 							 
-			if(!isRepeated){
+			if(column == undefined){
 				
-				var info = jQuery.map(categories, function(obj){
-							if(obj.column === node.name){ return obj ; } 
-						});
+				info = jQuery.map(categories, function(obj){
+							if(obj.column === node.original.name){ return obj ; } 
+						})[0];
+						
+			}
+			else {
+				
+				var index = currentColumns.indexOf(column);
+				
+				info = currentColumns[index].categories ;
+				currentColumns.splice(index, 1);
+			}
 			
-				node.categories = info[0] ;
-				currentColumns.push(node);
-				callback(node);
-			} 
+			updateFilters() ;
+			node.categories = info ;
+			currentColumns.push(node);
+			callback(node);
 		}
-	};
+	}
+	
+	function onNodeUnchecked(node, callback){
+		
+		var index = currentColumns.indexOf(node);
+		currentColumns.splice(index,1);
+		
+		if(currentColumns.length != 0){
+			updateFilters();	
+		}
+		
+		callback(node);
+	}
 	
 	function onDestroy(){
 		
@@ -193,11 +221,36 @@ var GoogleChartsBase = (function() {
 			categories = [] ;
 
 			if(currentTimeVariable != undefined){
-				this.databaseTree.enableCheckbox(currentTimeVariable.id);
+				this.databaseTree.enableCheckbox(currentTimeVariable.id, false);
 			}
 			
 			currentTimeVariable = undefined ;
 		}
+	}
+	
+	function updateFilters(){
+		
+		if(filters.length == 0){
+			
+			keys = jQuery.map(categories, function(obj){
+								if(obj.KEY === true){ return obj.column ; } 
+					});
+		}
+		else {
+			filters = [] ;
+		}
+		
+		for(index in keys){
+			
+			var id = currentTable.id + "." + keys[index] ;
+			
+			if(id != currentTimeVariable.id){
+				
+				var node = ref.databaseTree.getTreeNode(id);
+				filters.push(ref.databaseTree.getColumn(node));
+			}	
+		}
+
 	}
 	
 	
@@ -210,17 +263,37 @@ var GoogleChartsBase = (function() {
 						});	
 				
 			var id = currentTable.id + "." + timeVar ;
-			ref.databaseTree.disableCheckbox(id) ;
+			ref.databaseTree.disableCheckbox(id, true) ;
 				
 			currentTimeVariable = ref.databaseTree.getOriginalNode(id) ;
 			callback(currentTimeVariable);
 		}
 	}
 	
-	function controlLevels(nodes){
+	function controlFilters(activeFilters){
 		
-		var index ;
+		var index, child ;
 		
+		for(index in filters){
+			filter = filters[index];
+			
+			var active = jQuery.map(activeFilters, function(obj){
+									if(obj.id === filter.id){ return obj ; } 
+								})[0];
+							
+			for(child in filter.children){
+				
+				if(active != undefined){
+					
+					if(filter.children[child].text == active.value){
+						ref.databaseTree.disableCheckbox(filter.children[child].id, false);
+					}
+				}
+				else{
+					ref.databaseTree.enableCheckbox(filter.children[child].id, false);
+				}
+			}			
+		}
 	}
 	
 	// GoogleChartsBase public API
@@ -237,12 +310,20 @@ var GoogleChartsBase = (function() {
 		onNodeChecked.call(this,node,callback); 
 	};
 	
+	GoogleChartsBase.prototype.onNodeUnchecked = function(node, callback){ 
+		onNodeUnchecked.call(this,node,callback); 
+	};
+	
 	GoogleChartsBase.prototype.onDestroy = function(){
 		onDestroy.call(this);
 	};
 	
 	GoogleChartsBase.prototype.findTimeVariable = function(callback){
 		findTimeVariable.call(this,callback); 
+	};
+	
+	GoogleChartsBase.prototype.controlFilters = function(activeFilters){
+		controlFilters.call(this,activeFilters); 
 	};
 	
 	
