@@ -56,7 +56,7 @@
 		<div class="radio-input">
 			<label>{{operationLabel}}</label>
 			<div class="inline" ng-repeat="operation in operations">
-				<input name="ops" type="radio" ng-model="operationSelection" ng-change="operationSelecetionChanged(operationSelection)" value="{{operation.value}}">{{operation.name}}
+				<input name="ops" type="radio" ng-model="operationSelection" ng-change="operationSelectionChanged(operationSelection)" value="{{operation.value}}">{{operation.name}}
 			</div>
 		</div>
 		
@@ -65,9 +65,9 @@
 			<div class="table-scroll">
 				<table ng-repeat="filter in filters">
 					<tr ng-model="filter">
-						<td>{{filter.column}}</td>
+						<td>{{filter.column.text}}</td>
 						<td>----</td>
-						<td>{{filter.value}}</td>
+						<td>{{filter.value.text}}</td>
 					</tr>
 				</table>
 			</div>

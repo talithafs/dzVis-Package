@@ -169,41 +169,60 @@ var GoogleChartsBase = (function() {
 		}
 		else {
 			
-			var info ;
-			var column ;
+			var info, column, id, index;
+			var index = -1 ;
+			var isRepeated = false ;
 			
-			node = ref.databaseTree.getColumn(node) ;
+			id = node.id ;
+			
+			if(node.type == "lvl"){
+				id = node.parent ;
+			}
 
 			column = jQuery.map(currentColumns, function(obj){
-								if(obj.id === node.id){ return obj ; } 
-							 })[0] ;
-							 
-			if(column == undefined){
+						if(obj.id === id){ return obj ; } 
+			})[0] ;
+			
+			if(column != undefined){
+				isRepeated = true ;
 				
-				info = jQuery.map(categories, function(obj){
-							if(obj.column === node.original.name){ return obj ; } 
-						})[0];
-						
-			}
-			else {
-				
-				var index = currentColumns.indexOf(column);
-				
+				index = currentColumns.indexOf(column);				
 				info = currentColumns[index].categories ;
 				currentColumns.splice(index, 1);
 			}
 			
-			updateFilters() ;
-			node.categories = info ;
-			currentColumns.push(node);
-			callback(node);
+			column = ref.databaseTree.getColumn(node);
+							 
+			if(!isRepeated){
+				
+				info = jQuery.map(categories, function(obj){
+							if(obj.column === column.original.name){ return obj ; } 
+						})[0];
+			}
+			
+			column.categories = info ;
+			currentColumns.push(column);
+			
+			updateFilters();
+			
+			if(!isRepeated){
+				callback(column);
+			}
+			else {
+				callback(node);
+			}			
 		}
 	}
 	
 	function onNodeUnchecked(node, callback){
 		
-		var index = currentColumns.indexOf(node);
-		currentColumns.splice(index,1);
+		var index ;
+		
+		if(node.type == "attr"){
+			
+			index = currentColumns.indexOf(node);
+			currentColumns.splice(index,1);
+		}
 		
 		if(currentColumns.length != 0){
 			updateFilters();	
@@ -230,11 +249,14 @@ var GoogleChartsBase = (function() {
 	
 	function updateFilters(){
 		
+		var index, node, column, child ;
+		
 		if(filters.length == 0){
 			
 			keys = jQuery.map(categories, function(obj){
-								if(obj.KEY === true){ return obj.column ; } 
-					});
+				
+				if(obj.KEY === true){ return obj.column ; } 
+			});
 		}
 		else {
 			filters = [] ;
@@ -246,13 +268,63 @@ var GoogleChartsBase = (function() {
 			
 			if(id != currentTimeVariable.id){
 				
-				var node = ref.databaseTree.getTreeNode(id);
-				filters.push(ref.databaseTree.getColumn(node));
+				node = ref.databaseTree.getTreeNode(id);
+				column = ref.databaseTree.getColumn(node);
+				child = column.levels[column.levels.length - 1] ;
+								
+				if(child == undefined){
+					child = {};
+					child.id = null ;
+					child.text = DEFAULT.NO_VALUE ;
+				}
+				
+				alert(child.text + " " + column.levels.length);
+				
+				filters.push({
+					column : column,
+					value : child 
+				});
 			}	
 		}
-
 	}
 	
+	function controlFilters(activeFilters){
+		
+		var pIndex, cIndex, active, child ;
+		
+		for(pIndex in filters){
+			filter = filters[pIndex];
+			
+			var active = jQuery.map(activeFilters, function(obj){
+				if(obj.column.id === filter.column.id) return obj ;
+			})[0];
+			
+			
+			if(active != undefined && active.value.id != null){
+				
+				for(cIndex in active.column.levels){
+					child = active.column.levels[cIndex];
+					
+					if(child.id != active.value.id){
+						ref.databaseTree.disableCheckbox(child.id, false);
+					}
+					else {
+						ref.databaseTree.enableCheckbox(child.id, false);
+					}
+				}
+			}
+			else {
+				
+				for(cIndex in filter.column.levels){
+					child = filter.column.levels[cIndex];
+					
+					if(child.id != null){
+						ref.databaseTree.enableCheckbox(child.id, false);
+					}					
+				}
+			}
+		}
+	}
 	
 	function findTimeVariable(callback){
 
@@ -270,31 +342,6 @@ var GoogleChartsBase = (function() {
 		}
 	}
 	
-	function controlFilters(activeFilters){
-		
-		var index, child ;
-		
-		for(index in filters){
-			filter = filters[index];
-			
-			var active = jQuery.map(activeFilters, function(obj){
-									if(obj.id === filter.id){ return obj ; } 
-								})[0];
-							
-			for(child in filter.children){
-				
-				if(active != undefined){
-					
-					if(filter.children[child].text == active.value){
-						ref.databaseTree.disableCheckbox(filter.children[child].id, false);
-					}
-				}
-				else{
-					ref.databaseTree.enableCheckbox(filter.children[child].id, false);
-				}
-			}			
-		}
-	}
 	
 	// GoogleChartsBase public API
 	GoogleChartsBase.prototype.DEFAULT = DEFAULT ;

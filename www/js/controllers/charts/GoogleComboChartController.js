@@ -103,7 +103,10 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 		
 		$scope.$apply(function(){
 			
-			if(node.categories.TARGET === true){
+			if(node.type === "lvl"){
+				updateFilters();
+			}
+			else if(node.categories.TARGET === true){
 				
 				$scope.targetOptions.push(node);				
 				$scope.lineOptions.push(node);
@@ -141,7 +144,10 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 			
 		$scope.$apply(function(){
 			
-			if(node.categories.TARGET === true){
+			if(node.type === "lvl"){
+				updateFilters();
+			}
+			else if(node.categories.TARGET === true){
 
 				index = $scope.targetOptions.indexOf(node);
 				$scope.targetOptions.splice(index,1);
@@ -168,22 +174,26 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 			}
 			else if(node.categories.GROUP === true){
 				
-				updateFilters();
+				var index = jQuery.map($scope.groupOptions, function(obj){
+					if(obj.id === node.id){ return $scope.groupOptions.indexOf(obj) ; } 
+				})[0];
 				
-				// var group = jQuery.map($scope.groupOptions, function(obj){
-								// if(obj.id === node.id){ return obj ; } 
-							// })[0];
-// 							
-				// if(group == undefined){
-					// $scope.groupOptions.push(node);
-					// $scope.groupSelection = node ;
-				// }
-				// else {
-					// $scope.groupSelection = group ;
-				// }
 				
-				//changeGroup();
+				if(index != undefined){
+					$scope.groupOptions.splice(index,1);
+					dim = $scope.groupOptions.length ;
+					
+					if(dim != 0){
+						$scope.groupSelection = $scope.groupOptions[dim-1] ;
+					}
+					else {
+						$scope.groupSelection = base.DEFAULT.GROUP ;
+					}
+				}
+				
+				changeGroup();
 			}
+
 		});
 	}
 	
@@ -229,28 +239,20 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	}
 	
 	function updateFilters(){
-		
-		var index, column, value, filter ;
-		var filters = base.properties.filters;
-		
-		$scope.filters = [] ;
+	
+		var filters = base.properties.filters ;
+		var index ;
 
-		for(index in filters){
-			filter = filters[index] ;
-			
-			if(filter.id != $scope.groupSelection.id){
-				
-				column = filter.text ;
-				value = filter.children[filter.children.length - 1].text ;
-				
-				if(value == undefined){
-					value = base.DEFAULT.NO_VALUE ;
-				}
-				
-				$scope.filters.push({column : column, value : value, id : filter.id});
-			}	 
-		}
+		$scope.filters = [] ;
 		
+		for(index in filters){
+			
+			if(filters[index].column.id != $scope.groupSelection.id){
+				
+				$scope.filters.push(filters[index]);
+			}
+		}
+	
 		base.controlFilters($scope.filters);
 	}
 	 	

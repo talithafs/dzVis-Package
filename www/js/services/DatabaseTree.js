@@ -80,37 +80,43 @@ var DatabaseTree = (function(){
     
     function getColumn(item) {
 		var node = undefined ;
+		var index ;
 
 		// Return an error if 'item' is empty
 		if(item == undefined){
 			return "Error: parameter is empty." ;
 		}
-		
-		// If the last selected node is an atributte, return its original
-		if(item.type == "attr") { 
-			return item ;
-		}
 
-		// If the last selected node is a leaf, meaning it's not an attribute, but a level, get its parent through its id  
-		// Note that, by design, a table node is never the last selected node
-		node = treeInstance.get_node(item.parent);
-		
-		// If 'node' is undefined, there is something wrong with the tree. Return an error.
-		if(node == undefined){
-			return "Error: Leaf node has no parent.";
-		}
-		
-		var children = [] ;
-		
-		for(index in node.children_d){
-			child = treeInstance.get_node(node.children_d[index]);
-
-			if(child.state.checked){
-				children.push(child);
+		// If the last selected node is a leaf, meaning it's not an attribute, but a level, get its parent through its id  		
+		if(item.type == "lvl"){
+			node = treeInstance.get_node(item.parent);
+			
+			// If 'node' is undefined, there is something wrong with the tree. Return an error.
+			if(node == undefined){
+				return "Error: Leaf node has no parent.";
 			}
 		}
+		else {
+			node = item ;
+		}
 		
-		node.children = children ;
+		// Get checked nodes and find 'node's checked children, in the order they were checked
+		// Only the state of the node indicates if it's really checked. The jstree built-in list of checked nodes may not have been updated yet (i.e. when calling getColumn() inside a jstree.node_checked or jstree.node_unchecked event handler), but it preserves the order in which the nodes were checked.
+		var checked = getCheckedNodes();
+		
+		var levels = jQuery.map(checked, function(obj){
+				
+				if(obj.parent === node.id) return obj ;
+		});
+		
+		// Create a list of child nodes
+		node.levels = [] ;
+		
+		for(index in levels){
+			if(levels[index].state.checked === true){
+				node.levels.push(levels[index]);
+			}
+		}
 		
 		// Return node
 		return node ;

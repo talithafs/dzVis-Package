@@ -279,8 +279,12 @@ hr {
 	padding: 0 3px 0 3px ;
 }
 
+.list-input table {
+	white-space: nowrap;
+}
+
 .table-scroll {
-	overflow-y: auto ;
+	overflow: auto ;
 	height: 70px;
 	border: 1px solid #d3d3d3  ;
 	border-top: 1px solid gray ;

@@ -1,9 +1,12 @@
 .WAMP_DIR = "C:\\Users\\Talitha\\Dropbox\\Economia\\Projeto Final\\R Package\\dzVis\\www\\"
 .PACKAGE_DIR = "C:\\Users\\Talitha\\Documents\\R\\win-library\\3.2\\dzVis\\"
 
+.WAMP_DIR_ALT =  "C:\\Users\\Alex\\Desktop\\Projetos\\Projeto Final\\R Package\\www\\"
+.PACKAGE_DIR_ALT = "C:\\Users\\Alex\\Documents\\R\\win-library\\3.2\\dzVis\\"
+
 updateFrontEnd <- function(run = TRUE){
-  wamp <- "C:\\Users\\Alex\\Desktop\\Projetos\\Projeto Final\\R Package\\www\\"
-  dzvis <- "C:\\Users\\Alex\\Documents\\R\\win-library\\3.2\\dzVis\\"
+  wamp <- .WAMP_DIR
+  dzvis <- .PACKAGE_DIR
   www <- paste(dzvis, "\\www", sep="")
 
   if(file.exists(www)) {
@@ -18,8 +21,8 @@ updateFrontEnd <- function(run = TRUE){
 }
 
 rebuild <- function(run = TRUE, install = TRUE, doc = TRUE){
-  wamp <- "C:\\Users\\Alex\\Desktop\\Projetos\\Projeto Final\\R Package\\www\\"
-  dzvis <- "C:\\Users\\Alex\\Documents\\R\\win-library\\3.2\\dzVis\\"
+  wamp <- .WAMP_DIR
+  dzvis <- .PACKAGE_DIR
   www <- paste(dzvis, "\\www", sep="")
 
   if(file.exists(www)) {
