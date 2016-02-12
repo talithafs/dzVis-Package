@@ -4,7 +4,7 @@
 \alias{pasteLimitRestrictions}
 \title{Paste inequality restrictions to a SQL query}
 \usage{
-pasteLimitRestrictions(query, restrictions, whereClause = TRUE)
+pasteLimitRestrictions(query, restrictions, whereClause = FALSE)
 }
 \arguments{
 \item{query}{A \code{character} value. Initial value of the query string. Restrictions will be pasted after it.}

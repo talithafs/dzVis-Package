@@ -5,7 +5,7 @@
 \title{Import data from the dzVis database}
 \usage{
 importData(table, columns, restrictions = NULL, limits = NULL,
-  connection = NULL)
+  alternatives = NULL, connection = NULL)
 }
 \arguments{
 \item{table}{A \code{character}. The name of the table.}
@@ -15,6 +15,8 @@ importData(table, columns, restrictions = NULL, limits = NULL,
 \item{restrictions}{A n x 2 \code{matrix}. Equality restrictions. The first column must contain the names of the columns. The second, its values.}
 
 \item{limits}{A n x 3 \code{matrix}. Inequality restrictions. See the details section for important information.}
+
+\item{alternatives}{A n x 2 \code{matrix}. Alternative values of a column (joined by 'or' conditions in a SQL query). The first column must contain the names of the columns. The second, its values.}
 
 \item{connection}{A \code{DBI} Connection object if a new connection should not be estabilished.}
 }

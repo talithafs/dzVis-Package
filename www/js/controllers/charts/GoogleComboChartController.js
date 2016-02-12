@@ -52,6 +52,17 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
         base.onDestroy();
     });
     
+    $scope.$on("createChart", function(){
+    	
+    	var callback = function(parameters, filepath){
+    		
+    		alert(JSON.stringify(parameters));
+    		alert(filepath);
+    	};
+    	    	
+    	connection.createComboChart("chart.html", "", "","", "", "", "", [], [], callback);
+    });
+    
     $scope.selectMultipleDates = function(){
 		
 		$scope.multipleDatesMode = !$scope.multipleDatesMode ;
@@ -103,10 +114,7 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 		
 		$scope.$apply(function(){
 			
-			if(node.type === "lvl"){
-				updateFilters();
-			}
-			else if(node.categories.TARGET === true){
+			if(node.categories.TARGET === true){
 				
 				$scope.targetOptions.push(node);				
 				$scope.lineOptions.push(node);
@@ -140,14 +148,11 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	
 	function removeOption(node){
 		
-		var index, dim ;
+		var index, dim, group ;
 			
 		$scope.$apply(function(){
 			
-			if(node.type === "lvl"){
-				updateFilters();
-			}
-			else if(node.categories.TARGET === true){
+			if(node.categories.TARGET === true){
 
 				index = $scope.targetOptions.indexOf(node);
 				$scope.targetOptions.splice(index,1);
@@ -174,24 +179,32 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 			}
 			else if(node.categories.GROUP === true){
 				
-				var index = jQuery.map($scope.groupOptions, function(obj){
-					if(obj.id === node.id){ return $scope.groupOptions.indexOf(obj) ; } 
-				})[0];
+				if(node.levels != undefined && node.levels.length != 0){
+					updateFilters();
+				}
+				else {
+					
+					group = jQuery.map($scope.groupOptions, function(obj){
+						if(obj.id == node.id) return obj;
+					})[0];
 				
+					index = $scope.groupOptions.indexOf(group);
 				
-				if(index != undefined){
+					if(index != -1){
+					
 					$scope.groupOptions.splice(index,1);
 					dim = $scope.groupOptions.length ;
 					
-					if(dim != 0){
-						$scope.groupSelection = $scope.groupOptions[dim-1] ;
+						if(dim != 0){
+							$scope.groupSelection = $scope.groupOptions[dim-1] ;
+						}
+						else {
+							$scope.groupSelection = base.DEFAULT.GROUP ;
+						}
 					}
-					else {
-						$scope.groupSelection = base.DEFAULT.GROUP ;
-					}
-				}
 				
-				changeGroup();
+					changeGroup();
+				}
 			}
 
 		});
@@ -251,6 +264,7 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 				
 				$scope.filters.push(filters[index]);
 			}
+
 		}
 	
 		base.controlFilters($scope.filters);

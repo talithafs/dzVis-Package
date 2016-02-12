@@ -29,4 +29,8 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
 		$scope.chartListVisible = true ;
 	};
 	
+	$scope.createChart = function(){
+		$scope.$broadcast("createChart", $state.current.name);
+	};
+	
 }]);

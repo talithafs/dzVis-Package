@@ -26,9 +26,9 @@
 #'
 #' @export
 
-mapChartVariables <- function(table, variables, restrictions = NULL){
+mapChartVariables <- function(table, variables){
 
-  data <- importData(table, variables, restrictions = restrictions)
+  data <- importData(table, variables)
   nrows <- ncol(data)
 
   categories <- as.data.frame(matrix(nrow = nrows, ncol = 5))
@@ -40,14 +40,14 @@ mapChartVariables <- function(table, variables, restrictions = NULL){
     categories[row,"column"] <- colName
 
     if(validateTimeVariable(data, colName) == .VALID){
-        categories[row,.TIME] <- TRUE
+      categories[row,.TIME] <- TRUE
     }
     else {
       categories[row,.TIME] <- FALSE
     }
 
     if(validateTargetVariables(data, colName) == .VALID){
-        categories[row,.TARGET] <- TRUE
+      categories[row,.TARGET] <- TRUE
     }
     else {
       categories[row,.TARGET] <- FALSE
@@ -65,6 +65,17 @@ mapChartVariables <- function(table, variables, restrictions = NULL){
     }
     else {
       categories[row,.KEY] <- FALSE
+    }
+
+    if(categories[row,.TARGET] || categories[row,.TIME]){
+
+      limits <- getLimits(table,colName)
+      categories[row,.MIN] <- limits[,.MIN]
+      categories[row,.MAX] <- limits[,.MAX]
+    }
+    else {
+      categories[row,.MIN] <- NA
+      categories[row,.MAX] <- NA
     }
 
   }

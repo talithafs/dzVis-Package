@@ -4,8 +4,9 @@
 \alias{createComboChart}
 \title{Create a Google Combo Chart}
 \usage{
-createComboChart(filename, table, targetVar, groupVar, timeVar, min = NULL,
-  max = NULL, restrictions = NULL)
+createComboChart(filename, table, targetVar, groupVar, timeVar, min = NA,
+  max = NA, lineVar = NULL, operation = NULL, restrictions = NULL,
+  alternatives = NULL)
 }
 \arguments{
 \item{filename}{A \code{character}. The name of the .html file where the chart should be printed. The extension (.html) is not needed.}
@@ -23,6 +24,8 @@ createComboChart(filename, table, targetVar, groupVar, timeVar, min = NULL,
 \item{max}{A \code{numeric} value or a \code{date string} in the format 'yyyy-mm-dd'. Upper bound for the \code{timeVar}}
 
 \item{restrictions}{A n x 2 \code{matrix}. The n equality restrictions that make timeVar and groupVar values unique when combined.}
+
+\item{alternatives}{A n x 2 \code{matrix}. Alternative values of a column (joined by 'or' conditions in a SQL query). The first column must contain the names of the columns. The second, its values.}
 }
 \value{
 A \code{character}. The constant \code{.SUCCESS} if the chart was successfully created.
@@ -35,10 +38,13 @@ Creates a Combo Chart using the googleVis R package
 
 The parameters are checked according to the rules estabilished in validation functions and in the following order:
 \enumerate{
-   \item min, max, timeVar: \code{\link{validateLimits}}
-   \item timeVar, groupVar, restrictions: \code{\link{validateKeys}}
-   \item timeVar, groupVar, targetVar, restrictions: \code{\link{validateConsistency}}
+   \item targetVar, groupVar, timeVar, min, max, restrictions: \code{\link{validateGoogleChartParameters}}
+   \item lineVar: \code{\link{validateTargetVariables}} and \code{\link{validateConsistency}}
 }
+}
+\examples{
+createComboChart("chart","pea_por_idade","percentual_total", "grupo_idade","mes","2010-01-01","2010-05-01", t(as.matrix(c("tipo_area","Total das áreas")))
+
 }
 \seealso{
 \code{\link[googleVis]{gvisComboChart}}

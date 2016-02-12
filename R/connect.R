@@ -14,5 +14,5 @@
 
 
 connect <- function(){
-  DBI::dbConnect(MySQL(), db = "dzVis",  user = "dzvisuser", host = "Desktop", port=3306)
+  DBI::dbConnect(MySQL(), db = "dzVis",  user = "dzvisuser", host = "Talitha-PC", port=3306)
 }

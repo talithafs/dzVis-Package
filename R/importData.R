@@ -7,6 +7,7 @@
 #' @param columns A \code{character vector}. The name(s) of the column(s). If all columns should be imported, this argument must be set to \code{*}.
 #' @param restrictions A n x 2 \code{matrix}. Equality restrictions. The first column must contain the names of the columns. The second, its values.
 #' @param limits A n x 3 \code{matrix}. Inequality restrictions. See the details section for important information.
+#' @param alternatives A n x 2 \code{matrix}. Alternative values of a column (joined by 'or' conditions in a SQL query). The first column must contain the names of the columns. The second, its values.
 #' @param connection A \code{DBI} Connection object if a new connection should not be estabilished.
 #'
 #' @return A \code{data.frame} with the requested data.
@@ -29,8 +30,7 @@
 #'
 #' @import DBI
 
-
-importData <- function(table, columns, restrictions = NULL, limits = NULL, connection = NULL){
+importData <- function(table, columns, restrictions = NULL, limits = NULL, alternatives = NULL, connection = NULL){
 
   conn <- connection
 
@@ -41,16 +41,32 @@ importData <- function(table, columns, restrictions = NULL, limits = NULL, conne
   cols <- paste(columns,collapse = ", ")
   query <- paste("select",cols,"from",table)
 
-
-  if(!is.null(restrictions) && !is.null(limits)) {
-    query <- pasteIdRestrictions(query, restrictions)
-    query <- pasteLimitRestrictions(query, limits, whereClause = FALSE)
+  #-- Set up query
+  if(!is.null(restrictions) && !is.null(limits) && !is.null(alternatives)){
+    query <- pasteIdRestrictions(query,restrictions,whereClause = TRUE)
+    query <- pasteLimitRestrictions(query,limits)
+    query <- pasteIdRestrictions(query,alternatives, andClause = FALSE)
   }
-  else if(!is.null(limits)) {
-    query <- pasteLimitRestrictions(query, limits)
+  else if(!is.null(restrictions) && !is.null(limits)){
+    query <- pasteIdRestrictions(query,restrictions,whereClause = TRUE)
+    query <- pasteLimitRestrictions(query,limits)
+  }
+  else if(!is.null(restrictions) && !is.null(alternatives)){
+    query <- pasteIdRestrictions(query,restrictions,whereClause = TRUE)
+    query <- pasteIdRestrictions(query,alternatives, andClause = FALSE)
+  }
+  else if(!is.null(limits) && !is.null(alternatives)){
+    query <- pasteLimitRestrictions(query,limits, whereClause = TRUE)
+    query <- pasteIdRestrictions(query,alternatives, andClause = FALSE)
   }
   else if(!is.null(restrictions)){
-    query <- pasteIdRestrictions(query, restrictions)
+    query <- pasteIdRestrictions(query,restrictions,whereClause = TRUE)
+  }
+  else if(!is.null(limits)){
+    query <- pasteLimitRestrictions(query,limits, whereClause = TRUE)
+  }
+  else if(!is.null(alternatives)){
+    query <- pasteIdRestrictions(query,alternatives, whereClause = TRUE, andClause = FALSE)
   }
 
   data <- dbGetQuery(conn, query)

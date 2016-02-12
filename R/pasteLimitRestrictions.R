@@ -17,7 +17,9 @@
 #' @return A \code{character}. The new query string.
 
 
-pasteLimitRestrictions <- function(query, restrictions, whereClause = TRUE){
+pasteLimitRestrictions <- function(query, restrictions, whereClause = FALSE){
+
+  empty <- 0
 
   if(whereClause){
     newQuery = paste(query, "where ")
@@ -43,10 +45,17 @@ pasteLimitRestrictions <- function(query, restrictions, whereClause = TRUE){
     else if(!is.na(min)){
       newQuery <- paste(newQuery, targetVar, " >= '", min, "'", sep="")
     }
+    else {
+      empty <- empty + 1
+    }
 
     if(row != dim){
       newQuery <- paste(newQuery, "and ")
     }
+  }
+
+  if(empty == nrow(restrictions)){
+    return(query)
   }
 
   return(newQuery)

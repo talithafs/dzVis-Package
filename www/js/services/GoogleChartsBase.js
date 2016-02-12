@@ -34,7 +34,7 @@ var GoogleChartsBase = (function() {
 			return {id : null, name: null, text : "Nenhuma"} ;
 		},
 		get NO_VALUE(){
-			return "Nenhum valor selecionado" ;
+			return {id: null, text: "Nenhum valor selecionado"} ;
 		}
 	};
 	
@@ -145,6 +145,7 @@ var GoogleChartsBase = (function() {
 			}
 		}
 		else {
+			
 			onLoadFinish(currentColumns, currentTimeVariable);
 		}
 	}
@@ -169,48 +170,29 @@ var GoogleChartsBase = (function() {
 		}
 		else {
 			
-			var info, column, id, index;
-			var index = -1 ;
-			var isRepeated = false ;
+			var info, column, index ;
 			
-			id = node.id ;
-			
-			if(node.type == "lvl"){
-				id = node.parent ;
-			}
+			column = ref.databaseTree.getColumn(node);
 
-			column = jQuery.map(currentColumns, function(obj){
-						if(obj.id === id){ return obj ; } 
+			index = jQuery.map(currentColumns, function(obj){
+						if(obj.id === column.id){ return currentColumns.indexOf(obj) ; } 
 			})[0] ;
 			
-			if(column != undefined){
-				isRepeated = true ;
-				
-				index = currentColumns.indexOf(column);				
+			if(index != undefined){			
 				info = currentColumns[index].categories ;
 				currentColumns.splice(index, 1);
 			}
-			
-			column = ref.databaseTree.getColumn(node);
-							 
-			if(!isRepeated){
-				
+			else {
 				info = jQuery.map(categories, function(obj){
-							if(obj.column === column.original.name){ return obj ; } 
-						})[0];
+						if(obj.column === column.original.name){ return obj ; } 
+				})[0];
 			}
 			
 			column.categories = info ;
 			currentColumns.push(column);
 			
-			updateFilters();
-			
-			if(!isRepeated){
-				callback(column);
-			}
-			else {
-				callback(node);
-			}			
+			updateFilters(column);
+			callback(column);		
 		}
 	}
 	
@@ -219,15 +201,16 @@ var GoogleChartsBase = (function() {
 		var index ;
 		
 		if(node.type == "attr"){
-			
 			index = currentColumns.indexOf(node);
 			currentColumns.splice(index,1);
+			
+			node.levels = [] ;
+		}
+		else {
+			node = ref.databaseTree.getColumn(node) ;
 		}
 		
-		if(currentColumns.length != 0){
-			updateFilters();	
-		}
-		
+		updateFilters(node);
 		callback(node);
 	}
 	
@@ -235,9 +218,11 @@ var GoogleChartsBase = (function() {
 		
 		if(this.state.current.data.type != "googlevis"){
 			
+			
 			currentTable = undefined ;
 			currentColumns = [] ;
 			categories = [] ;
+			filters = [];
 
 			if(currentTimeVariable != undefined){
 				this.databaseTree.enableCheckbox(currentTimeVariable.id, false);
@@ -247,45 +232,54 @@ var GoogleChartsBase = (function() {
 		}
 	}
 	
-	function updateFilters(){
+	function updateFilters(node){
 		
-		var index, node, column, child ;
+		var index, column, child, id ;
 		
 		if(filters.length == 0){
 			
 			keys = jQuery.map(categories, function(obj){
-				
 				if(obj.KEY === true){ return obj.column ; } 
 			});
-		}
-		else {
-			filters = [] ;
-		}
-		
-		for(index in keys){
 			
-			var id = currentTable.id + "." + keys[index] ;
+			for(index in keys){
 			
-			if(id != currentTimeVariable.id){
+				id = currentTable.id + "." + keys[index] ;
 				
-				node = ref.databaseTree.getTreeNode(id);
-				column = ref.databaseTree.getColumn(node);
-				child = column.levels[column.levels.length - 1] ;
-								
-				if(child == undefined){
-					child = {};
-					child.id = null ;
-					child.text = DEFAULT.NO_VALUE ;
-				}
-				
-				alert(child.text + " " + column.levels.length);
-				
-				filters.push({
-					column : column,
-					value : child 
-				});
-			}	
+				if(id != currentTimeVariable.id){
+					
+					column = ref.databaseTree.getTreeNode(id) ;
+					column = ref.databaseTree.getColumn(column) ;
+																 
+					child = column.levels[column.levels.length - 1] ;
+									
+					if(child == undefined){
+						child = DEFAULT.NO_VALUE ;
+					}
+					
+					filters.push({
+						column : column,
+						value : child 
+					});
+				}	
+			}
 		}
+		else if(node != undefined && node.categories.GROUP === true) {
+				
+			index = jQuery.map(filters, function(obj){
+				if(obj.column.id == node.id) return filters.indexOf(obj);
+			});
+				
+			filters[index].column = node ;
+			
+			if(node.levels.length != 0){
+				filters[index].value = node.levels[node.levels.length - 1] ;
+			}
+			else {
+				filters[index].value = DEFAULT.NO_VALUE ;
+			}
+		}
+
 	}
 	
 	function controlFilters(activeFilters){

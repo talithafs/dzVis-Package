@@ -4,7 +4,7 @@
 \alias{mapChartVariables}
 \title{Map chart variables}
 \usage{
-mapChartVariables(table, variables, restrictions = NULL)
+mapChartVariables(table, variables)
 }
 \arguments{
 \item{table}{A \code{character} The name of a dzVis database table containing the variables - the columns - to be analysed.}
@@ -15,7 +15,7 @@ mapChartVariables(table, variables, restrictions = NULL)
 A \code{data.frame}. The first column represents the names of the variables. The next columns, named after the possible categories, booleans indicating if the variable can be assigned to the category.
 }
 \description{
-Maps which categories chart variables can be assigned to.
+Maps which categories chart variables can be assigned to. Minimum and maximum values are also provided when applicable.
 }
 \section{Possible categories}{
 
@@ -23,7 +23,7 @@ Maps which categories chart variables can be assigned to.
    \item \code{TARGET} Numeric variables. They are typcally represented on the axis of the chart.
    \item \code{GROUP} Character variables. Represent categories by which the \code{TARGET} variables are classified.
    \item \code{TIME} Date variable. Indicates when the \code{TARGET} were observed.
-   \item \code{KEY} Variables of any type. When combined, they represent the primary key - the id variable - of the table.
+   \item \code{KEY} Variables of any type. When combined, they represent the primary key - the id - of the table.
 }
 }
 

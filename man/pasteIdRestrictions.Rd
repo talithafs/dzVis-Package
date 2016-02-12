@@ -4,7 +4,8 @@
 \alias{pasteIdRestrictions}
 \title{Paste equality restrictions to a SQL query}
 \usage{
-pasteIdRestrictions(query, restrictions, whereClause = TRUE)
+pasteIdRestrictions(query, restrictions, whereClause = FALSE,
+  andClause = TRUE)
 }
 \arguments{
 \item{query}{A \code{character} value. Initial value of the query string. Restrictions will be pasted after it.}
@@ -13,6 +14,9 @@ pasteIdRestrictions(query, restrictions, whereClause = TRUE)
 
 \item{whereClause}{If set to \code{TRUE}, a 'where' clause is inserted before the restrictions.
 If set ot \code{FALSE}, an 'and' clause is inserted}
+
+\item{andClause}{If set to \code{TRUE}, 'and' clauses will join the restrictions.
+If set ot \code{FALSE}, 'or' clauses will join the restrictions.}
 }
 \value{
 A \code{character}. The new query string.

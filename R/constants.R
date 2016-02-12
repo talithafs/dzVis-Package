@@ -27,12 +27,21 @@
 #-- getColumnsByCategory
 .ERROR_CATEGORY = "Error: Category does not exist."
 
-
 ## Chart variables categories
 .TARGET = "TARGET"
 .GROUP = "GROUP"
 .TIME = "TIME"
 .KEY = "KEY"
+
+## Global names for data.frame columns
+.MAX = "MAXIMUM"
+.MIN = "MINIMUM"
+
+## Operations
+.AVG = "Media"
+.STD = "Desvio padrao"
+.MEDIAN = "Mediana"
+.NONE = "Nenhuma"
 
 ## Database types
 .DB_INT = "int"

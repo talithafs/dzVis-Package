@@ -51,7 +51,12 @@ var Connection = (function() {
 		
 		var req = ocpu.call(functionName, parameters, function(session){
 			
-			callback(session.getFileURL(parameters.filename));
+			var message ;
+			
+			session.getObject(function(data){ 
+				message = data; 
+				callback(message, session.getFileURL(parameters.filename));
+			});
 		});
 		
 		req.fail(function(){
@@ -102,7 +107,7 @@ var Connection = (function() {
 		call("validateKeys", parameters, callback);
 	};
 	
-	var createComboChart = function(filename, table, targetVar, groupVar, timeVar, min, max, restrictions, callback){
+	var createComboChart = function(filename, table, targetVar, groupVar, timeVar, min, max, restrictions, alternatives, callback){
 		
 		var parameters = {
 			filename : filename,
@@ -112,7 +117,8 @@ var Connection = (function() {
 			timeVar : timeVar,
 			min : min,
 			max : max,
-			restrictions : restrictions
+			restrictions : restrictions,
+			alternatives : alternatives 
 		};
 		
 		createChart("createComboChart", parameters, callback);
@@ -135,8 +141,8 @@ var Connection = (function() {
 		validateKeys.call(this, table, keys, restrictions, callback);
 	};
 	
-	Connection.prototype.createComboChart = function(filename, table, targetVar, groupVar, timeVar, min, max, restrictions, callback){ 
-		createComboChart.call(this, filename, table, targetVar, groupVar, timeVar, min, max, restrictions, callback);
+	Connection.prototype.createComboChart = function(filename, table, targetVar, groupVar, timeVar, min, max, restrictions, alternatives, callback){ 
+		createComboChart.call(this, filename, table, targetVar, groupVar, timeVar, min, max, restrictions, alternatives, callback);
 	};
 	
 	return {
