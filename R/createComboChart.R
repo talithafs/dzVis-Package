@@ -19,7 +19,8 @@
 #' The parameters are checked according to the rules estabilished in validation functions and in the following order:
 #' \enumerate{
 #'    \item targetVar, groupVar, timeVar, min, max, restrictions: \code{\link{validateGoogleChartParameters}}
-#'    \item lineVar: \code{\link{validateTargetVariables}} and \code{\link{validateConsistency}}
+#'    \item lineVar: \code{\link{validateTargetVariables}} and \code{\link{validateConsistency}}.
+#'    \item lineVar, operation, groupVar: If \code{groupVar} is \code{NULL}, \code{lineVar} must be also \code{NULL}. Besides, \code{operation} cannot be \code{NULL} when \code{lineVar} is not \code{NULL}.
 #'}
 #'
 #' @examples
@@ -43,6 +44,9 @@ createComboChart <- function(filename, table, targetVar, groupVar, timeVar, min 
 
   if(!is.null(lineVar) && lineVar == ""){
     lineVar <- NULL
+  }
+
+  if(!is.null(operation) && operation == ""){
     operation <- NULL
   }
 
@@ -54,12 +58,17 @@ createComboChart <- function(filename, table, targetVar, groupVar, timeVar, min 
     max <- NA
   }
 
+  if(!is.null(groupVar) && groupVar == ""){
+    groupVar <- NULL
+  }
+
   #-- Import data
-  if(!is.null(lineVar) && lineVar != timeVar){
+  columns <- c(targetVar, groupVar, timeVar)
+
+  if(!is.null(lineVar) && !(lineVar %in% targetVar)){
     columns <- c(columns, lineVar)
   }
 
-  columns <- c(targetVar, groupVar, timeVar)
   limits <- t(as.data.frame(c(timeVar, min, max)))
   data <- importData(table, columns, restrictions, limits, alternatives)
 
@@ -70,7 +79,15 @@ createComboChart <- function(filename, table, targetVar, groupVar, timeVar, min 
     return(validationMessage)
   }
 
-  if(!is.null(lineVar) && lineVar != targetVar){
+  if(!is.null(lineVar) && !(lineVar %in% targetVar)){
+
+    if(is.null(groupVar)){
+      return(.ERROR_LINE_1)
+    }
+
+    if(is.null(operation)){
+      return(.ERROR_LINE_2)
+    }
 
     validationMessage <- validateTargetVariables(data,lineVar)
 
@@ -106,6 +123,8 @@ createComboChart <- function(filename, table, targetVar, groupVar, timeVar, min 
       index = index + 1
     }
 
+    title <- getColumnAlias(table, targetVar)
+
   }
   else { #groupVar == NULL
 
@@ -117,19 +136,24 @@ createComboChart <- function(filename, table, targetVar, groupVar, timeVar, min 
     for(index in 2:ncolumns){
       names(newData)[index] <- getColumnAlias(table, names(newData)[index])
     }
+
+    title <- paste(names(newData)[2:ncolumns],collapse = ", ")
   }
 
+  ### should write a function to set an appropriate title
+  title = paste(toupper(gsub("_"," ",table)),": ", title, sep="")
+
   #-- Set chart options
-  options <- list( seriesType="bars",
+  options <- list( title = title,
+                   seriesType="bars",
                    chartArea = "{width : '65%', left: 30}",
                    width=900 )
 
   #-- Create line
-  if(!is.null(lineVar)){
+  if(!is.null(operation)){
 
-    if(lineVar == targetVar){
-      newCol <- apply(newData[2:ncolumns],1,mean)
-      name <- operation
+    if(lineVar == targetVar || is.null(groupVar)){
+      newCol <- applyOperation(newData[2:ncolumns],operation)
     }
     else {
       temp <- matrix(nrow = nrows, ncol = length(levels))
@@ -140,10 +164,10 @@ createComboChart <- function(filename, table, targetVar, groupVar, timeVar, min 
         index = index + 1
       }
 
-      newCol <- apply(temp,1,mean)
-      name <- operation
+      newCol <- applyOperation(temp,operation)
     }
 
+    name <- paste(operation, ": ", getColumnAlias(table,lineVar), sep="")
     newData <- cbind(newData, newCol)
     ncolumns = ncolumns + 1
     names(newData)[ncolumns] <- name

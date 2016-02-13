@@ -145,13 +145,11 @@ var GoogleChartsBase = (function() {
 			}
 		}
 		else {
-			
 			onLoadFinish(currentColumns, currentTimeVariable);
 		}
 	}
-	
-	
-	 
+
+
 	function onNodeChecked(node, callback){
 		
 		var table = ref.databaseTree.getTable(node) ;
@@ -325,17 +323,19 @@ var GoogleChartsBase = (function() {
 		if(currentTable != undefined){
 			
 			var timeVar = jQuery.map(categories, function(obj){
-							if(obj.TIME === true){ return obj.column ; } 
-						});	
+				if(obj.TIME === true){ return obj ; } 
+			})[0];	
 				
-			var id = currentTable.id + "." + timeVar ;
+			var id = currentTable.id + "." + timeVar.column ;
 			ref.databaseTree.disableCheckbox(id, true) ;
 				
 			currentTimeVariable = ref.databaseTree.getOriginalNode(id) ;
+			currentTimeVariable.maximum = timeVar.MAXIMUM ;
+			currentTimeVariable.minimum = timeVar.MINIMUM ;
+			
 			callback(currentTimeVariable);
 		}
 	}
-	
 	
 	// GoogleChartsBase public API
 	GoogleChartsBase.prototype.DEFAULT = DEFAULT ;
@@ -366,7 +366,6 @@ var GoogleChartsBase = (function() {
 	GoogleChartsBase.prototype.controlFilters = function(activeFilters){
 		controlFilters.call(this,activeFilters); 
 	};
-	
 	
 	return {
         getInstance: function (state, databaseTree, connection) {

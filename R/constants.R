@@ -27,6 +27,13 @@
 #-- getColumnsByCategory
 .ERROR_CATEGORY = "Error: Category does not exist."
 
+#-- applyOperation
+.ERROR_OPERATION = "Error: Parameter 'identifier' does not represent a valid operation."
+
+#-- createComboChart
+.ERROR_LINE_1 = "Error: Line variable should be NULL when the group variable is NULL."
+.ERROR_LINE_2 = "Error: Operation cannot be NULL when the line variable is not NULL."
+
 ## Chart variables categories
 .TARGET = "TARGET"
 .GROUP = "GROUP"

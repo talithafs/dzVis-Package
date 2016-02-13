@@ -29,10 +29,23 @@ pasteIdRestrictions <- function(query, restrictions, whereClause = FALSE, andCla
 
   dim = nrow(restrictions)
 
+  if(dim > 1){
+    restrictions <- restrictions[order(restrictions[,1]),]
+    nextLevel = restrictions[2,1]
+  }
+
   for(row in seq_along(1:dim)){
       newQuery <- paste(newQuery, restrictions[row,1], " = '", restrictions[row,2], "' ", sep="")
+
       if(row != dim){
-        newQuery <- paste(newQuery, joint)
+
+        if(nextLevel != restrictions[row + 1,1]){
+          nextLevel <- restrictions[row + 1,1]
+          newQuery <- paste(newQuery, ") and (")
+        }
+        else {
+          newQuery <- paste(newQuery, joint)
+        }
       }
   }
 

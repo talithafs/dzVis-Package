@@ -54,13 +54,20 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
     
     $scope.$on("createChart", function(){
     	
-    	var callback = function(parameters, filepath){
-    		
-    		alert(JSON.stringify(parameters));
-    		alert(filepath);
-    	};
-    	    	
-    	connection.createComboChart("chart.html", "", "","", "", "", "", [], [], callback);
+    	// var callback = function(parameters, filepath){
+//     		
+    		// alert(JSON.stringify(parameters));
+    		// alert(filepath);
+    	// };
+//     	    	
+    	// connection.createComboChart("chart.html", "", "","", "", "", "", [], [], callback);
+    	
+    	// a = $scope.multipleDates.split(",") ;
+//     	
+    	// alert(a[0] + " " + a[1]);
+    	
+    	// alert($scope.$parent.checkDates($scope.multipleDates.split(","), 'yyyy-mm-dd', $scope.lowerBound, $scope.upperBound));
+ 		   	
     });
     
     $scope.selectMultipleDates = function(){
@@ -91,7 +98,7 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 
 	$scope.operationSelectionChanged = function(value){
 		
-		$scope.operationSelection = value ;
+		//$scope.operationSelection = value ;
 	};
 	
 	function fillOptions(nodes, timeVar){
@@ -142,6 +149,10 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 			
 			if($scope.timeVar.text == base.DEFAULT.TIME.text){
 				$scope.timeVar = base.properties.timeVariable ;
+				$scope.minDate = base.properties.timeVariable.minimum ;
+				$scope.maxDate = base.properties.timeVariable.maximum ;
+				$scope.upperBound = $scope.maxDate ;
+				$scope.lowerBound = $scope.minDate ;
 			}
 		});
 	}
@@ -192,15 +203,15 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 				
 					if(index != -1){
 					
-					$scope.groupOptions.splice(index,1);
-					dim = $scope.groupOptions.length ;
-					
-						if(dim != 0){
-							$scope.groupSelection = $scope.groupOptions[dim-1] ;
-						}
-						else {
-							$scope.groupSelection = base.DEFAULT.GROUP ;
-						}
+						$scope.groupOptions.splice(index,1);
+						dim = $scope.groupOptions.length ;
+						
+							if(dim != 0){
+								$scope.groupSelection = $scope.groupOptions[dim-1] ;
+							}
+							else {
+								$scope.groupSelection = base.DEFAULT.GROUP ;
+							}
 					}
 				
 					changeGroup();
@@ -269,9 +280,6 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	
 		base.controlFilters($scope.filters);
 	}
-	 	
-	// $scope.minDate = "2010-01-01" ;
-	// $scope.maxDate = "2011-01-01" ;
 }]);
 
 

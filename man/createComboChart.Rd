@@ -39,7 +39,8 @@ Creates a Combo Chart using the googleVis R package
 The parameters are checked according to the rules estabilished in validation functions and in the following order:
 \enumerate{
    \item targetVar, groupVar, timeVar, min, max, restrictions: \code{\link{validateGoogleChartParameters}}
-   \item lineVar: \code{\link{validateTargetVariables}} and \code{\link{validateConsistency}}
+   \item lineVar: \code{\link{validateTargetVariables}} and \code{\link{validateConsistency}}.
+   \item lineVar, operation, groupVar: If \code{groupVar} is \code{NULL}, \code{lineVar} must be also \code{NULL}. Besides, \code{operation} cannot be \code{NULL} when \code{lineVar} is not \code{NULL}.
 }
 }
 \examples{
