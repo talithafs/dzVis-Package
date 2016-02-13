@@ -26,12 +26,13 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	$scope.lineVarLabel = features.LABEL.LINE ;
 	$scope.operationLabel = features.LABEL.OPERATIONS ;
 	
-	$scope.lineOptions = features.DEFAULT.LINE ;
-	$scope.operations = features.DEFAULT.OPERATIONS ;
+	$scope.lineOptions = [] ;
+	$scooe.lineOptions.push(features.DEFAULT.LINE[0]);
 	$scope.lineSelection = $scope.lineOptions[0];
+	
+	$scope.operations = features.DEFAULT.OPERATIONS ;	
 	$scope.operationSelection = $scope.operations[0].value ;
 
-	
 	$scope.$on("$stateChangeSuccess", function(){
 		
 		base.onLoad(fillOptions);
@@ -98,7 +99,20 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 
 	$scope.operationSelectionChanged = function(value){
 		
-		//$scope.operationSelection = value ;
+		$scope.operationSelection = value ;
+		
+		if($scope.operationSelection == $scope.operations[0].value){
+			$scope.lineSelection = $scope.lineOptions[0] ;
+		}
+	};
+	
+	$scope.lineSelectionChanged = function(value){
+		
+		$scope.lineSelection = value ;
+		
+		if($scope.lineSelection == $scope.lineSelection[0]){
+			$scope.operationSelection = $scope.operations[0].value ;
+		}
 	};
 	
 	function fillOptions(nodes, timeVar){
@@ -124,9 +138,9 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 			if(node.categories.TARGET === true){
 				
 				$scope.targetOptions.push(node);				
-				$scope.lineOptions.push(node);
+				//$scope.lineOptions.push(node);
 				$scope.targetSelection.push(node);
-				$scope.lineSelection = node ;
+				//$scope.lineSelection = node ;
 				
 				changeTarget();
 			}
@@ -169,7 +183,10 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 				$scope.targetOptions.splice(index,1);
 				
 				index = $scope.lineOptions.indexOf(node);
-				$scope.lineOptions.splice(index,1);
+				
+				if(index != -1){
+					$scope.lineOptions.splice(index,1);
+				}
 				
 				index = $scope.targetSelection.indexOf(node);
 				$scope.targetSelection.splice(index,1);
@@ -183,8 +200,8 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 					$scope.targetSelection.push($scope.targetOptions[dim-1]);
 				}
 				
-				dim = $scope.lineOptions.length ;
-				$scope.lineSelection = $scope.lineOptions[dim-1];
+				// dim = $scope.lineOptions.length ;
+				// $scope.lineSelection = $scope.lineOptions[dim-1];
 				
 				changeTarget();
 			}
@@ -236,14 +253,15 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 				updateFilters();
 			}
 		}
-		else {
-			
+		else {			
 			var dim = $scope.groupOptions.length ;
 			var lastGroup = $scope.groupOptions[dim - 1] ;
 			
 			$scope.groupSelection = lastGroup ;
 			updateFilters();
 		}
+		
+		changeLine();
 	}
 	
 	function changeGroup(){
@@ -258,8 +276,53 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 				$scope.targetSelection.push(lastSelection) ;
 			}
 		}
+		else {			
+			$scope.lineSelection = $scope.lineOptions[0] ;
+			$scope.operationSelection = $scope.operations[0];
+		}
 		
 		updateFilters();
+		changeLine();
+	}
+	
+	function changeLine(targetChanged){
+		
+		//if(targetChanged){
+			var opt = $scope.lineOptions[1] ;
+			
+			if($scope.targetSelection[0].text == base.DEFAULT.TARGET.text){
+				
+				if($scope.lineOptions.length != 1){
+					$scope.lineOptions = [] ;
+					$scope.lineOptions.push(features.DEFAULT.LINE[0]);
+					$scope.lineSelection = $scope.lineOptions[0];
+ 				}
+			}
+			else if($scope.targetSelection.length == 1){
+				
+				if(opt == undefined || (opt != undefined && opt.id == features.DEFAULT.LINE[1].id)){
+					
+					$scope.lineOptions = [] ;
+					$scope.lineOptions.push(features.DEFAULT.LINE[0]);
+					
+					for(index in $scope.targetOptions){
+						$scope.lineOptions.push($scope.targetOptions[index]);
+					}
+					
+					$scope.lineSelection = $scope.targetSelection ;
+				}
+			}
+			else {
+				if(opt == undefined || (opt != undefined && opt.id != features.DEFAULT.LINE[1].id)){
+					
+					$scope.lineOptions = [] ;
+					$scope.lineOptions.push(features.DEFAULT.LINE[0]);
+					$scope.lineOptions.push(features.DEFAULT.LINE[1]);
+					$scope.lineSelection = $scope.lineOptions[1];
+					$scope.operationSelection = $scope.operations[1].value ;
+				}
+			}
+		//}
 	}
 	
 	function updateFilters(){
@@ -288,7 +351,9 @@ function ComboChartFeatures(){
 	// New features defaults
 	this.DEFAULT = {
 		get LINE(){
-			return [{id : null, text : "Não desenhar linha"}] ;
+			return [{id : "no_line", text : "Não desenhar linha"},
+					{id : "num_var", text: "Utilizar variáveis numéricas" }
+				] ;
 		},
 		get OPERATIONS(){
 			return [
