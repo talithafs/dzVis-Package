@@ -20,7 +20,7 @@
 		
 		<div class="selection-input">
 			<label>{{lineVarLabel}}</label>
-			<select ng-model="lineSelection" ng-change="lineSelectionChanged(lineSelection)" ng-options="opt as opt.text for opt in lineOptions"> 
+			<select ng-model="lineSelection" ng-change="lineSelectionChanged(lineSelection)" ng-options="opt as opt.text for opt in lineOptions track by opt.id"> 
 			</select>
 		</div>
 		

@@ -172,6 +172,32 @@ hr {
 	font-weight: bold ;
 }
 
+/* Chart */
+#chart-address {
+	margin: 0px ;
+	padding: 0px ;
+	margin-top: 25px ;
+	padding-left: 2px ;
+}
+
+#chart-address p {
+	font-size: 12px ;
+	text-align: justify ;
+}
+
+#chart-address textarea {
+	border: 1px solid #d3d3d3  ;
+	width: 100% ;
+	resize: none ;
+	font-family: Monaco, "Lucida Console", "Courier New" ;
+	margin-bottom: 3px ;
+}
+
+#chart-address img {
+	float: left ;
+	margin-right: 3px ;
+}
+
 /* Charts list */
 
 #chart-list {
@@ -317,6 +343,12 @@ hr {
 	height: 48px ;
 }
 
+/* Error alert */
+#error-alert {
+	margin: 50px 10px 10px 10px ;
+	text-align: left ;
+}
+
 /* General classes */ 
 
 .switch {
@@ -341,6 +373,12 @@ hr {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+}
+
+.centered {
+	padding: 0px ;
+	margin-left: 1px ;
+	margin-right: 1px ;
 }
 
 /*.loading {

@@ -2,7 +2,6 @@
 #'
 #' @description Creates a Combo Chart using the googleVis R package
 #'
-#' @param filename A \code{character}. The name of the .html file where the chart should be printed. The extension (.html) is not needed.
 #' @param table A \code{character} value. The name of the table from which the data should be retrieved
 #' @param targetVar A \code{character} value. The vertical axis variable
 #' @param groupVar A \code{character} value. Variable by which \code{targetVar} should be grouped
@@ -11,6 +10,7 @@
 #' @param max A \code{numeric} value or a \code{date string} in the format 'yyyy-mm-dd'. Upper bound for the \code{timeVar}
 #' @param restrictions A n x 2 \code{matrix}. The n equality restrictions that make timeVar and groupVar values unique when combined.
 #' @param alternatives A n x 2 \code{matrix}. Alternative values of a column (joined by 'or' conditions in a SQL query). The first column must contain the names of the columns. The second, its values.
+#' @param filename A \code{character}. The name of the .html file where the chart should be printed. The extension (.html) is not needed.
 #'
 #' @return A \code{character}. The constant \code{.SUCCESS} if the chart was successfully created.
 #'         Otherwise, an error string returned by one of validation functions listed under the 'Parameters validation' section.
@@ -24,14 +24,14 @@
 #'}
 #'
 #' @examples
-#' createComboChart("chart","pea_por_idade","percentual_total", "grupo_idade","mes","2010-01-01","2010-05-01", t(as.matrix(c("tipo_area","Total das áreas")))
+#' createComboChart("pea_por_idade","percentual_total", "grupo_idade","mes","2010-01-01","2010-05-01", t(as.matrix(c("tipo_area","Total das áreas")))
 #'
 #' @seealso \code{\link[googleVis]{gvisComboChart}}
 #'
 #' @export
 #' @import googleVis
 
-createComboChart <- function(filename, table, targetVar, groupVar, timeVar, min = NA, max = NA, lineVar = NULL, operation = NULL, restrictions = NULL, alternatives = NULL){
+createComboChart <- function(table, targetVar, groupVar, timeVar, min = NA, max = NA, lineVar = NULL, operation = NULL, restrictions = NULL, alternatives = NULL, filename = NULL){
 
   #-- Process parameters
   if(!is.null(restrictions) && length(restrictions) == 0){
@@ -147,7 +147,8 @@ createComboChart <- function(filename, table, targetVar, groupVar, timeVar, min 
   options <- list( title = title,
                    seriesType="bars",
                    chartArea = "{width : '65%', left: 30}",
-                   width=900 )
+                   width=700,
+                   height=270 )
 
   #-- Create line
   if(!is.null(operation)){
@@ -176,7 +177,12 @@ createComboChart <- function(filename, table, targetVar, groupVar, timeVar, min 
 
   #-- Create the combo chart and print it
   chartObj = gvisComboChart(newData, xvar=timeVar, yvar=names(newData)[2:ncolumns], options=options)
-  printGoogleChart(filename,chartObj)
+  chartFile <- printGoogleChart(chartObj, filename)
 
-  return(.SUCCESS)
+  #-- Create a csv file with the data that was used
+  dataFile <- paste("DATA_", gsub(".html","",chartFile), ".csv", sep="")
+  con <- file(dataFile, encoding="utf8")
+  write.csv(newData, file = con, row.names = FALSE)
+
+  return(c(.SUCCESS,chartFile,dataFile))
 }

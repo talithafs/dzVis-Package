@@ -10,6 +10,14 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
 	$scope.useChartText = "Usar este gráfico >>";
 	$scope.goBackText = "<< Escolher outro gráfico" ;
 	$scope.btnCreateChartText = "Gerar gráfico" ;
+	$scope.information = "Utilize esse código para mostrar o gráfico em seu site. Clique no ícone para copiar para a sua área de transferência." ;
+	$scope.copyText = "Copiar para a área de transferência" ;
+	$scope.showChart = false ;
+	$scope.showAlert = false ;
+	$scope.errorText = "Erro: ";
+	
+	const COPIED = "O código foi copiado para a sua área de transferência." ;
+	const NOT_COPIED = "Houve um problema e o código não foi copiado para sua área de transferência." ;
 	
 	
 	$scope.chartSelectionChanged = function(value){
@@ -31,6 +39,57 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
 	
 	$scope.createChart = function(){
 		$scope.$broadcast("createChart", $state.current.name);
+	};
+	
+	$scope.$on("chartCreated", function(e, data){
+		
+		var chart, height, width ;
+		
+		height = data.height + 55 ;
+		width = data.width + 10 ;
+		
+		chart = angular.element(document.querySelector('#chart'));
+		chart.attr('src',data.filePath);
+		chart.attr('height', height);
+		chart.attr('width', width) ;
+		
+		$scope.showChart = true ;		
+		$scope.chartAddress = "<iframe width=\"" + width 
+								+ "px\" height=\"" + height  
+								+ "px\" frameborder=\"0\" src=\"" + data.filePath + "\"> </iframe>" ;
+								
+		$scope.chartURL = data.filePath ;
+	});
+	
+	$scope.download = function(resource){
+    	window.open(resource);
+	};
+	
+	$scope.$on("chartError", function(e, message){
+		
+		$scope.showAlert = true ;
+		$scope.errorMessage = message ;
+		
+	});
+	
+	$scope.alertClosed = function(){
+		
+		$scope.showAlert = false ;
+	};
+	
+	$scope.copyToClipboard = function(){
+		
+		var textarea = angular.element(document.querySelector('#code'));
+		textarea.select();
+		
+		try {
+    		var success = document.execCommand('copy');
+    		var message = success ? COPIED : NOT_COPIED ;
+    		alert(message);
+  		} 
+  		catch (error) {
+    		console.log(JSON.stringify(error));
+  		}
 	};
 	
 	$scope.checkDates = function(dates, format, lowerBound, upperBound){
