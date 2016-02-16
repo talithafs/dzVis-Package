@@ -12,7 +12,7 @@
 #' @param alternatives A n x 2 \code{matrix}. Alternative values of a column (joined by 'or' conditions in a SQL query). The first column must contain the names of the columns. The second, its values.
 #' @param filename A \code{character}. The name of the .html file where the chart should be printed. The extension (.html) is not needed.
 #'
-#' @return A \code{character}. The constant \code{.SUCCESS} if the chart was successfully created.
+#' @return A \code{character vector} if the chart was successfully created, with the name of two files: the .html file where the chart was printed and the .csv file where the source data was saved.
 #'         Otherwise, an error string returned by one of validation functions listed under the 'Parameters validation' section.
 #'
 #' @section Parameters validation:
@@ -24,7 +24,8 @@
 #'}
 #'
 #' @examples
-#' createComboChart("pea_por_idade","percentual_total", "grupo_idade","mes","2010-01-01","2010-05-01", t(as.matrix(c("tipo_area","Total das áreas")))
+#'
+#' createComboChart("pea_por_idade",c("percentual_ativas","percentual_nao_ativas"), NULL,"mes",NA,NA, NULL, "Media", restrictions, alternatives)
 #'
 #' @seealso \code{\link[googleVis]{gvisComboChart}}
 #'
@@ -146,9 +147,9 @@ createComboChart <- function(table, targetVar, groupVar, timeVar, min = NA, max 
   #-- Set chart options
   options <- list( title = title,
                    seriesType="bars",
-                   chartArea = "{width : '65%', left: 30}",
-                   width=700,
-                   height=270 )
+                   chartArea = "{width : '72%', left: 30}",
+                   width=750,
+                   height=300 )
 
   #-- Create line
   if(!is.null(operation)){
@@ -184,5 +185,5 @@ createComboChart <- function(table, targetVar, groupVar, timeVar, min = NA, max 
   con <- file(dataFile, encoding="utf8")
   write.csv(newData, file = con, row.names = FALSE)
 
-  return(c(.SUCCESS,chartFile,dataFile))
+  return(c(chartFile,dataFile))
 }

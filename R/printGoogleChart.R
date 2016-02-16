@@ -18,6 +18,8 @@ printGoogleChart <- function(chartObj, filename = NULL){
     filename <- chartObj$chartid
   }
 
+  chartObj$chartid = ""
+
   filename <- gsub("\\.htm$",".html",filename)
 
   if(!grepl("\\.html$", filename)) {

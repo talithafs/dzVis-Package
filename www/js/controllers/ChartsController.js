@@ -49,22 +49,26 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
 		width = data.width + 10 ;
 		
 		chart = angular.element(document.querySelector('#chart'));
-		chart.attr('src',data.filePath);
+		chart.attr('src',data.chartFilePath);
 		chart.attr('height', height);
 		chart.attr('width', width) ;
 		
-		$scope.showChart = true ;		
-		$scope.chartAddress = "<iframe width=\"" + width 
-								+ "px\" height=\"" + height  
-								+ "px\" frameborder=\"0\" src=\"" + data.filePath + "\"> </iframe>" ;
-								
-		$scope.chartURL = data.filePath ;
+		$scope.$apply(function(){
+			
+			if($scope.showAlert){
+				$scope.showAlert = false ;
+			}
+			
+			$scope.showChart = true ;		
+			$scope.chartAddress = "<iframe width=\"" + width 
+									+ "px\" height=\"" + height  
+									+ "px\" frameborder=\"0\" src=\"" + data.chartFilePath + "\"> </iframe>" ;
+									
+			$scope.chartURL = data.chartFilePath ;
+			$scope.sourceURL = data.sourceDataPath ;
+		});
 	});
-	
-	$scope.download = function(resource){
-    	window.open(resource);
-	};
-	
+
 	$scope.$on("chartError", function(e, message){
 		
 		$scope.showAlert = true ;
@@ -97,6 +101,12 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
 		var regex, match = "" ;
 		var results = [] ;
 		
+		if(!(dates instanceof Array)){
+			var temp = dates ;
+			dates = [] ;
+			dates.push(temp);
+		}
+		
 		if(format == 'yyyy-mm-dd'){
 			
 			regex = /^(\d{4})\-(\d{1,2})\-(\d{1,2})$/ ;
@@ -106,7 +116,7 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
 			regex = /^(\d{1,2})\-(\d{1,2})\-(\d{4})$/ ;
 		}
 		else {
-			return false ;
+			return "Interno. Formato de data especificado não corresponde a um formato válido." ;
 		}
 		
 		for(index in dates){
@@ -124,21 +134,21 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
 				date = match[1] + "-" + match[2] + "-" + match[3] ;
 					
 				if(match[3] < 1 || match[3] > 31){
-					return "Erro: Data inválida. Dia inválido: " + date ;
+					return "Data inválida. Dia inválido: " + date ;
 				}
 				
 				if(match[2] < 1 || match[2] > 12){
-					return "Erro: Data inválida. Mês inválido: " + date ;
+					return "Data inválida. Mês inválido: " + date ;
 				}
 				
-				if(date <= lowerBound || date >= upperBound){
-					return "Erro: Data inválida. Data não está dentro dos limites: " + date;
+				if(date < lowerBound || date > upperBound){
+					return "Data inválida. Data não está dentro dos limites: " + date;
 				}
 				
 				results.push(date);
 			}
 			else {
-				return "Erro: Data inválida. Formato inválido: " + dates[index] ;
+				return "Data inválida. Formato inválido: " + dates[index] ;
 			}
 		}
 		

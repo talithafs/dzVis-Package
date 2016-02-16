@@ -12,9 +12,9 @@
 
 createJSONFile <- function(data, filename = "output.json") {
 
-  if(class(data) != "list"){
-    return(FALSE)
-  }
+  #if(class(data) != "list"){
+   # return(FALSE)
+  #}
 
   json <- jsonlite::toJSON(data)
   con <- file(filename, encoding="utf8")

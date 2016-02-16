@@ -58,7 +58,7 @@
 		<div class="radio-input">
 			<label>{{operationLabel}}</label>
 			<div class="inline" ng-repeat="operation in operations">
-				<input name="ops" type="radio" ng-model="operationSelection" ng-change="operationSelectionChanged(operationSelection)" value="{{operation.value}}">{{operation.name}}
+				<input name="ops" type="radio" ng-model="operationSelection.value" ng-change="operationSelectionChanged(operationSelection.value)" value="{{operation.value}}">{{operation.name}}
 			</div>
 		</div>
 		

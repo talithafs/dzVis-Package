@@ -25,16 +25,16 @@ var GoogleChartsBase = (function() {
 	// Protected constants: Fields default values
 	var DEFAULT = {
 		get TARGET() {
-			return [{id : null, name: null, text : "Nenhuma"}] ;
+			return [{id : "no_target", text : "Nenhuma"}] ;
 		},
 		get GROUP() {
-			return [{id : null, name: null, text : "Não agrupar"}] ;
+			return [{id : "no_group", text : "Não agrupar"}] ;
 		},
 		get TIME() {
-			return {id : null, name: null, text : "Nenhuma"} ;
+			return {id : "no_time", text : "Nenhuma"} ;
 		},
 		get NO_VALUE(){
-			return {id: null, text: "Nenhum valor selecionado"} ;
+			return {id: "no_value", text: "Nenhum valor selecionado"} ;
 		}
 	};
 	
@@ -155,7 +155,7 @@ var GoogleChartsBase = (function() {
 		var table = ref.databaseTree.getTable(node) ;
 		
 		if(table != currentTable){
-			
+						
 			currentTable = table ;
 			currentTimeVariable = undefined ;
 			currentColumns = [] ;
@@ -215,8 +215,7 @@ var GoogleChartsBase = (function() {
 	function onDestroy(){
 		
 		if(this.state.current.data.type != "googlevis"){
-			
-			
+
 			currentTable = undefined ;
 			currentColumns = [] ;
 			categories = [] ;
@@ -337,6 +336,128 @@ var GoogleChartsBase = (function() {
 		}
 	}
 	
+	function checkVariables(target, time){
+		
+		if(target == undefined || target == "" || target.length == 0){
+			return "Nenhuma variável numérica foi selecionada" ;
+		}
+		else if(time == "" || time == undefined){
+			return "Nenhuma variável temporal foi encontrada" ;
+		}
+		
+		return "VALID" ;
+	}
+	
+	function checkFilters(filters){
+		
+		if(filters == undefined){
+			return "Interno. A variável 'filters' não foi definida." ;
+		}
+		
+		var index ;
+		for(index in filters){
+			var filter = filters[index] ;
+			
+			if(filter.value.text == DEFAULT.NO_VALUE.text){
+				return "É necessário selecionar algum valor para o filtro " + filter.column.text.toUpperCase() ;
+			}
+		}
+		
+		return "VALID" ;
+	}
+	
+	// GoogleChartsBase.prototype.getTargetVar = function(target){
+		// return getTargetVar.call(this,target); 
+	// };
+	
+	function getTargetVar(target){
+		
+		if(target == undefined || target[0].text == DEFAULT.TARGET[0].text ){
+			return "" ;
+		}
+	
+		var index ;
+		var names = [];
+		
+		for(index in target){
+			names.push(target[index].original.name);
+		}
+		
+		if(names.length == 1){
+			return names[0];
+		}
+		
+		return names ;
+		
+	}
+	
+	// GoogleChartsBase.prototype.getGroupVar = function(group){
+		// return getGroupVar.call(this,group); 
+	// };
+	
+	function getGroupVar(group){
+		
+		if(group == undefined || group.text == DEFAULT.GROUP[0].text){
+			return "" ;
+		}
+		
+		return group.original.name  ;
+	}
+	
+	// GoogleChartsBase.prototype.getTimeVar = function(timeVar){
+		// return getTimeVar.call(this,timeVar); 
+	// };
+	
+	function getTimeVar(timeVar){
+		
+		if(timeVar == undefined || timeVar.text == DEFAULT.TIME.text){
+			return "" ;
+		}
+		
+		return timeVar.name ;
+	}
+	
+	// GoogleChartsBase.prototype.getRestrictions = function(filters){
+		// return getRestrictions.call(this,filters); 
+	// };
+	
+	function getRestrictions(filters){
+		
+		var index ;
+		var restrictions = [] ;
+		
+		for(index in filters){
+			var filter = filters[index];
+			
+			restrictions.push([filter.column.original.name, filter.value.text]);
+		}
+		
+		return restrictions ;
+	}
+	
+	// GoogleChartsBase.prototype.getAlternatives = function(group){
+		// return getAlternatives.call(this,group); 
+	// };
+	
+	function getAlternatives(group){
+		
+		var index, name ;
+		var alternatives = [] ;
+		
+		if(group == undefined || group.text == DEFAULT.GROUP[0].text){
+			return [] ;
+		}
+		name = group.original.name ;
+		
+		for(index in group.levels){
+			var level = group.levels[index];
+			
+			alternatives.push([name, level.text]);
+		}
+		
+		return alternatives ;
+	}
+	
 	// GoogleChartsBase public API
 	GoogleChartsBase.prototype.DEFAULT = DEFAULT ;
 	GoogleChartsBase.prototype.LABEL = LABEL ;
@@ -365,6 +486,34 @@ var GoogleChartsBase = (function() {
 	
 	GoogleChartsBase.prototype.controlFilters = function(activeFilters){
 		controlFilters.call(this,activeFilters); 
+	};
+	
+	GoogleChartsBase.prototype.checkFilters = function(filters){
+		return checkFilters.call(this,filters); 
+	};
+	
+	GoogleChartsBase.prototype.checkVariables = function(target, time){
+		return checkVariables.call(this,target, time); 
+	};
+	
+	GoogleChartsBase.prototype.getTargetVar = function(target){
+		return getTargetVar.call(this,target); 
+	};
+	
+	GoogleChartsBase.prototype.getGroupVar = function(group){
+		return getGroupVar.call(this,group); 
+	};
+	
+	GoogleChartsBase.prototype.getTimeVar = function(timeVar){
+		return getTimeVar.call(this,timeVar); 
+	};
+	
+	GoogleChartsBase.prototype.getRestrictions = function(filters){
+		return getRestrictions.call(this,filters); 
+	};
+	
+	GoogleChartsBase.prototype.getAlternatives = function(group){
+		return getAlternatives.call(this,group); 
 	};
 	
 	return {

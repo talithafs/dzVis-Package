@@ -51,11 +51,14 @@ var Connection = (function() {
 		
 		var req = ocpu.call(functionName, parameters, function(session){
 			
-			var message ;
-			
-			session.getObject(function(data){ 
-				message = data; 
-				callback(message, session.getFileURL(parameters.filename));
+			session.getObject(function(data){
+				
+				if(typeof data == "string"){
+					callback("ERROR", data);
+				}
+				else {
+					callback(session.getFileURL(data[0]), session.getFileURL(data[1]));
+				}
 			});
 		});
 		
@@ -107,16 +110,17 @@ var Connection = (function() {
 		call("validateKeys", parameters, callback);
 	};
 	
-	var createComboChart = function(filename, table, targetVar, groupVar, timeVar, min, max, restrictions, alternatives, callback){
+	var createComboChart = function(table, targetVar, groupVar, timeVar, min, max, lineVar, operation, restrictions, alternatives, callback){
 		
 		var parameters = {
-			filename : filename,
 			table : table,
 			targetVar : targetVar,
 			groupVar : groupVar,
 			timeVar : timeVar,
 			min : min,
 			max : max,
+			lineVar : lineVar,
+			operation : operation,
 			restrictions : restrictions,
 			alternatives : alternatives 
 		};
@@ -141,8 +145,8 @@ var Connection = (function() {
 		validateKeys.call(this, table, keys, restrictions, callback);
 	};
 	
-	Connection.prototype.createComboChart = function(filename, table, targetVar, groupVar, timeVar, min, max, restrictions, alternatives, callback){ 
-		createComboChart.call(this, filename, table, targetVar, groupVar, timeVar, min, max, restrictions, alternatives, callback);
+	Connection.prototype.createComboChart = function(table, targetVar, groupVar, timeVar, min, max, lineVar, operation, restrictions, alternatives, callback){ 
+		createComboChart.call(this, table, targetVar, groupVar, timeVar, min, max, lineVar, operation, restrictions, alternatives, callback);
 	};
 	
 	return {

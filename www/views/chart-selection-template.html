@@ -29,19 +29,30 @@
   <strong>{{errorText}}</strong>{{errorMessage}}
 </div>
 
-<div ng-show="showChart && !chartListVisible" class="row centered"> <!-- id="creative" -->
+<div ng-show="showChart && !chartListVisible" class="row centered"> 
+	
 	<div class="col-md-12 col-lg-12">
+		
 		<div id="chart-frame" class="col-sm-10 col-md-10 col-lg-10">
 			<iframe src="" id="chart" frameborder="0"> </iframe> 
 		</div> 
-		<div id="chart-address" class="col-sm-2 col-md-2 col-lg-2"> <!-- id="chart-address" -->
+		
+		<div id="chart-sources" class="col-sm-2 col-md-2 col-lg-2"> 
+			
 			<textarea id="code" rows="8" readonly>{{chartAddress}}</textarea>
 			<img id="btn-copy" title="{{copyText}}" alt="{{copyText}}" src="img/clipboard.png" ng-click="copyToClipboard()">
 			<p>{{information}}</p>
+			
+			<div class="download-button">
+				<img src="img/html-file.png">
+				<a download="chart.html" ng-href="{{chartURL}}">Baixar gráfico</a>
+			</div>
+			
+			<div class="download-button">
+				<img src="img/csv-file.png">
+				<a download="source-data.csv" ng-href="{{sourceURL}}">Baixar dados</a>
+			</div>
 		</div>
-	</div>
-	<div class="col-md-12" id="downloads">
-		<a target="_self" download="chart.html" ng-href="{{chartURL}}">Baixar gráfico</a>
 	</div>
 </div>
 

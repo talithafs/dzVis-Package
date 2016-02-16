@@ -173,27 +173,28 @@ hr {
 }
 
 /* Chart */
-#chart-address {
+#chart-sources {
 	margin: 0px ;
 	padding: 0px ;
 	margin-top: 25px ;
 	padding-left: 2px ;
 }
 
-#chart-address p {
+#chart-sources p {
 	font-size: 12px ;
 	text-align: justify ;
 }
 
-#chart-address textarea {
-	border: 1px solid #d3d3d3  ;
+#chart-sources textarea {
+	border: 1px solid #B1DDED  ;
 	width: 100% ;
 	resize: none ;
-	font-family: Monaco, "Lucida Console", "Courier New" ;
+	font-family: "Courier New" ;
 	margin-bottom: 3px ;
 }
 
-#chart-address img {
+#chart-sources img {
+	cursor: pointer ;
 	float: left ;
 	margin-right: 3px ;
 }
@@ -238,7 +239,7 @@ hr {
 #chart-options {
 	height: 200px ;
 	overflow: hidden ;
-	border-bottom: 1px dashed #000 ;
+	border-bottom: 1px solid #B1DDED ;
 }
 
 #chart-options h4 {
@@ -379,6 +380,24 @@ hr {
 	padding: 0px ;
 	margin-left: 1px ;
 	margin-right: 1px ;
+}
+
+.download-button {
+	padding: 0px ;
+	display: block ;
+	border: 1px solid #B1DDED ;
+	height: 26px ;
+	margin-bottom: 3px ;
+	font-size: 13px ;
+}
+
+.download-button a {
+	line-height: 26px ;
+}
+
+.download-button:hover {
+	background-color: #B1DDED ;
+	cursor: pointer ;
 }
 
 /*.loading {

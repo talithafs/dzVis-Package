@@ -31,7 +31,8 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	$scope.lineSelection = $scope.lineOptions[0];
 	
 	$scope.operations = features.DEFAULT.OPERATIONS ;	
-	$scope.operationSelection = $scope.operations[0].value ;
+	$scope.operationSelection = { value : "-" };
+	$scope.operationSelection.value = $scope.operations[0].value ;
 
 	$scope.$on("$stateChangeSuccess", function(){
 		
@@ -55,29 +56,56 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
     
     $scope.$on("createChart", function(){
     	
-    	var message ;
+    	var validation = {} ;
+    	validation.message = "Nenhum parâmetro foi escolhido." ;
     	
-		 $scope.$emit("chartCreated", { filePath : "data/chart.html",
-		 								width : 700,
-		 								height : 270 }
-		 );
-		 
-		// $scope.$emit("chartError", "Um erro feiao");
+    	if($scope.timeVar.text != base.DEFAULT.TIME.text){
+    		validation = checkDates();
+    	}
     	
-    	// var callback = function(parameters, filepath){
-//     		
-    		// alert(JSON.stringify(parameters));
-    		// alert(filepath);
-    	// };
-//     	    	
-    	// connection.createComboChart("chart.html", "", "","", "", "", "", [], [], callback);
+    	if(!checkValidationMessage(validation.message)){ return ; }
+		if(!checkValidationMessage(base.checkFilters($scope.filters))){ return ; }
     	
-    	// a = $scope.multipleDates.split(",") ;
-//     	
-    	// alert(a[0] + " " + a[1]);
-    	
-    	// alert($scope.$parent.checkDates($scope.multipleDates.split(","), 'yyyy-mm-dd', $scope.lowerBound, $scope.upperBound));
- 		   	
+        var target = base.getTargetVar($scope.targetSelection);
+        var group = base.getGroupVar($scope.groupSelection);
+        var time = base.getTimeVar($scope.timeVar);
+        
+        if(!checkValidationMessage(base.checkVariables(target, time))){ return ; }        
+        
+        var restrictions = base.getRestrictions($scope.filters);
+        var alternatives = base.getAlternatives($scope.groupSelection);
+        var line = getLineVar();
+        var operation = $scope.operationSelection.value ;
+        var min = validation.minDate ;
+        var max = validation.maxDate ;
+        
+        alternatives = getAlternatives(time, validation.multipleDates, alternatives) ;
+        
+      	var callback = function(chartFilePath, sourceDataPath){
+    		
+    		if(chartFilePath != "ERROR"){
+    			$scope.$emit("chartCreated", {  chartFilePath : chartFilePath,
+		 										sourceDataPath : sourceDataPath,
+		 										width : 750,
+		 										height : 300 
+				});
+    		}
+    		else {
+    			$scope.$emit("chartError", sourceDataPath);
+    		}    		
+    	}; 
+
+    	connection.createComboChart( table = base.properties.table.id,
+    								 targetVar = target,
+    								 groupVar = group,
+    								 timeVar = time,
+    								 min = min,
+    								 max = max,
+    								 lineVar = line,
+    								 operation = operation,
+    								 restrictions = restrictions,
+    								 alternatives = alternatives,
+    								 callback = callback );
     });
     
     $scope.selectMultipleDates = function(){
@@ -108,9 +136,7 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 
 	$scope.operationSelectionChanged = function(value){
 		
-		$scope.operationSelection = value ;
-		
-		if($scope.operationSelection == $scope.operations[0].value){
+		if($scope.operationSelection.value == $scope.operations[0].value){
 			$scope.lineSelection = $scope.lineOptions[0] ;
 		}
 	};
@@ -120,10 +146,10 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 		$scope.lineSelection = value ;
 		
 		if($scope.lineSelection == $scope.lineOptions[0]){
-			$scope.operationSelection = $scope.operations[0].value ;
+			$scope.operationSelection.value = $scope.operations[0].value ;
 		}
-		else if($scope.operationSelection == $scope.operations[0].value){
-			$scope.operationSelection = $scope.operations[1].value ;
+		else if($scope.operationSelection.value == $scope.operations[0].value){
+			$scope.operationSelection.value = $scope.operations[1].value ;
 		}
 	};
 	
@@ -280,7 +306,7 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 		}
 		else {			
 			$scope.lineSelection = $scope.lineOptions[0] ;
-			$scope.operationSelection = $scope.operations[0];
+			$scope.operationSelection.value = $scope.operations[0].value;
 		}
 		
 		updateFilters();
@@ -296,7 +322,18 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 				
 			if(index != -1){
 				$scope.lineOptions.splice(index,1);				
-				$scope.lineSelection = $scope.lineOptions[dim - 1] ;
+				$scope.lineSelection = $scope.lineOptions[dim-1] ;
+				
+				if($scope.lineSelection == $scope.lineOptions[0]){
+					$scope.operationSelection.value = $scope.operations[0].value ;
+				}
+			}
+			
+			if($scope.targetSelection.length == 1 && $scope.targetSelection.text != base.DEFAULT.TARGET.text){
+				$scope.lineOptions = [] ;
+				$scope.lineOptions.push(features.DEFAULT.LINE[0]);
+				$scope.lineOptions.push($scope.targetOptions[0]);
+				$scope.lineSelection = $scope.lineOptions[1];
 			}
 		}
 		else {		
@@ -335,7 +372,7 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 					$scope.lineOptions.push(features.DEFAULT.LINE[0]);
 					$scope.lineOptions.push(features.DEFAULT.LINE[1]);
 					$scope.lineSelection = $scope.lineOptions[1];
-					$scope.operationSelection = $scope.operations[1].value ;
+					$scope.operationSelection.value = $scope.operations[1].value ;
 				}
 			}
 		}
@@ -359,6 +396,81 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	
 		base.controlFilters($scope.filters);
 	}
+	
+	function checkValidationMessage(message){
+		
+		if(message != "VALID"){
+    		$scope.$emit("chartError", message);
+    		return false ;
+    	}
+    	
+    	return true ;
+	}
+	
+	function checkDates(){
+		
+		var validation = { } ;
+		validation.minDate = "" ;
+		validation.maxDate = "" ;
+		validation.message = "VALID" ;
+		validation.multipleDates = "" ;
+		
+		if($scope.multipleDatesMode){
+
+			var results = $scope.$parent.checkDates($scope.multipleDates.split(","), 
+									  				'dd-mm-yyyy', 
+									  				$scope.lowerBound, 
+									  				$scope.upperBound);
+			if(typeof results == "string"){
+				validation.message = results ;
+			}
+			
+			validation.multipleDates = results ;
+			return validation ;
+		}
+		else {
+			
+			var results = $scope.$parent.checkDates([$scope.minDate, $scope.maxDate], 
+									  				'yyyy-mm-dd', 
+									  				$scope.lowerBound, 
+									  				$scope.upperBound);
+			if(typeof results == "string"){
+				validation.message = results ;
+				
+			}
+			else {
+				validation.minDate = results[0] ;
+				validation.maxDate = results[1] ;
+			}
+		}
+		
+		return validation ;
+	}
+	
+	function getLineVar(){
+		
+		var noLine = features.DEFAULT.LINE[0].id ;
+		var numVar = features.DEFAULT.LINE[1].id ;
+		var lineVar = $scope.lineSelection ;
+		
+		if(lineVar == undefined || lineVar.id == noLine || lineVar.id == numVar){
+			return "" ;
+		}
+		
+		return lineVar.original.name ;
+	}
+	
+	function getAlternatives(timeVarName, multipleDates, alternatives){
+		
+		if($scope.multipleDatesMode){
+			
+			for(index in multipleDates){
+				alternatives.push([timeVarName, multipleDates[index]]);
+			}
+		}
+		
+		return alternatives ;
+	}
 }]);
 
 
@@ -368,14 +480,14 @@ function ComboChartFeatures(){
 	this.DEFAULT = {
 		get LINE(){
 			return [{id : "no_line", text : "Não desenhar linha"},
-					{id : "num_var", text: "Utilizar variáveis numéricas" }
+					{id : "num_var", text: "Utilizar variáveis numéricas"}
 				] ;
 		},
 		get OPERATIONS(){
 			return [
-				{name: "Nenhuma", value: "none"},
-				{name: "Desvio Padrão", value: "std"},
-				{name: "Média", value: "mean"}
+				{name: "Nenhuma", value: ""},
+				{name: "Desvio Padrão", value: "Desvio padrao"},
+				{name: "Média", value: "Media"}
 			];
 		}
 	};

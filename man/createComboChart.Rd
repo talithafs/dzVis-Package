@@ -4,13 +4,11 @@
 \alias{createComboChart}
 \title{Create a Google Combo Chart}
 \usage{
-createComboChart(filename, table, targetVar, groupVar, timeVar, min = NA,
-  max = NA, lineVar = NULL, operation = NULL, restrictions = NULL,
-  alternatives = NULL)
+createComboChart(table, targetVar, groupVar, timeVar, min = NA, max = NA,
+  lineVar = NULL, operation = NULL, restrictions = NULL,
+  alternatives = NULL, filename = NULL)
 }
 \arguments{
-\item{filename}{A \code{character}. The name of the .html file where the chart should be printed. The extension (.html) is not needed.}
-
 \item{table}{A \code{character} value. The name of the table from which the data should be retrieved}
 
 \item{targetVar}{A \code{character} value. The vertical axis variable}
@@ -26,9 +24,11 @@ createComboChart(filename, table, targetVar, groupVar, timeVar, min = NA,
 \item{restrictions}{A n x 2 \code{matrix}. The n equality restrictions that make timeVar and groupVar values unique when combined.}
 
 \item{alternatives}{A n x 2 \code{matrix}. Alternative values of a column (joined by 'or' conditions in a SQL query). The first column must contain the names of the columns. The second, its values.}
+
+\item{filename}{A \code{character}. The name of the .html file where the chart should be printed. The extension (.html) is not needed.}
 }
 \value{
-A \code{character}. The constant \code{.SUCCESS} if the chart was successfully created.
+A \code{character vector} if the chart was successfully created, with the name of two files: the .html file where the chart was printed and the .csv file where the source data was saved.
         Otherwise, an error string returned by one of validation functions listed under the 'Parameters validation' section.
 }
 \description{
@@ -44,7 +44,8 @@ The parameters are checked according to the rules estabilished in validation fun
 }
 }
 \examples{
-createComboChart("chart","pea_por_idade","percentual_total", "grupo_idade","mes","2010-01-01","2010-05-01", t(as.matrix(c("tipo_area","Total das áreas")))
+
+createComboChart("pea_por_idade",c("percentual_ativas","percentual_nao_ativas"), NULL,"mes",NA,NA, NULL, "Media", restrictions, alternatives)
 
 }
 \seealso{

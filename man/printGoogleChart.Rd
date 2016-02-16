@@ -4,16 +4,15 @@
 \alias{printGoogleChart}
 \title{Print Google Chart}
 \usage{
-printGoogleChart(filename, chartObj)
+printGoogleChart(chartObj, filename = NULL)
 }
 \arguments{
-\item{filename}{A \code{character} value. The name of the output file. The extension (.html) is not needed.}
-
 \item{chartObj}{A \code{gvis} object.}
+
+\item{filename}{A \code{character} value. The name of the output file. The extension (.html) is not needed.}
 }
 \value{
-\code{TRUE} if the file was correctly created and
-        \code{FALSE}, otherwise.
+\code{character}. The name of the file where the chart was printed.
 }
 \description{
 Prints a Google Chart to a .html file, encoded with UTF-8.
