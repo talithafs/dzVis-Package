@@ -30,9 +30,12 @@
 #-- applyOperation
 .ERROR_OPERATION = "Error: Parameter 'identifier' does not represent a valid operation."
 
-#-- createComboChart
-.ERROR_LINE_1 = "Error: Line variable should be NULL when the group variable is NULL."
-.ERROR_LINE_2 = "Error: Operation cannot be NULL when the line variable is not NULL."
+#-- createGoogleComboChart
+.ERROR_GOOGLE_COMBO_1 = "Error: Line variable should be NULL when the group variable is NULL."
+.ERROR_GOOGLE_COMBO_2 = "Error: Operation cannot be NULL when the line variable is not NULL."
+
+#--createGoogleMotionChart
+.ERROR_GOOGLE_MOTION = "Group variable cannot be NULL."
 
 ## Chart variables categories
 .TARGET = "TARGET"

@@ -9,7 +9,7 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	$scope.filtersLabel = base.LABEL.FILTERS ;
 	$scope.minLabel = base.LABEL.MIN_DATE ;
 	$scope.maxLabel = base.LABEL.MAX_DATE ;
-	$scope.placeholder = base.PLACEHOLDER.MULTIPLE_DATES ;
+	$scope.placeholder = base.PLACEHOLDER.MULTIPLE_DATES.MONTHLY ;
 	$scope.selectMultipleDatesLabel = base.LABEL.MULTIPLE_DATES ;
 	
 	// Google Charts default values
@@ -87,7 +87,7 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
     			$scope.$emit("chartCreated", {  chartFilePath : chartFilePath,
 		 										sourceDataPath : sourceDataPath,
 		 										width : 750,
-		 										height : 300 
+		 										height : 320 
 				});
     		}
     		else {
@@ -95,21 +95,21 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
     		}    		
     	}; 
 
-    	connection.createComboChart( table = base.properties.table.id,
-    								 targetVar = target,
-    								 groupVar = group,
-    								 timeVar = time,
-    								 min = min,
-    								 max = max,
-    								 lineVar = line,
-    								 operation = operation,
-    								 restrictions = restrictions,
-    								 alternatives = alternatives,
-    								 callback = callback );
+    	connection.createGoogleComboChart( table = base.properties.table.id,
+    								 	   targetVar = target,
+    								 	   groupVar = group,
+    								 	   timeVar = time,
+    								 	   min = min,
+    								 	   max = max,
+    								 	   lineVar = line,
+    								 	   operation = operation,
+    								 	   restrictions = restrictions,
+    								 	   alternatives = alternatives,
+    								 	   callback = callback );
     });
     
     $scope.selectMultipleDates = function(){
-		
+
 		$scope.multipleDatesMode = !$scope.multipleDatesMode ;
 		
 		if($scope.multipleDatesMode){
@@ -385,7 +385,6 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 				
 				$scope.filters.push(filters[index]);
 			}
-
 		}
 	
 		base.controlFilters($scope.filters);
@@ -417,6 +416,16 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 				var min = angular.element(document.querySelector('#gcc-min-date'));
 				min.attr('type',"month");
 			}
+			
+			if(freq == "diaria"){
+				$scope.placeholder = base.PLACEHOLDER.MULTIPLE_DATES.DAILY ;
+			}
+			else if(freq == "mensal") {
+				$scope.placeholder = base.PLACEHOLDER.MULTIPLE_DATES.MONTHLY ;
+			}
+			else {
+				$scope.placeholder = base.PLACEHOLDER.MULTIPLE_DATES.YEARLY ;
+			}
 		}
 	}
 	
@@ -433,15 +442,24 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	function checkDates(){
 		
 		var validation = { } ;
+		var frequency = base.properties.table.original.frequency ;
+		var format = "" ;
+		
 		validation.minDate = "" ;
 		validation.maxDate = "" ;
 		validation.message = "VALID" ;
 		validation.multipleDates = "" ;
 		
 		if($scope.multipleDatesMode){
+			
+			format = "mm-yyyy" ;
+			
+			if(frequency == "diaria"){
+				format = "dd-mm-yyyy" ;
+			}
 
 			var results = $scope.$parent.checkDates($scope.multipleDates.split(","), 
-									  				'dd-mm-yyyy', 
+									  				format, 
 									  				$scope.lowerBound, 
 									  				$scope.upperBound);
 			if(typeof results == "string"){
@@ -453,8 +471,14 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 		}
 		else {
 			
+			format = "yyyy-mm" ;
+			
+			if(frequency == "diaria"){
+				format = "yyyy-mm-dd" ;
+			}
+			
 			var results = $scope.$parent.checkDates([$scope.minDate, $scope.maxDate], 
-									  				'yyyy-mm-dd', 
+									  				format, 
 									  				$scope.lowerBound, 
 									  				$scope.upperBound);
 			if(typeof results == "string"){

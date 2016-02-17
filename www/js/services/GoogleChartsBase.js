@@ -69,7 +69,11 @@ var GoogleChartsBase = (function() {
 	// Protected constants: Placeholders 
 	var PLACEHOLDER = {
 		get MULTIPLE_DATES(){
-			return "Inserir datas no formato dd-mm-aaaa, separadas por vírgulas" ;
+			return { 
+				 	 DAILY: "Inserir datas no formato dd-mm-aaaa, separadas por vírgulas", 
+					 MONTHLY: "Inserir datas no formato mm-aaaa, separadas por vírgulas",
+					 YEARLY: "Inserir datas no formato aaaa, separadas por vírgulas"
+				   } ;
 		}
 	};
 	

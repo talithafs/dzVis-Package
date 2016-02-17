@@ -31,7 +31,7 @@
 #' @export
 #' @import googleVis
 
-createComboChart <- function(table, targetVar, groupVar, timeVar, min = NA, max = NA, lineVar = NULL, operation = NULL, restrictions = NULL, alternatives = NULL, filename = NULL){
+createGoogleComboChart <- function(table, targetVar, groupVar, timeVar, min = NA, max = NA, lineVar = NULL, operation = NULL, restrictions = NULL, alternatives = NULL, filename = NULL){
 
   #-- Process parameters
   if(!is.null(restrictions) && length(restrictions) == 0){
@@ -82,11 +82,11 @@ createComboChart <- function(table, targetVar, groupVar, timeVar, min = NA, max 
   if(!is.null(lineVar) && !(lineVar %in% targetVar)){
 
     if(is.null(groupVar)){
-      return(.ERROR_LINE_1)
+      return(.ERROR_GOOGLE_COMBO_1)
     }
 
     if(is.null(operation)){
-      return(.ERROR_LINE_2)
+      return(.ERROR_GOOGLE_COMBO_2)
     }
 
     validationMessage <- validateTargetVariables(data,lineVar)
@@ -148,7 +148,7 @@ createComboChart <- function(table, targetVar, groupVar, timeVar, min = NA, max 
                    seriesType="bars",
                    chartArea = "{width : '72%', left: 30}",
                    width=750,
-                   height=300 )
+                   height=320 )
 
   #-- Create line
   if(!is.null(operation)){

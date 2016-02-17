@@ -96,39 +96,62 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
   		}
 	};
 	
-	$scope.checkDates = function(dates, format, lowerBound, upperBound){
+	$scope.checkDates = function(inputs, inputsFormat, lowerBound, upperBound){
 		
 		var regex, match = "" ;
 		var results = [] ;
 		
-		if(!(dates instanceof Array)){
-			var temp = dates ;
-			dates = [] ;
-			dates.push(temp);
+		if(!(inputs instanceof Array)){
+			var temp = inputs ;
+			inputs = [] ;
+			inputs.push(temp);
 		}
 		
-		if(format == 'yyyy-mm-dd'){
+		if(inputsFormat == 'yyyy-mm-dd'){
 			
 			regex = /^(\d{4})\-(\d{1,2})\-(\d{1,2})$/ ;
 		}
-		else if(format == 'dd-mm-yyyy'){
+		else if(inputsFormat == 'dd-mm-yyyy'){
 			
 			regex = /^(\d{1,2})\-(\d{1,2})\-(\d{4})$/ ;
+		}
+		else if(inputsFormat == 'mm-yyyy'){
+			
+			regex = /^(\d{1,2})\-(\d{4})$/ ;
+			
+		}
+		else if(inputsFormat == 'yyyy-mm'){
+			
+			regex = /^(\d{4})\-(\d{1,2})$/ ;	
 		}
 		else {
 			return "Interno. Formato de data especificado não corresponde a um formato válido." ;
 		}
 		
-		for(index in dates){
+		if(inputsFormat == 'yyyy-mm' || inputsFormat == 'mm-yyyy'){
+			lowerBound = lowerBound + "-01";
+			upperBound = upperBound + "-01";
+		}
+		
+		for(index in inputs){
 				
-			match = dates[index].match(regex);
+			match = inputs[index].match(regex);
 			
 			if(match != null){
 				
-				if(format == 'dd-mm-yyyy'){
+				if(inputsFormat == 'dd-mm-yyyy'){
 					var temp = match[1] ;
 					match[1] = match[3];
 					match[3] = temp ; 
+				}
+				else if(inputsFormat == 'mm-yyyy'){
+					var temp = match[1] ;
+					match[1] = match[2];
+					match[2] = temp ;
+					match.push('01');  
+				}
+				else if(inputsFormat == 'yyyy-mm'){
+					match.push('01');
 				}
 				
 				date = match[1] + "-" + match[2] + "-" + match[3] ;
@@ -148,7 +171,7 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
 				results.push(date);
 			}
 			else {
-				return "Data inválida. Formato inválido: " + dates[index] ;
+				return "Data inválida. Formato inválido: " + inputs[index] ;
 			}
 		}
 		

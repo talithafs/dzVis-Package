@@ -79,16 +79,6 @@ var Connection = (function() {
 		getQuery("getColumnValues", parameters, callback) ;
 	} ;
 	
-	var getColumnsByCategory = function(table, category, callback){
-		
-		var parameters = {
-			table : table,
-			category : category
-		} ;
-		
-		return call("getColumnsByCategory", parameters, callback) ;
-	} ;
-	
 	var mapChartVariables = function(table, variables, callback){
 		
 		var parameters = {
@@ -99,18 +89,7 @@ var Connection = (function() {
 		call("mapChartVariables", parameters, callback);
 	} ;
 	
-	var validateKeys = function(table, keys, restrictions, callback){
-		
-		var parameters = {
-			data : table,
-			keys : keys,
-			restrictions : restrictions
-		};
-		
-		call("validateKeys", parameters, callback);
-	};
-	
-	var createComboChart = function(table, targetVar, groupVar, timeVar, min, max, lineVar, operation, restrictions, alternatives, callback){
+	var createGoogleComboChart = function(table, targetVar, groupVar, timeVar, min, max, lineVar, operation, restrictions, alternatives, callback){
 		
 		var parameters = {
 			table : table,
@@ -125,7 +104,23 @@ var Connection = (function() {
 			alternatives : alternatives 
 		};
 		
-		createChart("createComboChart", parameters, callback);
+		createChart("createGoogleComboChart", parameters, callback);
+	};
+	
+	var createGoogleMotionChart = function(table, targetVar, groupVar, timeVar, min, max, restrictions, alternatives, callback){
+		
+		var parameters = {
+			table : table,
+			targetVar : targetVar,
+			groupVar : groupVar,
+			timeVar : timeVar,
+			min : min,
+			max : max,
+			restrictions : restrictions,
+			alternatives : alternatives 
+		};
+		
+		createChart("createGoogleMotionChart", parameters, callback);
 	};
 	
 	//Connection public API
@@ -133,20 +128,16 @@ var Connection = (function() {
 		getColumnValues.call(this, column, table, nvalues, callback);
 	};
 	
-	Connection.prototype.getColumnsByCategory = function(table, category, callback){ 
-		getColumnsByCategory.call(this, table, category, callback);
-	};
-	
 	Connection.prototype.mapChartVariables = function(table, variables, callback){ 
 		mapChartVariables.call(this, table, variables, callback);
 	};
 	
-	Connection.prototype.validateKeys = function(table, keys, restrictions, callback){ 
-		validateKeys.call(this, table, keys, restrictions, callback);
+	Connection.prototype.createGoogleComboChart = function(table, targetVar, groupVar, timeVar, min, max, lineVar, operation, restrictions, alternatives, callback){ 
+		createGoogleComboChart.call(this, table, targetVar, groupVar, timeVar, min, max, lineVar, operation, restrictions, alternatives, callback);
 	};
 	
-	Connection.prototype.createComboChart = function(table, targetVar, groupVar, timeVar, min, max, lineVar, operation, restrictions, alternatives, callback){ 
-		createComboChart.call(this, table, targetVar, groupVar, timeVar, min, max, lineVar, operation, restrictions, alternatives, callback);
+	Connection.prototype.createGoogleMotionChart = function(table, targetVar, groupVar, timeVar, min, max, restrictions, alternatives, callback){ 
+		createGoogleMotionChart.call(this, table, targetVar, groupVar, timeVar, min, max, restrictions, alternatives, callback);
 	};
 	
 	return {

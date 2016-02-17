@@ -19,6 +19,9 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
 	$scope.targetSelection = [] ;
 	$scope.targetSelection.push($scope.targetOptions[0]) ;	
 	$scope.groupSelection = $scope.groupOptions[0] ;
+	
+	var inputMax = angular.element(document.querySelector('#gmc-max-date'));
+	var inputMin = angular.element(document.querySelector('#gmc-min-date'));
 
 	$scope.$on("$stateChangeSuccess", function(){
 		
@@ -42,55 +45,50 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
     
     $scope.$on("createChart", function(){
     	
-    	// var validation = {} ;
-    	// validation.message = "Nenhum parâmetro foi escolhido." ;
-//     	
-    	// if($scope.timeVar.text != base.DEFAULT.TIME.text){
-    		// validation = checkDates();
-    	// }
-//     	
-    	// if(!checkValidationMessage(validation.message)){ return ; }
-		// if(!checkValidationMessage(base.checkFilters($scope.filters))){ return ; }
-//     	
-        // var target = base.getTargetVar($scope.targetSelection);
-        // var group = base.getGroupVar($scope.groupSelection);
-        // var time = base.getTimeVar($scope.timeVar);
-//         
-        // if(!checkValidationMessage(base.checkVariables(target, time))){ return ; }        
-//         
-        // var restrictions = base.getRestrictions($scope.filters);
-        // var alternatives = base.getAlternatives($scope.groupSelection);
-        // var min = validation.minDate ;
-        // var max = validation.maxDate ;
-//         
-      	// var callback = function(chartFilePath, sourceDataPath){
-//     		
-    		// if(chartFilePath != "ERROR"){
-    			// $scope.$emit("chartCreated", {  chartFilePath : chartFilePath,
-		 										// sourceDataPath : sourceDataPath,
-		 										// width : 750,
-		 										// height : 300 
-				// });
-    		// }
-    		// else {
-    			// $scope.$emit("chartError", sourceDataPath);
-    		// }    		
-    	// }; 
-// 
-    	// connection.createComboChart( table = base.properties.table.id,
-    								 // targetVar = target,
-    								 // groupVar = group,
-    								 // timeVar = time,
-    								 // min = min,
-    								 // max = max,
-    								 // lineVar = line,
-    								 // operation = operation,
-    								 // restrictions = restrictions,
-    								 // alternatives = alternatives,
-    								 // callback = callback );
-    								 
+    	var validation = {} ;
+    	validation.message = "Nenhum parâmetro foi escolhido." ;
     	
-    		//alert($scope.maxDate);
+    	if($scope.timeVar.text != base.DEFAULT.TIME.text){
+    		validation = checkDates();
+    	}
+    	
+    	if(!checkValidationMessage(validation.message)){ return ; }
+		if(!checkValidationMessage(base.checkFilters($scope.filters))){ return ; }
+    	
+        var target = base.getTargetVar($scope.targetSelection);
+        var group = base.getGroupVar($scope.groupSelection);
+        var time = base.getTimeVar($scope.timeVar);
+        
+        if(!checkValidationMessage(base.checkVariables(target, time))){ return ; }        
+        
+        var restrictions = base.getRestrictions($scope.filters);
+        var alternatives = base.getAlternatives($scope.groupSelection);
+        var min = validation.minDate ;
+        var max = validation.maxDate ;
+        
+      	var callback = function(chartFilePath, sourceDataPath){
+    		
+    		if(chartFilePath != "ERROR"){
+    			$scope.$emit("chartCreated", {  chartFilePath : chartFilePath,
+		 										sourceDataPath : sourceDataPath,
+		 										width : 730,
+		 										height : 320
+				});
+    		}
+    		else {
+    			$scope.$emit("chartError", sourceDataPath);
+    		}    		
+    	}; 
+
+    	connection.createGoogleMotionChart( table = base.properties.table.id,
+    								        targetVar = target,
+    								 	    groupVar = group,
+    								 		timeVar = time,
+    								 		min = min,
+    								 		max = max,
+    								 		restrictions = restrictions,
+    								 		alternatives = alternatives,
+    								 		callback = callback );
     });
     
     $scope.targetSelectionChanged = function(value){
@@ -285,13 +283,20 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
 	
 	function checkDates(){
 		
+		var frequency = base.properties.table.original.frequency ;
 		var validation = { } ;
+		var format = 'yyyy-mm' ;
+		
+		if(frequency == 'diaria'){
+			format = 'yyyy-mm-dd' ;
+		}
+		
 		validation.minDate = "" ;
 		validation.maxDate = "" ;
 		validation.message = "VALID" ;
 
 		var results = $scope.$parent.checkDates([$scope.minDate, $scope.maxDate], 
-								  				'yyyy-mm-dd', 
+								  				format, 
 								  				$scope.lowerBound, 
 								  				$scope.upperBound);
 		if(typeof results == "string"){
@@ -310,26 +315,21 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
 		
 		if($scope.timeVar.id != timeVar.id){
 			
+			var freq = base.properties.table.original.frequency ;
+			
 			$scope.timeVar = timeVar ;
 			$scope.minDate = $scope.timeVar.minimum ;
 			$scope.maxDate = $scope.timeVar.maximum ;
 			$scope.upperBound = $scope.maxDate ;
 			$scope.lowerBound = $scope.minDate ;
 
-			
-			if(base.properties.table.original.frequency == "diaria"){
-				var max = angular.element(document.querySelector('#gmc-max-date'));
-				max.attr('type',"date");
-				
-				var min = angular.element(document.querySelector('#gmc-min-date'));
-				min.attr('type',"date");
+			if(freq == "diaria"){
+				inputMax.attr('type',"date");
+				inputMin.attr('type',"date");
 			}
 			else if(freq == "mensal"){
-				var max = angular.element(document.querySelector('#gmc-max-date'));
-				max.attr('type',"month");
-				
-				var min = angular.element(document.querySelector('#gmc-min-date'));
-				min.attr('type',"month");
+				inputMax.attr('type',"month");
+				inputMin.attr('type',"month");
 			}
 		}
 	}
