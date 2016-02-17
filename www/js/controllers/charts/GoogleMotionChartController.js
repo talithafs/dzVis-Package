@@ -88,8 +88,9 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
     								 // restrictions = restrictions,
     								 // alternatives = alternatives,
     								 // callback = callback );
+    								 
     	
-    		alert($scope.maxDate);
+    		//alert($scope.maxDate);
     });
     
     $scope.targetSelectionChanged = function(value){
@@ -108,9 +109,9 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
 
 	
 	function fillOptions(nodes, timeVar){
-
+		
 		$scope.$apply(function(){
-			$scope.timeVar = timeVar ;
+			setTimeParameters(timeVar);
 		});
 		
 		for(index in nodes){
@@ -151,14 +152,7 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
 				changeGroup();
 			}
 			
-			if($scope.timeVar.text == base.DEFAULT.TIME.text){
-				alert("helloo");
-				$scope.timeVar = base.properties.timeVariable ;
-				$scope.minDate = base.properties.timeVariable.minimum ;
-				$scope.maxDate = base.properties.timeVariable.maximum ;
-				$scope.upperBound = $scope.maxDate ;
-				$scope.lowerBound = $scope.minDate ;
-			}
+			setTimeParameters(base.properties.timeVariable);
 		});
 	}
 	
@@ -310,6 +304,34 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
 		}
 
 		return validation ;
+	}
+	
+	function setTimeParameters(timeVar){
+		
+		if($scope.timeVar.id != timeVar.id){
+			
+			$scope.timeVar = timeVar ;
+			$scope.minDate = $scope.timeVar.minimum ;
+			$scope.maxDate = $scope.timeVar.maximum ;
+			$scope.upperBound = $scope.maxDate ;
+			$scope.lowerBound = $scope.minDate ;
+
+			
+			if(base.properties.table.original.frequency == "diaria"){
+				var max = angular.element(document.querySelector('#gmc-max-date'));
+				max.attr('type',"date");
+				
+				var min = angular.element(document.querySelector('#gmc-min-date'));
+				min.attr('type',"date");
+			}
+			else if(freq == "mensal"){
+				var max = angular.element(document.querySelector('#gmc-max-date'));
+				max.attr('type',"month");
+				
+				var min = angular.element(document.querySelector('#gmc-min-date'));
+				min.attr('type',"month");
+			}
+		}
 	}
 
 	

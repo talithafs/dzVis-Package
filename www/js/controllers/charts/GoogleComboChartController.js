@@ -156,9 +156,9 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	function fillOptions(nodes, timeVar){
 
 		$scope.$apply(function(){
-			$scope.timeVar = timeVar ;
+			setTimeParameters(timeVar);
 		});
-		
+
 		for(index in nodes){
 			addOption(nodes[index]);
 		}
@@ -197,14 +197,8 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 				changeGroup();
 			}
 			
-			if($scope.timeVar.text == base.DEFAULT.TIME.text){
-				
-				$scope.timeVar = base.properties.timeVariable ;
-				$scope.minDate = base.properties.timeVariable.minimum ;
-				$scope.maxDate = base.properties.timeVariable.maximum ;
-				$scope.upperBound = $scope.maxDate ;
-				$scope.lowerBound = $scope.minDate ;
-			}
+			setTimeParameters(base.properties.timeVariable);
+		
 		});
 	}
 	
@@ -395,6 +389,35 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 		}
 	
 		base.controlFilters($scope.filters);
+	}
+	
+	function setTimeParameters(timeVar){
+		
+		if($scope.timeVar.id != timeVar.id){
+			
+			var freq = base.properties.table.original.frequency ;
+
+			$scope.timeVar = timeVar ;
+			$scope.minDate = $scope.timeVar.minimum ;
+			$scope.maxDate = $scope.timeVar.maximum ;
+			$scope.upperBound = $scope.maxDate ;
+			$scope.lowerBound = $scope.minDate ;
+			
+			if(freq == "diaria"){
+				var max = angular.element(document.querySelector('#gcc-max-date'));
+				max.attr('type',"date");
+				
+				var min = angular.element(document.querySelector('#gcc-min-date'));
+				min.attr('type',"date");
+			}
+			else if(freq == "mensal"){
+				var max = angular.element(document.querySelector('#gcc-max-date'));
+				max.attr('type',"month");
+				
+				var min = angular.element(document.querySelector('#gcc-min-date'));
+				min.attr('type',"month");
+			}
+		}
 	}
 	
 	function checkValidationMessage(message){

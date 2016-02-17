@@ -32,13 +32,13 @@
 		<div ng-show="!multipleDatesMode">
 			<div class="date-input">
 				<label>{{minLabel}}</label>
-				<input type="date" ng-model="minDate" value="{{minDate}}" min="{{lowerBound}}" max="{{maxDate}}">
+				<input id="gcc-min-date" type="month" ng-model="minDate" value="{{minDate}}" min="{{lowerBound}}" max="{{maxDate}}">
 				<p>{{lowerBound | date:'dd-MM-yyyy'}}</p>
 			</div>
 				
 			<div class="date-input">
 				<label>{{maxLabel}}</label>
-				<input type="date" ng-model="maxDate" value="{{maxDate}}" min="{{minDate}}" max="{{upperBound}}">
+				<input id="gcc-max-date" type="month" ng-model="maxDate" value="{{maxDate}}" min="{{minDate}}" max="{{upperBound}}">
 				<p>{{upperBound | date:'dd-MM-yyyy'}}</p>
 			</div>
 		</div>
