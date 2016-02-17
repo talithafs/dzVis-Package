@@ -281,6 +281,7 @@ hr {
 
 .date-input input {
 	height: 23px ;
+	max-width: 180px ;
 }
 
 .date-input label {

@@ -38,6 +38,13 @@ importData <- function(table, columns, restrictions = NULL, limits = NULL, alter
     conn <- connect()
   }
 
+  dateCol <- getColumnsByCategory(table,.TIME,conn)
+  altDates <- formatDates(table, alternatives[alternatives[,1] == dateCol,2], toStandard = TRUE)
+  restDates <- formatDates(table, restrictions[restrictions[,1] == dateCol,2], toStandard = TRUE)
+
+  alternatives[alternatives[,1] == dateCol,2] <- altDates
+  restrictions[restrictions[,1] == dateCol,2] <- restDates
+
   cols <- paste(columns,collapse = ", ")
   query <- paste("select",cols,"from",table)
 

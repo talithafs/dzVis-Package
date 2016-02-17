@@ -27,6 +27,10 @@
 
 validateGoogleChartParameters <- function(data, table, targetVar, groupVar, timeVar, min, max, restrictions){
 
+  lim <- formatDates(table, c(min,max), toStandard = TRUE)
+  min <- as.Date(lim[1])
+  max <- as.Date(lim[2])
+
   if(!is.na(min) || !is.na(max)){
     validationMessage <- validateLimits(data,timeVar,as.Date(min),as.Date(max))
 

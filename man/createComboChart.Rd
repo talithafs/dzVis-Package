@@ -44,7 +44,6 @@ The parameters are checked according to the rules estabilished in validation fun
 }
 }
 \examples{
-
 createComboChart("pea_por_idade",c("percentual_ativas","percentual_nao_ativas"), NULL,"mes",NA,NA, NULL, "Media", restrictions, alternatives)
 
 }

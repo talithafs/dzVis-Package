@@ -104,9 +104,9 @@ completeJSON = gsub('\\}\n\n \\{',"\\},\n{",completeJSON)
 
 for(name in names(dbAD)){
   name <- paste('\"',name,'\"',sep="")
-  query <- paste("select descricao from tabelas where nome = ", name);
+  query <- paste("select descricao, frequencia_dados from tabelas where nome = ", name);
   results <- dbGetQuery(connection, query)
-  rootNode = paste('\"id\": ',name,', \"text\": ', gsub("_", " ", name), ', \"description\": "', results[[1]], '", \"children\"', sep="")
+  rootNode = paste('\"id\": ',name,', \"text\": ', gsub("_", " ", name), ', \"description\": "', results[[1]], '\", \"frequency\": "', results[[2]], '", \"children\"', sep="")
   completeJSON = gsub(name,rootNode,completeJSON)
 }
 

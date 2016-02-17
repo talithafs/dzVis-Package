@@ -24,7 +24,6 @@
 #'}
 #'
 #' @examples
-#'
 #' createComboChart("pea_por_idade",c("percentual_ativas","percentual_nao_ativas"), NULL,"mes",NA,NA, NULL, "Media", restrictions, alternatives)
 #'
 #' @seealso \code{\link[googleVis]{gvisComboChart}}
@@ -175,6 +174,9 @@ createComboChart <- function(table, targetVar, groupVar, timeVar, min = NA, max 
     names(newData)[ncolumns] <- name
     options <- c(options, series = paste("{", ncolumns - 2,": {type: 'line'}}",sep=""))
   }
+
+  #-- Format dates
+  #newData[,timeVar] <- formatDates(table, newData[,timeVar], toStandard = FALSE)
 
   #-- Create the combo chart and print it
   chartObj = gvisComboChart(newData, xvar=timeVar, yvar=names(newData)[2:ncolumns], options=options)

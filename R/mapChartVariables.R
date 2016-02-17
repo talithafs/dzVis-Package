@@ -70,6 +70,11 @@ mapChartVariables <- function(table, variables){
     if(categories[row,.TARGET] || categories[row,.TIME]){
 
       limits <- getLimits(table,colName)
+
+      if(categories[row,.TIME]){
+        limits[,.MIN] <- formatDates(table, limits[,.MIN],toStandard = FALSE)
+        limits[,.MAX] <- formatDates(table, limits[,.MAX],toStandard = FALSE)
+      }
       categories[row,.MIN] <- limits[,.MIN]
       categories[row,.MAX] <- limits[,.MAX]
     }

@@ -166,8 +166,7 @@ var GoogleChartsBase = (function() {
 		if(categories.length == 0){
 			onLoad(callback);
 		}
-		else {
-			
+		else {			
 			var info, column, index ;
 			
 			column = ref.databaseTree.getColumn(node);

@@ -1,5 +1,5 @@
 [ {
-  "id": "pea_por_idade", "text": "pea por idade", "description": "População economicamente ativa classificada por grupos de idade", "children": [
+  "id": "pea_por_idade", "text": "pea por idade", "description": "População economicamente ativa classificada por grupos de idade", "frequency": "mensal", "children": [
     {
       "id": "pea_por_idade.tipo_area",
       "name": "tipo_area",
@@ -92,48 +92,48 @@
       "id": "pea_por_idade.coeficiente_total",
       "name": "coeficiente_total",
       "type": "attr",
-      "text": "Total (Coeficiente de Variação)",
+      "text": "Total (Coef. de Variação)",
       "description": "Coeficiente de variação de pessoas de 10 anos ou mais de idade"    },
     {
       "id": "pea_por_idade.ativas_por_mil",
       "name": "ativas_por_mil",
       "type": "attr",
-      "text": "Economicamente Ativas (Mil pessoas)",
+      "text": "Ativas (Mil pessoas)",
       "description": "Total de pessoas de 10 anos ou mais de idade, economicamente ativas na semana de referência (Mil pessoas)"    },
     {
       "id": "pea_por_idade.percentual_ativas",
       "name": "percentual_ativas",
       "type": "attr",
-      "text": "Economicamente Ativas (Percentual)",
+      "text": "Ativas (Percentual)",
       "description": "Percentual de pessoas de 10 anos ou mais de idade economicamente ativas na semana de referência"    },
     {
       "id": "pea_por_idade.coeficiente_ativas",
       "name": "coeficiente_ativas",
       "type": "attr",
-      "text": "Economicamente Ativas (Coeficiente de Variação)",
+      "text": "Ativas (Coef. de Variação)",
       "description": "Coeficiente de variação de pessoas de 10 anos ou mais de idade, economicamente ativas na semana de referência"    },
     {
       "id": "pea_por_idade.nao_ativas_por_mil",
       "name": "nao_ativas_por_mil",
       "type": "attr",
-      "text": "Não Economicamente Ativas (Mil pessoas)",
+      "text": "Não Ativas (Mil pessoas)",
       "description": "Total de pessoas de 10 anos ou mais de idade, não economicamente ativas na semana de referência (Mil pessoas)"    },
     {
       "id": "pea_por_idade.percentual_nao_ativas",
       "name": "percentual_nao_ativas",
       "type": "attr",
-      "text": "Não Economicamente Ativas (Percentual)",
+      "text": "Não Ativas (Percentual)",
       "description": "Percentual de pessoas de 10 anos ou mais de idade, não economicamente ativas na semana de referência"    },
     {
       "id": "pea_por_idade.coeficiente_nao_ativas",
       "name": "coeficiente_nao_ativas",
       "type": "attr",
-      "text": "Não Economicamente Ativas (Coeficiente de Variação)",
+      "text": "Não Ativas (Coef. de Variação)",
       "description": "Coeficiente de variação de pessoas de 10 anos ou mais de idade, não economicamente ativas na semana de referência"    }
   ]
 },
 {
-  "id": "pea_por_sexo", "text": "pea por sexo", "description": "População economicamente ativa classificada por sexo", "children": [
+  "id": "pea_por_sexo", "text": "pea por sexo", "description": "População economicamente ativa classificada por sexo", "frequency": "diaria", "children": [
     {
       "id": "pea_por_sexo.tipo_area",
       "name": "tipo_area",
@@ -214,43 +214,43 @@
       "id": "pea_por_sexo.coeficiente_total",
       "name": "coeficiente_total",
       "type": "attr",
-      "text": "Total (Coeficiente de Variação)",
+      "text": "Total (Coef. de Variação)",
       "description": "Coeficiente de variação de pessoas de 10 anos ou mais de idade"    },
     {
       "id": "pea_por_sexo.ativas_por_mil",
       "name": "ativas_por_mil",
       "type": "attr",
-      "text": "Economicamente Ativas (Mil pessoas)",
+      "text": "Ativas (Mil pessoas)",
       "description": "Total de pessoas de 10 anos ou mais de idade, economicamente ativas na semana de referência (Mil pessoas)"    },
     {
       "id": "pea_por_sexo.percentual_ativas",
       "name": "percentual_ativas",
       "type": "attr",
-      "text": "Economicamente Ativas (Percentual)",
+      "text": "Ativas (Percentual)",
       "description": "Percentual de pessoas de 10 anos ou mais de idade economicamente ativas na semana de referência"    },
     {
       "id": "pea_por_sexo.coeficiente_ativas",
       "name": "coeficiente_ativas",
       "type": "attr",
-      "text": "Economicamente Ativas (Coeficiente de Variação)",
+      "text": "Ativas (Coeficiente de Variação)",
       "description": "Coeficiente de variação de pessoas de 10 anos ou mais de idade, economicamente ativas na semana de referência"    },
     {
       "id": "pea_por_sexo.nao_ativas_por_mil",
       "name": "nao_ativas_por_mil",
       "type": "attr",
-      "text": "Não Economicamente Ativas (Mil pessoas)",
+      "text": "Não Ativas (Mil pessoas)",
       "description": "Total de pessoas de 10 anos ou mais de idade, não economicamente ativas na semana de referência (Mil pessoas)"    },
     {
       "id": "pea_por_sexo.percentual_nao_ativas",
       "name": "percentual_nao_ativas",
       "type": "attr",
-      "text": "Não Economicamente Ativas (Percentual)",
+      "text": "Não Ativas (Percentual)",
       "description": "Percentual de pessoas de 10 anos ou mais de idade, não economicamente ativas na semana de referência"    },
     {
       "id": "pea_por_sexo.coeficiente_nao_ativas",
       "name": "coeficiente_nao_ativas",
       "type": "attr",
-      "text": "Não Economicamente Ativas (Coeficiente de Variação)",
+      "text": "Não Ativas (Coef. de Variação)",
       "description": "Coeficiente de variação de pessoas de 10 anos ou mais de idade, não economicamente ativas na semana de referência"    }
   ]
 }

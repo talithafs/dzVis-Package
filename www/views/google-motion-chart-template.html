@@ -1,1 +1,57 @@
-<h1>MOTION CHART</h1>
+<div class"row">
+	
+	<div class="col-md-4 col-sm-4">
+		
+		<div class="selection-input">
+			<label>{{targetVarLabel}}</label>
+			<select ng-model="targetSelection" ng-change="targetSelectionChanged(targetSelection)" ng-options="opt as opt.text for opt in targetOptions" multiple> 		
+			</select>
+		</div>
+	
+		<div class="selection-input">
+			<label>{{groupVarLabel}}</label>
+			<select ng-model="groupSelection" ng-change="groupSelectionChanged(groupSelection)" ng-options="opt as opt.text for opt in groupOptions"> 
+			</select>
+		</div>
+
+	</div>
+	
+	<div class="col-md-4 col-sm-4">
+		
+		<div class="list-input">
+			<label>{{filtersLabel}}</label>
+			<div class="table-scroll">
+				<table ng-repeat="filter in filters">
+					<tr ng-model="filter">
+						<td>{{filter.column.text}}</td>
+						<td>----</td>
+						<td>{{filter.value.text}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+	</div>
+	
+	<div class="col-md-4 col-sm-4">
+		
+		<div class="no-option"> 
+				<label>{{timeVarLabel}}:</label>
+				<p>{{timeVar.text}}</p> 
+		</div>
+		
+		
+		<div class="date-input">
+			<label>{{minLabel}}</label>
+			<input type="month" ng-model="minDate" value="{{minDate}}" min="{{lowerBound}}" max="{{maxDate}}">
+			<p>{{lowerBound | date:'dd-MM-yyyy'}}</p>
+		</div>
+			
+		<div class="date-input">
+			<label>{{maxLabel}}</label>
+			<input type="month" ng-model="maxDate" value="{{maxDate}}" min="{{minDate}}" max="{{upperBound}}">
+			<p>{{upperBound | date:'dd-MM-yyyy'}}</p>
+		</div>	
+	</div>
+	
+</div>
