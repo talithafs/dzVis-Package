@@ -60,12 +60,17 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
     		validation = checkDates();
     	}
     	
+    	var group = base.getGroupVar($scope.groupSelection);
+    	
+    	if(group == ""){
+    		checkValidationMessage("As variáveis numéricas devem ser agrupadas.");
+    	}
+    	
     	if(!checkValidationMessage(validation.message)){ return ; }
 		if(!checkValidationMessage(base.checkFilters($scope.filters))){ return ; }
     	
        // var target = base.getTargetVar($scope.targetSelection);
         var target = base.getTargetVar($scope.targetOptions);
-        var group = base.getGroupVar($scope.groupSelection);
         var time = base.getTimeVar($scope.timeVar);
         
         if(!checkValidationMessage(base.checkVariables(target, time))){ return ; }        
@@ -107,12 +112,13 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
     	// changeTarget();
     // };
     
-    // $scope.groupSelectionChanged = function(value){
+    $scope.groupSelectionChanged = function(value){
 //     	
+		updateFilters() ;
     	// $scope.groupSelection = value ;
 //     	
     	// changeGroup();	
-    // };
+    };
 
 	
 	function fillOptions(nodes){
@@ -153,6 +159,11 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
 							})[0];
 							
 				if(group == undefined){
+					
+					if($scope.groupOptions[0].id == noGroup){
+						$scope.groupOptions.splice(0,1);
+					}
+					
 					$scope.groupOptions.push(node);
 					$scope.groupSelection = node ;
 				}
@@ -216,8 +227,8 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
 								$scope.groupSelection = $scope.groupOptions[dim-1] ;
 							}
 							else {
-								$scope.groupSelection = [] ;
-								$scope.groupSelection.push(base.DEFAULT.GROUP) ;
+								$scope.groupOptions.push(base.DEFAULT.GROUP) ;
+								$scope.groupSelection = $scope.groupOptions[0] ;
 							}
 					}
 				

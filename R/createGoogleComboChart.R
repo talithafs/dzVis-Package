@@ -126,9 +126,21 @@ createGoogleComboChart <- function(table, targetVar, groupVar, timeVar, min = NA
   else { #groupVar == NULL
 
     ncolumns <- ncol(data)
-    newData <- cbind(data[,timeVar], data[,!(names(data) %in% timeVar)])
+    isTarget <- !(names(data) %in% timeVar)
 
+    if(ncolumns == 2){
+      name <- names(data)[isTarget]
+      cols <- as.data.frame(data[,isTarget])
+      names(cols) <- name
+    }
+    else {
+      cols <- data[,!(names(data) %in% timeVar)]
+    }
+
+    newData <- cbind(data[,timeVar], cols)
     names(newData)[1] <- timeVar
+
+    print(newData)
 
     for(index in 2:ncolumns){
       names(newData)[index] <- getColumnAlias(table, names(newData)[index])
@@ -137,7 +149,6 @@ createGoogleComboChart <- function(table, targetVar, groupVar, timeVar, min = NA
     target <- names(newData)[2:ncolumns]
   }
 
-  ### should write a function to set an appropriate title
   title = formatGoogleChartTitle(table, restrictions, target)
 
   #-- Set chart options
@@ -171,6 +182,8 @@ createGoogleComboChart <- function(table, targetVar, groupVar, timeVar, min = NA
     names(newData)[ncolumns] <- name
     options <- c(options, series = paste("{", ncolumns - 2,": {type: 'line'}}",sep=""))
   }
+
+  print(class(newData))
 
   #-- Create the combo chart and print it
   chartObj = gvisComboChart(newData, xvar=timeVar, yvar=names(newData)[2:ncolumns], options=options)

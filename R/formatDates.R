@@ -13,6 +13,9 @@
 #' @import zoo
 
 
+#SE PASSAR YEARMON PRA UMA TABELA DIARIA E FOR TO-STANDARD, TEM Q CORRIGIR PORRA
+
+
 formatDates <- function(table, dates, toStandard = TRUE, connection = NULL){
 
   conn <- connection

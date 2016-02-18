@@ -249,16 +249,12 @@ var DatabaseTree = (function(){
 	}
 	
 	function startWaiting(){
-		
-		alert("called start");
-		
+
 		$tree.addClass("wait");
 	}
 	
 	function stopWaiting(){
-		
-		alert("called stop");
-		
+
 		$tree.removeClass("wait");
 	}
 	
