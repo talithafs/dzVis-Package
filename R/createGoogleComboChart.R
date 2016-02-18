@@ -23,9 +23,6 @@
 #'    \item lineVar, operation, groupVar: If \code{groupVar} is \code{NULL}, \code{lineVar} must be also \code{NULL}. Besides, \code{operation} cannot be \code{NULL} when \code{lineVar} is not \code{NULL}.
 #'}
 #'
-#' @examples
-#' createComboChart("pea_por_idade",c("percentual_ativas","percentual_nao_ativas"), NULL,"mes",NA,NA, NULL, "Media", restrictions, alternatives)
-#'
 #' @seealso \code{\link[googleVis]{gvisComboChart}}
 #'
 #' @export
@@ -123,7 +120,7 @@ createGoogleComboChart <- function(table, targetVar, groupVar, timeVar, min = NA
       index = index + 1
     }
 
-    title <- getColumnAlias(table, targetVar)
+    target <- getColumnAlias(table, targetVar)
 
   }
   else { #groupVar == NULL
@@ -137,11 +134,11 @@ createGoogleComboChart <- function(table, targetVar, groupVar, timeVar, min = NA
       names(newData)[index] <- getColumnAlias(table, names(newData)[index])
     }
 
-    title <- paste(names(newData)[2:ncolumns],collapse = ", ")
+    target <- names(newData)[2:ncolumns]
   }
 
   ### should write a function to set an appropriate title
-  title = paste(toupper(gsub("_"," ",table)),": ", title, sep="")
+  title = formatGoogleChartTitle(table, restrictions, target)
 
   #-- Set chart options
   options <- list( title = title,
@@ -175,17 +172,12 @@ createGoogleComboChart <- function(table, targetVar, groupVar, timeVar, min = NA
     options <- c(options, series = paste("{", ncolumns - 2,": {type: 'line'}}",sep=""))
   }
 
-  #-- Format dates
-  #newData[,timeVar] <- formatDates(table, newData[,timeVar], toStandard = FALSE)
-
   #-- Create the combo chart and print it
   chartObj = gvisComboChart(newData, xvar=timeVar, yvar=names(newData)[2:ncolumns], options=options)
   chartFile <- printGoogleChart(chartObj, filename)
 
   #-- Create a csv file with the data that was used
-  dataFile <- paste("DATA_", gsub(".html","",chartFile), ".csv", sep="")
-  con <- file(dataFile, encoding="utf8")
-  write.csv(newData, file = con, row.names = FALSE)
+  dataFile <- printChartData(newData,chartFile)
 
   return(c(chartFile,dataFile))
 }

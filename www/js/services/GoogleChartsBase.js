@@ -25,10 +25,10 @@ var GoogleChartsBase = (function() {
 	// Protected constants: Fields default values
 	var DEFAULT = {
 		get TARGET() {
-			return [{id : "no_target", text : "Nenhuma"}] ;
+			return {id : "no_target", text : "Nenhuma"} ;
 		},
 		get GROUP() {
-			return [{id : "no_group", text : "Não agrupar"}] ;
+			return {id : "no_group", text : "Não agrupar"};
 		},
 		get TIME() {
 			return {id : "no_time", text : "Nenhuma"} ;
@@ -112,18 +112,21 @@ var GoogleChartsBase = (function() {
 	// Protected functions
 	function onLoad(callback){
 		
-		var onLoadFinish = function(timeVar){
+		var onLoadFinish = function(){
+								ref.databaseTree.stopWaiting();
 								updateFilters();
-						   		callback(currentColumns, timeVar);
+						   		callback(currentColumns);
 						   };
 		
 		if(currentColumns.length == 0){
-			
+						
 			var checked = ref.databaseTree.getCheckedColumns() ;
 		
 			if(checked.length != 0){
-					
+				
+				ref.databaseTree.startWaiting();
 				currentTable = ref.databaseTree.getTable(checked[0]);
+				currentTable = currentTable.original ;
 				
 				for(index in checked){
 					currentColumns.push(checked[index]);
@@ -149,7 +152,7 @@ var GoogleChartsBase = (function() {
 			}
 		}
 		else {
-			onLoadFinish(currentColumns, currentTimeVariable);
+			onLoadFinish(currentColumns);
 		}
 	}
 
@@ -157,8 +160,9 @@ var GoogleChartsBase = (function() {
 	function onNodeChecked(node, callback){
 		
 		var table = ref.databaseTree.getTable(node) ;
+		table = table.original ;
 		
-		if(table != currentTable){
+		if(currentTable == undefined || table.id != currentTable.id){
 						
 			currentTable = table ;
 			currentTimeVariable = undefined ;
@@ -361,7 +365,7 @@ var GoogleChartsBase = (function() {
 		for(index in filters){
 			var filter = filters[index] ;
 			
-			if(filter.value.text == DEFAULT.NO_VALUE.text){
+			if(filter.value.id == DEFAULT.NO_VALUE.id){
 				return "É necessário selecionar algum valor para o filtro " + filter.column.text.toUpperCase() ;
 			}
 		}
@@ -375,7 +379,7 @@ var GoogleChartsBase = (function() {
 	
 	function getTargetVar(target){
 		
-		if(target == undefined || target[0].text == DEFAULT.TARGET[0].text ){
+		if(target == undefined || target[0].id == DEFAULT.TARGET.id ){
 			return "" ;
 		}
 	
@@ -400,7 +404,7 @@ var GoogleChartsBase = (function() {
 	
 	function getGroupVar(group){
 		
-		if(group == undefined || group.text == DEFAULT.GROUP[0].text){
+		if(group == undefined || group.id == DEFAULT.GROUP.id){
 			return "" ;
 		}
 		
@@ -447,7 +451,7 @@ var GoogleChartsBase = (function() {
 		var index, name ;
 		var alternatives = [] ;
 		
-		if(group == undefined || group.text == DEFAULT.GROUP[0].text){
+		if(group == undefined || group.id == DEFAULT.GROUP.id){
 			return [] ;
 		}
 		name = group.original.name ;

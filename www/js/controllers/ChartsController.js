@@ -6,19 +6,24 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
 	});
 	
 	$scope.chartListVisible = true ;
+	$scope.showChart = false ;
+	$scope.showErrorAlert = false ;
+	$scope.showInfoAlert = true ;
+	$scope.loading = false ;
+	
 	$scope.selectChartText = "Escolha um tipo de gráfico";
 	$scope.useChartText = "Usar este gráfico >>";
 	$scope.goBackText = "<< Escolher outro gráfico" ;
 	$scope.btnCreateChartText = "Gerar gráfico" ;
 	$scope.information = "Utilize esse código para mostrar o gráfico em seu site. Clique no ícone para copiar para a sua área de transferência." ;
 	$scope.copyText = "Copiar para a área de transferência" ;
-	$scope.showChart = false ;
-	$scope.showAlert = false ;
 	$scope.errorText = "Erro: ";
+	$scope.infoTitle = "Crie seu gráfico: " ;
+	$scope.infoText = "Selecione os campos de interesse na base de dados e configure seu gráfico manipulando as opções acima. A validação das opções é automática." ;
+	$scope.loadingMessage = "Criando gráfico" ;
 	
 	const COPIED = "O código foi copiado para a sua área de transferência." ;
 	const NOT_COPIED = "Houve um problema e o código não foi copiado para sua área de transferência." ;
-	
 	
 	$scope.chartSelectionChanged = function(value){
 
@@ -30,6 +35,7 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
 		$scope.chartListVisible = false ;
 		$scope.chartName = $scope.selection.name ;
 		$state.go($scope.selection.name) ;
+		$scope.showChart = false ;
 	};
 	
 	$scope.goBack = function(){
@@ -38,6 +44,9 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
 	};
 	
 	$scope.createChart = function(){
+		
+		$scope.showChart = false ;
+		$scope.loading = true ;
 		$scope.$broadcast("createChart", $state.current.name);
 	};
 	
@@ -55,10 +64,11 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
 		
 		$scope.$apply(function(){
 			
-			if($scope.showAlert){
-				$scope.showAlert = false ;
+			if($scope.showErrorAlert){
+				$scope.showErrorAlert = false ;
 			}
 			
+			$scope.loading = false ;
 			$scope.showChart = true ;		
 			$scope.chartAddress = "<iframe width=\"" + width 
 									+ "px\" height=\"" + height  
@@ -71,14 +81,19 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
 
 	$scope.$on("chartError", function(e, message){
 		
-		$scope.showAlert = true ;
+		$scope.loading = false ;
+		$scope.showErrorAlert = true ;
 		$scope.errorMessage = message ;
-		
 	});
 	
-	$scope.alertClosed = function(){
+	$scope.infoAlertClosed = function(){
 		
-		$scope.showAlert = false ;
+		$scope.showInfoAlert = false ;
+	};
+	
+	$scope.errorAlertClosed = function(){
+
+		$scope.showErrorAlert = false ;
 	};
 	
 	$scope.copyToClipboard = function(){

@@ -43,10 +43,6 @@ The parameters are checked according to the rules estabilished in validation fun
    \item lineVar, operation, groupVar: If \code{groupVar} is \code{NULL}, \code{lineVar} must be also \code{NULL}. Besides, \code{operation} cannot be \code{NULL} when \code{lineVar} is not \code{NULL}.
 }
 }
-\examples{
-createComboChart("pea_por_idade",c("percentual_ativas","percentual_nao_ativas"), NULL,"mes",NA,NA, NULL, "Media", restrictions, alternatives)
-
-}
 \seealso{
 \code{\link[googleVis]{gvisComboChart}}
 }

@@ -13,8 +13,12 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	$scope.selectMultipleDatesLabel = base.LABEL.MULTIPLE_DATES ;
 	
 	// Google Charts default values
-	$scope.targetOptions = base.DEFAULT.TARGET ;
-	$scope.groupOptions = base.DEFAULT.GROUP ;
+	$scope.targetOptions = [] ;
+	$scope.targetOptions.push(base.DEFAULT.TARGET) ;
+	
+	$scope.groupOptions = [] ;
+	$scope.groupOptions.push(base.DEFAULT.GROUP) ;
+	
 	$scope.timeVar = base.DEFAULT.TIME ;
 	$scope.filters = [] ;
 	
@@ -27,12 +31,22 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	$scope.operationLabel = features.LABEL.OPERATIONS ;
 	
 	$scope.lineOptions = [] ;
-	$scope.lineOptions.push(features.DEFAULT.LINE[0]);
+	$scope.lineOptions.push(features.DEFAULT.LINE.NO_LINE);
 	$scope.lineSelection = $scope.lineOptions[0];
 	
 	$scope.operations = features.DEFAULT.OPERATIONS ;	
 	$scope.operationSelection = { value : "-" };
-	$scope.operationSelection.value = $scope.operations[0].value ;
+	$scope.operationSelection.value = $scope.operations.NONE.value ;
+	
+	const noTarget = base.DEFAULT.TARGET.id ;
+	const noGroup = base.DEFAULT.GROUP.id ;
+	const noTime = base.DEFAULT.TIME.id ;
+	const noLine = features.DEFAULT.LINE.NO_LINE.id ;
+	const numVar = features.DEFAULT.LINE.NUM_VAR.id ;
+	const noOp = features.DEFAULT.OPERATIONS.NONE.value ;
+	
+	var inputMax = angular.element(document.querySelector('#gcc-max-date'));
+	var inputMin = angular.element(document.querySelector('#gcc-min-date'));				
 
 	$scope.$on("$stateChangeSuccess", function(){
 		
@@ -59,7 +73,7 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
     	var validation = {} ;
     	validation.message = "Nenhum parâmetro foi escolhido." ;
     	
-    	if($scope.timeVar.text != base.DEFAULT.TIME.text){
+    	if($scope.timeVar.id != noTime){
     		validation = checkDates();
     	}
     	
@@ -136,7 +150,7 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 
 	$scope.operationSelectionChanged = function(value){
 		
-		if($scope.operationSelection.value == $scope.operations[0].value){
+		if($scope.operationSelection.value == $scope.operations.NONE.value){
 			$scope.lineSelection = $scope.lineOptions[0] ;
 		}
 	};
@@ -146,17 +160,17 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 		$scope.lineSelection = value ;
 		
 		if($scope.lineSelection == $scope.lineOptions[0]){
-			$scope.operationSelection.value = $scope.operations[0].value ;
+			$scope.operationSelection.value = $scope.operations.NONE.value ;
 		}
-		else if($scope.operationSelection.value == $scope.operations[0].value){
-			$scope.operationSelection.value = $scope.operations[1].value ;
+		else if($scope.operationSelection.value == $scope.operations.NONE.value){
+			$scope.operationSelection.value = $scope.operations.STD.value ;
 		}
 	};
 	
-	function fillOptions(nodes, timeVar){
+	function fillOptions(nodes){
 
 		$scope.$apply(function(){
-			setTimeParameters(timeVar);
+			setTimeParameters(base.properties.timeVariable);
 		});
 
 		for(index in nodes){
@@ -217,7 +231,8 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 				$scope.targetSelection.splice(index,1);
 				
 				if($scope.targetOptions.length == 0){
-					$scope.targetOptions = base.DEFAULT.TARGET ;
+					$scope.targetOptions = [] ;
+					$scope.targetOptions.push(base.DEFAULT.TARGET) ;
 				}
 				
 				if($scope.targetSelection.length == 0){
@@ -249,7 +264,8 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 								$scope.groupSelection = $scope.groupOptions[dim-1] ;
 							}
 							else {
-								$scope.groupSelection = base.DEFAULT.GROUP ;
+								$scope.groupSelection = [] ;
+								$scope.groupSelection.push(base.DEFAULT.GROUP) ;
 							}
 					}
 				
@@ -265,12 +281,12 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 		
 		if($scope.targetSelection.length != 1){
 	
-			if($scope.targetSelection[0].text === base.DEFAULT.TARGET[0].text){
+			if($scope.targetSelection[0].id === noTarget){
 				$scope.targetSelection.splice(0,1);
 				$scope.targetOptions.splice(0,1);
 			}
 			
-			if($scope.groupSelection != $scope.groupSelection[0]){
+			if($scope.groupSelection != noGroup){
 				$scope.groupSelection = $scope.groupOptions[0] ;
 				updateFilters();
 			}
@@ -300,7 +316,7 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 		}
 		else {			
 			$scope.lineSelection = $scope.lineOptions[0] ;
-			$scope.operationSelection.value = $scope.operations[0].value;
+			$scope.operationSelection.value = $scope.operations.NONE.value;
 		}
 		
 		updateFilters();
@@ -318,14 +334,14 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 				$scope.lineOptions.splice(index,1);				
 				$scope.lineSelection = $scope.lineOptions[dim-1] ;
 				
-				if($scope.lineSelection == $scope.lineOptions[0]){
-					$scope.operationSelection.value = $scope.operations[0].value ;
+				if($scope.lineSelection.id == noLine){
+					$scope.operationSelection.value = $scope.operations.NONE.value ;
 				}
 			}
 			
-			if($scope.targetSelection.length == 1 && $scope.targetSelection.text != base.DEFAULT.TARGET.text){
+			if($scope.targetSelection.length == 1 && $scope.targetSelection[0].id != noTarget){
 				$scope.lineOptions = [] ;
-				$scope.lineOptions.push(features.DEFAULT.LINE[0]);
+				$scope.lineOptions.push(features.DEFAULT.LINE.NO_LINE);
 				$scope.lineOptions.push($scope.targetOptions[0]);
 				$scope.lineSelection = $scope.lineOptions[1];
 			}
@@ -333,20 +349,20 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 		else {		
 			var opt = $scope.lineOptions[1] ;
 			
-			if($scope.targetSelection[0].text == base.DEFAULT.TARGET.text){
+			if($scope.targetSelection[0].id == noTarget){
 				
 				if($scope.lineOptions.length != 1){
 					$scope.lineOptions = [] ;
-					$scope.lineOptions.push(features.DEFAULT.LINE[0]);
+					$scope.lineOptions.push(features.DEFAULT.LINE.NO_LINE);
 					$scope.lineSelection = $scope.lineOptions[0];
  				}
 			}
 			else if($scope.targetSelection.length == 1){
 				
-				if(opt == undefined || (opt != undefined && opt.id == features.DEFAULT.LINE[1].id)){
+				if(opt == undefined || (opt != undefined && opt.id == numVar)){
 					
 					$scope.lineOptions = [] ;
-					$scope.lineOptions.push(features.DEFAULT.LINE[0]);
+					$scope.lineOptions.push(features.DEFAULT.LINE.NO_LINE);
 					
 					for(index in $scope.targetOptions){
 						$scope.lineOptions.push($scope.targetOptions[index]);
@@ -360,13 +376,13 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 				}
 			}
 			else {
-				if(opt == undefined || (opt != undefined && opt.id != features.DEFAULT.LINE[1].id)){
+				if(opt == undefined || (opt != undefined && opt.id != numVar)){
 					
 					$scope.lineOptions = [] ;
-					$scope.lineOptions.push(features.DEFAULT.LINE[0]);
-					$scope.lineOptions.push(features.DEFAULT.LINE[1]);
+					$scope.lineOptions.push(features.DEFAULT.LINE.NO_LINE);
+					$scope.lineOptions.push(features.DEFAULT.LINE.NUM_VAR);
 					$scope.lineSelection = $scope.lineOptions[1];
-					$scope.operationSelection.value = $scope.operations[1].value ;
+					$scope.operationSelection.value = $scope.operations.STD.value ;
 				}
 			}
 		}
@@ -394,7 +410,7 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 		
 		if($scope.timeVar.id != timeVar.id){
 			
-			var freq = base.properties.table.original.frequency ;
+			var freq = base.properties.table.frequency ;
 
 			$scope.timeVar = timeVar ;
 			$scope.minDate = $scope.timeVar.minimum ;
@@ -403,18 +419,12 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 			$scope.lowerBound = $scope.minDate ;
 			
 			if(freq == "diaria"){
-				var max = angular.element(document.querySelector('#gcc-max-date'));
-				max.attr('type',"date");
-				
-				var min = angular.element(document.querySelector('#gcc-min-date'));
-				min.attr('type',"date");
+				inputMax.attr('type',"date");
+				inputMin.attr('type',"date");
 			}
-			else if(freq == "mensal"){
-				var max = angular.element(document.querySelector('#gcc-max-date'));
-				max.attr('type',"month");
-				
-				var min = angular.element(document.querySelector('#gcc-min-date'));
-				min.attr('type',"month");
+			else if(freq == "mensal"){				
+				inputMax.attr('type',"month");
+				inputMin.attr('type',"month");
 			}
 			
 			if(freq == "diaria"){
@@ -442,7 +452,7 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	function checkDates(){
 		
 		var validation = { } ;
-		var frequency = base.properties.table.original.frequency ;
+		var frequency = base.properties.table.frequency ;
 		var format = "" ;
 		
 		validation.minDate = "" ;
@@ -496,8 +506,6 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	
 	function getLineVar(){
 		
-		var noLine = features.DEFAULT.LINE[0].id ;
-		var numVar = features.DEFAULT.LINE[1].id ;
 		var lineVar = $scope.lineSelection ;
 		
 		if(lineVar == undefined || lineVar.id == noLine || lineVar.id == numVar){
@@ -526,16 +534,17 @@ function ComboChartFeatures(){
 	// New features defaults
 	this.DEFAULT = {
 		get LINE(){
-			return [{id : "no_line", text : "Não desenhar linha"},
-					{id : "num_var", text: "Utilizar variáveis numéricas"}
-				] ;
+			return {
+					NO_LINE : {id : "no_line", text : "Não desenhar linha"},
+					NUM_VAR : {id : "num_var", text: "Utilizar variáveis numéricas"}
+				} ;
 		},
 		get OPERATIONS(){
-			return [
-				{name: "Nenhuma", value: ""},
-				{name: "Desvio Padrão", value: "Desvio padrao"},
-				{name: "Média", value: "Media"}
-			];
+			return {
+				NONE: {name: "Nenhuma", value: ""},
+				STD: {name: "Desvio Padrão", value: "Desvio padrao"},
+				AVG: {name: "Média", value: "Media"}
+			};
 		}
 	};
 	

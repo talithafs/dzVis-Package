@@ -248,6 +248,20 @@ var DatabaseTree = (function(){
 		treeInstance.disable_checkbox(node);
 	}
 	
+	function startWaiting(){
+		
+		alert("called start");
+		
+		$tree.addClass("wait");
+	}
+	
+	function stopWaiting(){
+		
+		alert("called stop");
+		
+		$tree.removeClass("wait");
+	}
+	
 	function search(text){
 		
 		treeInstance.search(text);
@@ -304,6 +318,14 @@ var DatabaseTree = (function(){
 	
 	DatabaseTree.prototype.disableCheckbox = function(node, uncheck){ 
 		disableCheckbox.call(this, node, uncheck);
+	};
+	
+	DatabaseTree.prototype.startWaiting = function(){ 
+		startWaiting.call(this); 
+	};
+	
+	DatabaseTree.prototype.stopWaiting = function(){ 
+		stopWaiting.call(this); 
 	};
 	
 	DatabaseTree.prototype.search = function(text){ 

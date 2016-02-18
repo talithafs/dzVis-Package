@@ -81,11 +81,8 @@ createGoogleMotionChart <- function(table, targetVar, groupVar, timeVar, min = N
     names(data)[index] <- getColumnAlias(table, names(data)[index])
   }
 
-  ### should write a function to set an appropriate title
- ## title = paste(toupper(gsub("_"," ",table)),": ", title, sep="")
-
   #-- Set chart options
- options <- list( chartArea = "{width : '68%', left: 0}",
+  options <- list( chartArea = "{width : '68%', left: 0}",
                   width=730,
                   height=320 )
 
@@ -95,9 +92,7 @@ createGoogleMotionChart <- function(table, targetVar, groupVar, timeVar, min = N
   chartFile <- printGoogleChart(chartObj, filename)
 
   #-- Create a csv file with the data that was used
-  dataFile <- paste("DATA_", gsub(".html","",chartFile), ".csv", sep="")
-  con <- file(dataFile, encoding="utf8")
-  write.csv(data, file = con, row.names = FALSE)
+  dataFile <- printChartData(data, chartFile)
 
   return(c(chartFile,dataFile))
 }

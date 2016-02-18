@@ -257,8 +257,27 @@ hr {
 
 #btn-create-chart {
 	margin-right: 10px ;
-	margin-top: 3px ;
+	margin-top: 5px ;
+	margin-bottom: 5px ;
 	float: right ;
+}
+
+#load-info {
+	width: 100% ;
+	text-align: center ;
+	margin-top: 100px ;
+	clear: both ;
+}
+
+#load-info img {
+	display: block ;
+	margin: 0 auto ;
+}
+
+#load-info p {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;  
+	font-size: 13px ;
+	margin-bottom: 0px ;
 }
 
 /* Data options view */ 
@@ -345,9 +364,10 @@ hr {
 	height: 48px ;
 }
 
-/* Error alert */
-#error-alert {
-	margin: 50px 10px 10px 10px ;
+/* Error alert and basic info */
+.information {
+	clear: both ;
+	margin: 10px 10px ;
 	text-align: left ;
 }
 
@@ -401,9 +421,11 @@ hr {
 	cursor: pointer ;
 }
 
-/*.loading {
-	background-image: url('../img/carregando.gif') ;
-	background-position: center bottom 30px;
-	background-repeat: no-repeat ;
-}*/
+.wait {
+    cursor:wait;
+}
+
+.wait > * {
+    pointer-events:none;
+}
 

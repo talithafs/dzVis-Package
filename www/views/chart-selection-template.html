@@ -19,14 +19,30 @@
 	<div id="views" ui-view> </div>
 </div>
 
-<div ng-show = "!chartListVisible">
-	<button id="btn-create-chart" ng-click="createChart()">{{btnCreateChartText}}</button>
-	<p class="switch" id="go-back" ng-click="goBack()">{{goBackText}}</p>
+<div ng-show ="!chartListVisible" id="buttons">
+	
+	<button id="btn-create-chart" class="btn btn-primary btn-md" ng-click="createChart()">
+		{{btnCreateChartText}}</button>
+	<p class="switch" id="go-back" ng-click="goBack()">{{goBackText}}</p>	
 </div>
 
-<div id="error-alert" ng-show="showAlert" class="alert alert-danger">
-  <a href="#" class="close" data-dismiss="alert" aria-label="close" ng-click="alertClosed()">&times;</a>
-  <strong>{{errorText}}</strong>{{errorMessage}}
+
+<div ng-show="!chartListVisible" id="info">
+		
+	<div ng-show="showErrorAlert" class="alert alert-danger information">
+	  <a href="#" class="close" data-dismiss="alert" aria-label="close" ng-click="errorAlertClosed()">&times;</a>
+	  <strong>{{errorText}}</strong>{{errorMessage}}
+	</div>
+	
+	<div ng-show="showInfoAlert && !showChart" class="alert alert-info information">
+	  <a href="#" class="close" data-dismiss="alert" aria-label="close" ng-click="infoAlertClosed()">&times;</a>
+	  <strong>{{infoTitle}}</strong>{{infoText}}
+	</div>
+	
+	<div id="load-info" ng-show="loading">
+		<p>{{loadingMessage}}</p>
+		<img src="img/loader.gif">
+	</div>
 </div>
 
 <div ng-show="showChart && !chartListVisible" class="row centered"> 
@@ -55,4 +71,7 @@
 		</div>
 	</div>
 </div>
+
+
+
 

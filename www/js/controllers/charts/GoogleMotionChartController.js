@@ -11,14 +11,22 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
 	$scope.maxLabel = base.LABEL.MAX_DATE ;
 	
 	// Google Charts default values
-	$scope.targetOptions = base.DEFAULT.TARGET ;
-	$scope.groupOptions = base.DEFAULT.GROUP ;
+	$scope.targetOptions = [] ;
+	$scope.targetOptions.push(base.DEFAULT.TARGET) ;
+	
+	$scope.groupOptions = [] ;
+	$scope.groupOptions.push(base.DEFAULT.GROUP) ;
+	
 	$scope.timeVar = base.DEFAULT.TIME ;
 	$scope.filters = [] ;
 	
-	$scope.targetSelection = [] ;
-	$scope.targetSelection.push($scope.targetOptions[0]) ;	
+	// $scope.targetSelection = [] ;
+	// $scope.targetSelection.push($scope.targetOptions[0]) ;	
 	$scope.groupSelection = $scope.groupOptions[0] ;
+	
+	const noTarget = base.DEFAULT.TARGET.id ;
+	const noGroup = base.DEFAULT.GROUP.id ;
+	const noTime = base.DEFAULT.TIME.id ;
 	
 	var inputMax = angular.element(document.querySelector('#gmc-max-date'));
 	var inputMin = angular.element(document.querySelector('#gmc-min-date'));
@@ -48,14 +56,15 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
     	var validation = {} ;
     	validation.message = "Nenhum parâmetro foi escolhido." ;
     	
-    	if($scope.timeVar.text != base.DEFAULT.TIME.text){
+    	if($scope.timeVar.id != noTime){
     		validation = checkDates();
     	}
     	
     	if(!checkValidationMessage(validation.message)){ return ; }
 		if(!checkValidationMessage(base.checkFilters($scope.filters))){ return ; }
     	
-        var target = base.getTargetVar($scope.targetSelection);
+       // var target = base.getTargetVar($scope.targetSelection);
+        var target = base.getTargetVar($scope.targetOptions);
         var group = base.getGroupVar($scope.groupSelection);
         var time = base.getTimeVar($scope.timeVar);
         
@@ -91,25 +100,25 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
     								 		callback = callback );
     });
     
-    $scope.targetSelectionChanged = function(value){
-    	
-    	$scope.targetSelection = value ;
-    	
-    	changeTarget();
-    };
+    // $scope.targetSelectionChanged = function(value){
+//     	
+    	// $scope.targetSelection = value ;
+//     	
+    	// changeTarget();
+    // };
     
-    $scope.groupSelectionChanged = function(value){
-    	
-    	$scope.groupSelection = value ;
-    	
-    	changeGroup();	
-    };
+    // $scope.groupSelectionChanged = function(value){
+//     	
+    	// $scope.groupSelection = value ;
+//     	
+    	// changeGroup();	
+    // };
 
 	
-	function fillOptions(nodes, timeVar){
+	function fillOptions(nodes){
 		
 		$scope.$apply(function(){
-			setTimeParameters(timeVar);
+			setTimeParameters(base.properties.timeVariable);
 		});
 		
 		for(index in nodes){
@@ -129,9 +138,13 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
 			if(node.categories.TARGET === true){
 				
 				$scope.targetOptions.push(node);				
-				$scope.targetSelection.push(node);
+				//$scope.targetSelection.push(node);
 				
-				changeTarget();
+				if($scope.targetOptions.length != 1 && $scope.targetOptions[0].id == noTarget){
+					$scope.targetOptions.splice(0,1);
+				}
+				
+				//changeTarget();
 			}
 			else if(node.categories.GROUP === true){
 				
@@ -147,9 +160,10 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
 					$scope.groupSelection = group ;
 				}
 				
-				changeGroup();
+				//changeGroup();
 			}
 			
+			updateFilters() ;
 			setTimeParameters(base.properties.timeVariable);
 		});
 	}
@@ -165,19 +179,20 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
 				index = $scope.targetOptions.indexOf(node);
 				$scope.targetOptions.splice(index,1);
 				
-				index = $scope.targetSelection.indexOf(node);
-				$scope.targetSelection.splice(index,1);
+				// index = $scope.targetSelection.indexOf(node);
+				// $scope.targetSelection.splice(index,1);
 				
 				if($scope.targetOptions.length == 0){
-					$scope.targetOptions = base.DEFAULT.TARGET ;
+					$scope.targetOptions = [] ;
+					$scope.targetOptions.push(base.DEFAULT.TARGET) ;
 				}
 				
-				if($scope.targetSelection.length == 0){
-					dim = $scope.targetOptions.length ;
-					$scope.targetSelection.push($scope.targetOptions[dim-1]);
-				}
+				// if($scope.targetSelection.length == 0){
+					// dim = $scope.targetOptions.length ;
+					// $scope.targetSelection.push($scope.targetOptions[dim-1]);
+				// }
 				
-				changeTarget(node);
+				//changeTarget(node);
 			}
 			else if(node.categories.GROUP === true){
 				
@@ -201,56 +216,59 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
 								$scope.groupSelection = $scope.groupOptions[dim-1] ;
 							}
 							else {
-								$scope.groupSelection = base.DEFAULT.GROUP ;
+								$scope.groupSelection = [] ;
+								$scope.groupSelection.push(base.DEFAULT.GROUP) ;
 							}
 					}
 				
-					changeGroup();
+					//changeGroup();
 				}
+				
+				updateFilters();
 			}
 
 		});
 	}
 	
 	
-	function changeTarget(node){
-		
-		if($scope.targetSelection.length != 1){
+	// function changeTarget(node){
+// 		
+		// if($scope.targetSelection.length != 1){
+// 	
+			// if($scope.targetSelection[0].id === noTarget){
+				// $scope.targetSelection.splice(0,1);
+				// $scope.targetOptions.splice(0,1);
+			// }
+// 			
+			// if($scope.groupSelection.id != noGroup){
+				// $scope.groupSelection = $scope.groupOptions[0] ;
+				// updateFilters();
+			// }
+		// }
+		// else {			
+			// var dim = $scope.groupOptions.length ;
+			// var lastGroup = $scope.groupOptions[dim - 1] ;
+// 			
+			// $scope.groupSelection = lastGroup ;
+			// updateFilters();
+		// }
+	// }
 	
-			if($scope.targetSelection[0].text === base.DEFAULT.TARGET[0].text){
-				$scope.targetSelection.splice(0,1);
-				$scope.targetOptions.splice(0,1);
-			}
-			
-			if($scope.groupSelection != $scope.groupSelection[0]){
-				$scope.groupSelection = $scope.groupOptions[0] ;
-				updateFilters();
-			}
-		}
-		else {			
-			var dim = $scope.groupOptions.length ;
-			var lastGroup = $scope.groupOptions[dim - 1] ;
-			
-			$scope.groupSelection = lastGroup ;
-			updateFilters();
-		}
-	}
-	
-	function changeGroup(){
-		
-		if($scope.groupSelection != $scope.groupOptions[0]){
-			
-			var dim = $scope.targetSelection.length ;
-					
-			if(dim != 1){
-				var lastSelection = $scope.targetSelection[dim-1] ;
-				$scope.targetSelection = [] ;
-				$scope.targetSelection.push(lastSelection) ;
-			}
-		}
-		
-		updateFilters();
-	}
+	// function changeGroup(){
+// 		
+		// if($scope.groupSelection != $scope.groupOptions[0]){
+// 			
+			// var dim = $scope.targetSelection.length ;
+// 					
+			// if(dim != 1){
+				// var lastSelection = $scope.targetSelection[dim-1] ;
+				// $scope.targetSelection = [] ;
+				// $scope.targetSelection.push(lastSelection) ;
+			// }
+		// }
+// 		
+		// updateFilters();
+	// }
 	
 	function updateFilters(){
 	
@@ -283,7 +301,7 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
 	
 	function checkDates(){
 		
-		var frequency = base.properties.table.original.frequency ;
+		var frequency = base.properties.table.frequency ;
 		var validation = { } ;
 		var format = 'yyyy-mm' ;
 		
@@ -315,7 +333,7 @@ application.controller("GoogleMotionChartController", ["$scope", "$state", "goog
 		
 		if($scope.timeVar.id != timeVar.id){
 			
-			var freq = base.properties.table.original.frequency ;
+			var freq = base.properties.table.frequency ;
 			
 			$scope.timeVar = timeVar ;
 			$scope.minDate = $scope.timeVar.minimum ;

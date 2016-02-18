@@ -9,7 +9,6 @@
 #'
 #' @seealso \code{\link[googleVis]{print.gvis}}
 #'
-#' @export
 #' @import googleVis
 
 printGoogleChart <- function(chartObj, filename = NULL){

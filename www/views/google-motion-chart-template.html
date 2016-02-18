@@ -2,10 +2,17 @@
 	
 	<div class="col-md-4 col-sm-4">
 		
-		<div class="selection-input">
+		<div class="list-input">
 			<label>{{targetVarLabel}}</label>
-			<select ng-model="targetSelection" ng-change="targetSelectionChanged(targetSelection)" ng-options="opt as opt.text for opt in targetOptions" multiple> 		
-			</select>
+			<div class="table-scroll">
+				<table ng-repeat="selection in targetOptions">
+					<tr ng-model="filter">
+						<td>{{selection.text}}</td>
+					</tr>
+				</table>
+			</div>
+			<!-- <select ng-model="targetSelection" ng-change="targetSelectionChanged(targetSelection)" ng-options="opt as opt.text for opt in targetOptions" multiple> 		
+			</select> -->			
 		</div>
 	
 		<div class="selection-input">
