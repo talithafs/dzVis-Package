@@ -2,12 +2,14 @@
 #'
 #' @description Creates a Combo Chart using the googleVis R package
 #'
-#' @param table A \code{character} value. The name of the table from which the data should be retrieved
-#' @param targetVar A \code{character} value. The vertical axis variable
-#' @param groupVar A \code{character} value. Variable by which \code{targetVar} should be grouped
-#' @param timeVar A \code{character} value. The horizontal axis variable
+#' @param table A \code{character}. The name of the table from which the data should be retrieved
+#' @param targetVar A \code{character}. The name of the column with the vertical axis variable.
+#' @param groupVar A \code{character}. The name of the column with the variable by which \code{targetVar} should be grouped
+#' @param timeVar A \code{character}. The name of the column with the horizontal axis variable
 #' @param min A \code{numeric} value or a \code{date string} in the format 'yyyy-mm-dd'. Lower bound for the \code{timeVar}
 #' @param max A \code{numeric} value or a \code{date string} in the format 'yyyy-mm-dd'. Upper bound for the \code{timeVar}
+#' @param lineVar A \code{character}. The name of the column with the variable that should be used to draw a line according to an operation.
+#' @param operation A \code{charater}. The operation that should be used to draw the line. Please check the \code{\link{applyOperation}} documentation for more information.
 #' @param restrictions A n x 2 \code{matrix}. The n equality restrictions that make timeVar and groupVar values unique when combined.
 #' @param alternatives A n x 2 \code{matrix}. Alternative values of a column (joined by 'or' conditions in a SQL query). The first column must contain the names of the columns. The second, its values.
 #' @param filename A \code{character}. The name of the .html file where the chart should be printed. The extension (.html) is not needed.
@@ -140,8 +142,6 @@ createGoogleComboChart <- function(table, targetVar, groupVar, timeVar, min = NA
     newData <- cbind(data[,timeVar], cols)
     names(newData)[1] <- timeVar
 
-    print(newData)
-
     for(index in 2:ncolumns){
       names(newData)[index] <- getColumnAlias(table, names(newData)[index])
     }
@@ -182,8 +182,6 @@ createGoogleComboChart <- function(table, targetVar, groupVar, timeVar, min = NA
     names(newData)[ncolumns] <- name
     options <- c(options, series = paste("{", ncolumns - 2,": {type: 'line'}}",sep=""))
   }
-
-  print(class(newData))
 
   #-- Create the combo chart and print it
   chartObj = gvisComboChart(newData, xvar=timeVar, yvar=names(newData)[2:ncolumns], options=options)

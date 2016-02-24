@@ -36,14 +36,14 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 	
 	$scope.operations = features.DEFAULT.OPERATIONS ;	
 	$scope.operationSelection = { value : "-" };
-	$scope.operationSelection.value = $scope.operations.NONE.value ;
+	$scope.operationSelection.value = $scope.operations.ANONE.value ;
 	
 	const noTarget = base.DEFAULT.TARGET.id ;
 	const noGroup = base.DEFAULT.GROUP.id ;
 	const noTime = base.DEFAULT.TIME.id ;
 	const noLine = features.DEFAULT.LINE.NO_LINE.id ;
 	const numVar = features.DEFAULT.LINE.NUM_VAR.id ;
-	const noOp = features.DEFAULT.OPERATIONS.NONE.value ;
+	const noOp = features.DEFAULT.OPERATIONS.ANONE.value ;
 	
 	var inputMax = angular.element(document.querySelector('#gcc-max-date'));
 	var inputMin = angular.element(document.querySelector('#gcc-min-date'));				
@@ -150,7 +150,7 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 
 	$scope.operationSelectionChanged = function(value){
 		
-		if($scope.operationSelection.value == $scope.operations.NONE.value){
+		if($scope.operationSelection.value == $scope.operations.ANONE.value){
 			$scope.lineSelection = $scope.lineOptions[0] ;
 		}
 	};
@@ -160,9 +160,9 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 		$scope.lineSelection = value ;
 		
 		if($scope.lineSelection == $scope.lineOptions[0]){
-			$scope.operationSelection.value = $scope.operations.NONE.value ;
+			$scope.operationSelection.value = $scope.operations.ANONE.value ;
 		}
-		else if($scope.operationSelection.value == $scope.operations.NONE.value){
+		else if($scope.operationSelection.value == $scope.operations.ANONE.value){
 			$scope.operationSelection.value = $scope.operations.STD.value ;
 		}
 	};
@@ -316,7 +316,7 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 		}
 		else {			
 			$scope.lineSelection = $scope.lineOptions[0] ;
-			$scope.operationSelection.value = $scope.operations.NONE.value;
+			$scope.operationSelection.value = $scope.operations.ANONE.value;
 		}
 		
 		updateFilters();
@@ -335,7 +335,7 @@ application.controller("GoogleComboChartController", ["$scope", "$state", "conne
 				$scope.lineSelection = $scope.lineOptions[dim-1] ;
 				
 				if($scope.lineSelection.id == noLine){
-					$scope.operationSelection.value = $scope.operations.NONE.value ;
+					$scope.operationSelection.value = $scope.operations.ANONE.value ;
 				}
 			}
 			
@@ -541,7 +541,7 @@ function ComboChartFeatures(){
 		},
 		get OPERATIONS(){
 			return {
-				NONE: {name: "Nenhuma", value: ""},
+				ANONE: {name: "Nenhum", value: ""},
 				STD: {name: "Desvio Padrão", value: "Desvio padrao"},
 				AVG: {name: "Média", value: "Media"}
 			};

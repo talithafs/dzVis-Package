@@ -2,10 +2,10 @@
 #'
 #' @description Creates a Combo Chart using the googleVis R package
 #'
-#' @param table A \code{character} value. The name of the table from which the data should be retrieved
-#' @param targetVar A \code{character} value. The vertical axis variable
-#' @param groupVar A \code{character} value. Variable by which \code{targetVar} should be grouped
-#' @param timeVar A \code{character} value. The horizontal axis variable
+#' @param table A \code{character}. The name of the table from which the data should be retrieved
+#' @param targetVar A \code{character}. The name of the column with the vertical axis variable
+#' @param groupVar A \code{character}. The name of the column with the variable by which \code{targetVar} should be grouped
+#' @param timeVar A \code{character}. The name of the column with the horizontal axis variable
 #' @param min A \code{numeric} value or a \code{date string} in the format 'yyyy-mm-dd'. Lower bound for the \code{timeVar}
 #' @param max A \code{numeric} value or a \code{date string} in the format 'yyyy-mm-dd'. Upper bound for the \code{timeVar}
 #' @param restrictions A n x 2 \code{matrix}. The n equality restrictions that make timeVar and groupVar values unique when combined.
@@ -18,6 +18,7 @@
 #' @section Parameters validation:
 #' The parameters are checked according to the rules estabilished in validation functions and in the following order:
 #' \enumerate{
+#'    \item groupVar: This variable cannot be \code{NULL}.
 #'    \item targetVar, groupVar, timeVar, min, max, restrictions: \code{\link{validateGoogleChartParameters}}
 #'    \item lineVar: \code{\link{validateTargetVariables}} and \code{\link{validateConsistency}}.
 #'    \item lineVar, operation, groupVar: If \code{groupVar} is \code{NULL}, \code{lineVar} must be also \code{NULL}. Besides, \code{operation} cannot be \code{NULL} when \code{lineVar} is not \code{NULL}.

@@ -1,19 +1,16 @@
 #' @title Format dates
 #'
-#' @description blblba
+#' @description xxxxxxxxxx
 #'
-#' @param table bla
-#' @param dates bla
-#' @param toStandard bla
-#' @param connection bla
+#' @param table xxxxxxxxxx
+#' @param dates xxxxxxxxxxx
+#' @param toStandard xxxxxxxxxx
+#' @param connection xxxxxxx
 #'
-#' @return foadoasas
+#' @return xxxxxxx
 #'
 #' @import DBI
 #' @import zoo
-
-
-#SE PASSAR YEARMON PRA UMA TABELA DIARIA E FOR TO-STANDARD, TEM Q CORRIGIR PORRA
 
 
 formatDates <- function(table, dates, toStandard = TRUE, connection = NULL){

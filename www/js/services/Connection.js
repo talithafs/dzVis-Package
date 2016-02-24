@@ -47,6 +47,12 @@ var Connection = (function() {
 	
 	};
 	
+	/** @function createChart(functionName, parameters, callback)
+	* @description Standard function to create charts using opencpu.
+	* @param {string} functionName Name of the R function that creates the chart. 
+	* @param {Object} parameters Parameters of the R function.
+	* @param {function} callback Function that must be executed after the chart is created.
+	*/
 	var createChart = function(functionName, parameters, callback){
 		
 		var req = ocpu.call(functionName, parameters, function(session){

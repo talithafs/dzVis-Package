@@ -1,7 +1,16 @@
+/**
+ * @fileOverview Definition of the service DatabaseTree. It can change the state of the jstree
+ * as well as provide information about it. 
+ * @author Talitha Speranza
+ * @version 0.1
+ */
+
+
 services.service("databasetree", function(){ 
 	return DatabaseTree.getInstance(); 
 });
 
+/** @namespace */
 var DatabaseTree = (function(){
 	
 	// Single instance

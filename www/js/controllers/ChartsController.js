@@ -3,6 +3,8 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
 	charts.success(function(data){
 		$scope.options = data ;
 		$scope.selection = $scope.options[0] ;
+		
+		
 	});
 	
 	$scope.chartListVisible = true ;
@@ -24,6 +26,7 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
 	
 	const COPIED = "O código foi copiado para a sua área de transferência." ;
 	const NOT_COPIED = "Houve um problema e o código não foi copiado para sua área de transferência." ;
+	
 	
 	$scope.chartSelectionChanged = function(value){
 
