@@ -106,7 +106,7 @@ var Connection = (function() {
 		var req = ocpu.call(functionName, parameters, function(session){
 			
 			session.getObject(function(data){
-				
+
 				if(typeof data == "string"){
 					callback("ERROR", data);
 				}

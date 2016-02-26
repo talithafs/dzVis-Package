@@ -76,6 +76,8 @@ importData <- function(table, columns, restrictions = NULL, limits = NULL, alter
     query <- pasteIdRestrictions(query,alternatives, whereClause = TRUE, andClause = FALSE)
   }
 
+  query <- debugCharacters(query)
+
   data <- dbGetQuery(conn, query)
   types <- getDataTypes(table, columns, conn)
 

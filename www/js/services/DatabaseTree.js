@@ -406,6 +406,7 @@ var DatabaseTree = (function(){
 	   			
 	   			if(original.id != id){
 	   				disableNode(original);
+	   				enableCheckbox(original.children, false);
 	   				disableNode(original.children);
 	   				
 	   				for(cIndex in original.children){

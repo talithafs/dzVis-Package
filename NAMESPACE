@@ -3,6 +3,7 @@
 export(connect)
 export(createGoogleComboChart)
 export(createGoogleMotionChart)
+export(debugCharacters)
 export(disconnect)
 export(getColumnValues)
 export(getColumnsByCategory)
