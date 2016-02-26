@@ -30,6 +30,7 @@ names(dbDesc) <- tableNames
 
 # Loop through aggregate data tables to find columns of the type enum and
 # append their levels to the corresponding description table
+id = 0 
 for(dbName in names(dbAD)){
 
   iAD = dbAD[[dbName]]
@@ -59,7 +60,9 @@ for(dbName in names(dbAD)){
 
       for(index in seq_along(levels)){
         lvl[1,2] = levels[index]
+        lvl[1,1] = id 
         tempList[[index]] = lvl
+        id = id + 1 
       }
 
       newCol[[count]] = tempList

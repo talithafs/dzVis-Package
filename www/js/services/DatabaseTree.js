@@ -18,7 +18,8 @@ services.service("databasetree", function(){
 var DatabaseTree = (function(){
 	
 	/** 
-	 * A column node with all of its associated levels (categories)
+	 * A column node with all of its associated levels (categories). All the properties
+	 * of the jstree node are maintained
 	 * @typedef {Object} DatabaseTree~Node
 	 */
 	
@@ -185,9 +186,9 @@ var DatabaseTree = (function(){
 
 	 /** 
 	* @function DatabaseTree#getTable
-	* @description Gets the complete table  node associated with a tree node
+	* @description Gets the table  node associated with a tree node
 	* @param {TreeNode} item A jstree tree node.
-	* @return {Node} 
+	* @return {TreeNode} 
 	*/
 	function getTable(item){
 		var node = undefined ;
@@ -288,7 +289,7 @@ var DatabaseTree = (function(){
 	/** 
 	* @function DatabaseTree#enableNode
 	* @description Enables a tree node in the jstree
-	* @param {Node|TreeNode} node The node that must be enabled
+	* @param {Node|TreeNode|string} node The node or the id of the node that must be enabled
 	*/
 	function enableNode(node){
 		
@@ -302,7 +303,7 @@ var DatabaseTree = (function(){
 	/** 
 	* @function DatabaseTree#disableNode
 	* @description Disables a tree node in the jstree
-	* @param {Node|TreeNode} node The node that must be disabled
+	* @param {Node|TreeNode|string} node The node or the id of the node that must be disabled
 	*/
 	function disableNode(node){
 		
@@ -317,7 +318,7 @@ var DatabaseTree = (function(){
 	/** 
 	* @function DatabaseTree#enableCheckbox
 	* @description Enables the checkbox of a tree node in the jstree
-	* @param {Node|TreeNode} node The node whose checkbox must be enabled
+	* @param {Node|TreeNode|string} node The node or the id of the node whose checkbox must be enabled
 	* @param {boolean} check Indicates whether the node should also be checked
 	*/
 	function enableCheckbox(node, check){
@@ -336,7 +337,7 @@ var DatabaseTree = (function(){
 	/** 
 	* @function DatabaseTree#disableCheckbox
 	* @description Disables the checkbox of a tree node in the jstree
-	* @param {Node|TreeNode} node The node whose checkbox must be disabled
+	* @param {Node|TreeNode|string} node The node or the id of the node whose checkbox must be disabled
 	* @param {boolean} uncheck Indicates whether the node should also be unchecked
 	*/
 	function disableCheckbox(node, uncheck){
@@ -389,6 +390,46 @@ var DatabaseTree = (function(){
 		
 		return treeInstance.get_checked(true);
 	}
+	
+	/**
+	 * @function DatabaseTree#manageTables
+	 * @description Disables all table nodes but the one associated with the id passed as an argument. If no id is passed, enables all table nodes.
+	 */
+	function manageTables(id){
+		
+		var pIndex, cIndex ;
+		
+	   if(id != undefined){
+	   	
+			for(pIndex in source){
+				var original = source[pIndex];
+	   			
+	   			if(original.id != id){
+	   				disableNode(original);
+	   				disableNode(original.children);
+	   				
+	   				for(cIndex in original.children){
+	   					disableNode(original.children[cIndex].children);
+	   				}
+	   			}
+	   		}
+	   }
+	   else {
+	   		for(pIndex in source){
+	   			var original = source[pIndex];
+	   			
+	   			enableNode(original);
+	   			enableNode(original.children);
+	   			
+	   			for(cIndex in original.children){
+	   					enableNode(original.children[cIndex].children);
+	   			}
+	   		}
+	   }
+		
+		
+	}
+	
 	
 	
 	// DatabaseTree public API
@@ -456,6 +497,10 @@ var DatabaseTree = (function(){
 	
 	DatabaseTree.prototype.getCheckedColumns = function(){ 
 		return getCheckedColumns.call(this); 
+	};
+	
+	DatabaseTree.prototype.manageTables = function(id){ 
+		manageTables.call(this, id); 
 	};
 
 	return {

@@ -8,30 +8,37 @@
       "description": "Total de todas as áreas ou de uma Região Metropolitana.",
       "children": [
           {
+            "id": 0,
             "text": "Belo Horizonte - MG",
             "type": "lvl"
          },
           {
+            "id": 1,
             "text": "Porto Alegre - RS",
             "type": "lvl"
          },
           {
+            "id": 2,
             "text": "Recife - PE",
             "type": "lvl"
          },
           {
+            "id": 3,
             "text": "Rio de Janeiro - RJ",
             "type": "lvl"
          },
           {
+            "id": 4,
             "text": "Salvador - BA",
             "type": "lvl"
          },
           {
+            "id": 5,
             "text": "São Paulo - SP",
             "type": "lvl"
          },
           {
+            "id": 6,
             "text": "Total das áreas",
             "type": "lvl"
           }
@@ -45,26 +52,32 @@
       "description": "Grupo de idade.",
       "children": [
           {
+            "id": 7,
             "text": "10 a 14 anos",
             "type": "lvl"
          },
           {
+            "id": 8,
             "text": "15 a 17 anos",
             "type": "lvl"
          },
           {
+            "id": 9,
             "text": "18 a 24 anos",
             "type": "lvl"
          },
           {
+            "id": 10,
             "text": "25 a 49 anos",
             "type": "lvl"
          },
           {
+            "id": 11,
             "text": "50 anos ou mais",
             "type": "lvl"
          },
           {
+            "id": 12,
             "text": "Total",
             "type": "lvl"
           }
@@ -142,30 +155,37 @@
       "description": "Total de todas as áreas ou de uma Região Metropolitana.",
       "children": [
           {
+            "id": 13,
             "text": "Belo Horizonte - MG",
             "type": "lvl"
          },
           {
+            "id": 14,
             "text": "Porto Alegre - RS",
             "type": "lvl"
          },
           {
+            "id": 15,
             "text": "Recife - PE",
             "type": "lvl"
          },
           {
+            "id": 16,
             "text": "Rio de Janeiro - RJ",
             "type": "lvl"
          },
           {
+            "id": 17,
             "text": "Salvador - BA",
             "type": "lvl"
          },
           {
+            "id": 18,
             "text": "São Paulo - SP",
             "type": "lvl"
          },
           {
+            "id": 19,
             "text": "Total das áreas",
             "type": "lvl"
           }
@@ -179,14 +199,17 @@
       "description": "Sexo.",
       "children": [
           {
+            "id": 20,
             "text": "Homem",
             "type": "lvl"
          },
           {
+            "id": 21,
             "text": "Mulher",
             "type": "lvl"
          },
           {
+            "id": 22,
             "text": "Total",
             "type": "lvl"
           }

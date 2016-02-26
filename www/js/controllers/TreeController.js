@@ -10,6 +10,8 @@ application.controller("TreeController",["$scope", "databasetree", function($sco
 	
 	databaseTree.create('data/menu.json');
 	
+	var lastTable = undefined ;
+	
 	/** @fires TreeController#treeClicked */
 	$scope.treeClicked = function(){
 		
@@ -24,6 +26,13 @@ application.controller("TreeController",["$scope", "databasetree", function($sco
 	/** @fires TreeController#nodeChecked */ 
 	databaseTree.$tree.on("check_node.jstree", function(event, data){
 		
+		var table = databaseTree.getTable(data.node);
+		
+		if(table != lastTable){
+			databaseTree.manageTables(table.id);
+			lastTable = table ;
+		}
+		
 		/** 
 		 * Reports that a node was checked in the jstree
 		 * @event TreeController#nodeChecked
@@ -34,6 +43,13 @@ application.controller("TreeController",["$scope", "databasetree", function($sco
 	
 	/** @fires TreeController#nodeUnchecked*/
 	databaseTree.$tree.on("uncheck_node.jstree", function(event, data){
+		
+		var checked = databaseTree.getCheckedNodes();
+		
+		if(checked.length == 0){
+			lastTable = undefined ;
+			databaseTree.manageTables();
+		}
 		
 		/** 
 		 * Reports that a node was checked in the jstree
