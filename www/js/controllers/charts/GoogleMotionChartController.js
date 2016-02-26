@@ -1,6 +1,6 @@
-application.controller("GoogleMotionChartController", ["$scope", "$state", "googlecharts", "connection", function($scope, $state, base, connection){
+application.controller("GoogleMotionChartController", ["$scope", "$state", "googlecharts", function($scope, $state, base){
 	
-	var features = new ComboChartFeatures() ;
+	var connection = $scope.$parent.connection ;
 	
 	// Google Charts labels
 	$scope.targetVarLabel =  base.LABEL.TARGET;

@@ -1,18 +1,45 @@
+/**
+ * @fileOverview Definition of the TreeController. It manages events associated with the jstree
+ * @author Talitha Speranza
+ * @version 0.1
+ */
+
+/** @class 
+ *	@name TreeController */
 application.controller("TreeController",["$scope", "databasetree", function($scope, databaseTree){
-	
-	//rodar o script de criacao do menu.json ? 
 	
 	databaseTree.create('data/menu.json');
 	
-	$scope.treeClicked = function(){		
+	/** @fires TreeController#treeClicked */
+	$scope.treeClicked = function(){
+		
+		/** 
+		 * Reports that the jstree element was clicked
+		 * @event TreeController#treeClicked
+     	 * @type {Array.<DatabaseTree~TreeNode>}
+     	 */		
 		$scope.$parent.$broadcast("treeClicked",databaseTree.getCheckedNodes());
 	} ;
 	
+	/** @fires TreeController#nodeChecked */ 
 	databaseTree.$tree.on("check_node.jstree", function(event, data){
+		
+		/** 
+		 * Reports that a node was checked in the jstree
+		 * @event TreeController#nodeChecked
+     	 * @type {DatabaseTree~TreeNode}
+     	 */
 		$scope.$parent.$broadcast("nodeChecked", data.node);
 	});
 	
+	/** @fires TreeController#nodeUnchecked*/
 	databaseTree.$tree.on("uncheck_node.jstree", function(event, data){
+		
+		/** 
+		 * Reports that a node was checked in the jstree
+		 * @event TreeController#nodeUnchecked
+     	 * @type {DatabaseTree~TreeNode}
+     	 */
 		$scope.$parent.$broadcast("nodeUnchecked", data.node);
 	});
 	

@@ -9,17 +9,21 @@ createGoogleComboChart(table, targetVar, groupVar, timeVar, min = NA,
   alternatives = NULL, filename = NULL)
 }
 \arguments{
-\item{table}{A \code{character} value. The name of the table from which the data should be retrieved}
+\item{table}{A \code{character}. The name of the table from which the data should be retrieved}
 
-\item{targetVar}{A \code{character} value. The vertical axis variable}
+\item{targetVar}{A \code{character}. The name of the column with the vertical axis variable.}
 
-\item{groupVar}{A \code{character} value. Variable by which \code{targetVar} should be grouped}
+\item{groupVar}{A \code{character}. The name of the column with the variable by which \code{targetVar} should be grouped}
 
-\item{timeVar}{A \code{character} value. The horizontal axis variable}
+\item{timeVar}{A \code{character}. The name of the column with the horizontal axis variable}
 
 \item{min}{A \code{numeric} value or a \code{date string} in the format 'yyyy-mm-dd'. Lower bound for the \code{timeVar}}
 
 \item{max}{A \code{numeric} value or a \code{date string} in the format 'yyyy-mm-dd'. Upper bound for the \code{timeVar}}
+
+\item{lineVar}{A \code{character}. The name of the column with the variable that should be used to draw a line according to an operation.}
+
+\item{operation}{A \code{charater}. The operation that should be used to draw the line. Please check the \code{\link{applyOperation}} documentation for more information.}
 
 \item{restrictions}{A n x 2 \code{matrix}. The n equality restrictions that make timeVar and groupVar values unique when combined.}
 

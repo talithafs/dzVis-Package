@@ -3,9 +3,9 @@ application.controller("ChartsController",["$scope", "$state", "charts", "connec
 	charts.success(function(data){
 		$scope.options = data ;
 		$scope.selection = $scope.options[0] ;
-		
-		
 	});
+	
+	$scope.connection = connection ;
 	
 	$scope.chartListVisible = true ;
 	$scope.showChart = false ;

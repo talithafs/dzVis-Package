@@ -1,6 +1,7 @@
-application.controller("GoogleComboChartController", ["$scope", "$state", "connection", "googlecharts", function($scope, $state, connection, base){
+application.controller("GoogleComboChartController", ["$scope", "$state", "googlecharts", function($scope, $state, base){
 	
 	var features = new ComboChartFeatures() ;
+	var connection = $scope.$parent.connection ;
 	
 	// Google Charts labels
 	$scope.targetVarLabel =  base.LABEL.TARGET;

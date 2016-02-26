@@ -7,18 +7,18 @@
 formatDates(table, dates, toStandard = TRUE, connection = NULL)
 }
 \arguments{
-\item{table}{bla}
+\item{table}{xxxxxxxxxx}
 
-\item{dates}{bla}
+\item{dates}{xxxxxxxxxxx}
 
-\item{toStandard}{bla}
+\item{toStandard}{xxxxxxxxxx}
 
-\item{connection}{bla}
+\item{connection}{xxxxxxx}
 }
 \value{
-foadoasas
+xxxxxxx
 }
 \description{
-blblba
+xxxxxxxxxx
 }
 
