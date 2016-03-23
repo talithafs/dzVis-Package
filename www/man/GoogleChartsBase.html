@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: GoogleChartsBase</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: GoogleChartsBase</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>GoogleChartsBase</h2>
+        
+            <div class="class-description">An object that abstracts shared logic between Google Charts controllers</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name" id="GoogleChartsBase"><span class="type-signature"></span>new GoogleChartsBase<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_GoogleChartsBase.js.html">services/GoogleChartsBase.js</a>, <a href="services_GoogleChartsBase.js.html#line11">line 11</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="checkVariables"><span class="type-signature"></span>checkVariables<span class="signature">(target, time)</span><span class="type-signature"> &rarr; {String}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Checks if there's at least one target variable and exactly one time variable
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>target</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The name of the column that contains the target variable</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>time</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The name of the column that contains the time variable</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_GoogleChartsBase.js.html">services/GoogleChartsBase.js</a>, <a href="services_GoogleChartsBase.js.html#line412">line 412</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    An error message or the string "VALID"
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="controlFilters"><span class="type-signature"></span>controlFilters<span class="signature">(activeFilters)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Controls the state of the tree according to the active filters, that is, the currently selected filters.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>activeFilters</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="DatabaseTree.html#~Node">DatabaseTree~Node</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Current set of filters</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_GoogleChartsBase.js.html">services/GoogleChartsBase.js</a>, <a href="services_GoogleChartsBase.js.html#line344">line 344</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="findTimeVariable"><span class="type-signature">(private) </span>findTimeVariable<span class="signature">(callback)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Finds the time variable of the current table
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#onLoadCallback">onLoadCallback</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The callback that handles the response</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_GoogleChartsBase.js.html">services/GoogleChartsBase.js</a>, <a href="services_GoogleChartsBase.js.html#line387">line 387</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="onDestroy"><span class="type-signature"></span>onDestroy<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Function to be called when the event "$destroy" is captured. If the currently selected chart is not from the googlevis package, it destroys the cache.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_GoogleChartsBase.js.html">services/GoogleChartsBase.js</a>, <a href="services_GoogleChartsBase.js.html#line267">line 267</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="onLoad"><span class="type-signature"></span>onLoad<span class="signature">(callback)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Function to be called when the event "$stateChangeSuccess" is captured. Loads checked columns into the cache. The array containing these columns will then be passed to the callback as argument.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#onLoadCallback">onLoadCallback</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The callback that handles the response</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_GoogleChartsBase.js.html">services/GoogleChartsBase.js</a>, <a href="services_GoogleChartsBase.js.html#line142">line 142</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="onNodeChecked"><span class="type-signature"></span>onNodeChecked<span class="signature">(node, callback)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Function to be called when the event "nodeChecked" is captured. Loads the last checked node into the cache. The node will then be passed to the callback as an argument.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>node</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="DatabaseTree.html#~Node">DatabaseTree~Node</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The node that has just been checked</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#onNodeCheckedCallback">onNodeCheckedCallback</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The callback that handles the response</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_GoogleChartsBase.js.html">services/GoogleChartsBase.js</a>, <a href="services_GoogleChartsBase.js.html#line193">line 193</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="onNodeUnchecked"><span class="type-signature"></span>onNodeUnchecked<span class="signature">(node, callback)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Function to be called when the event "nodeUnchecked" is captured. Unloads the last unchecked node from the cache. The node will then be passed to the callback as an argument.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>node</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="DatabaseTree.html#~Node">DatabaseTree~Node</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The node that has just been unchecked</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#onNodeUncheckedCallback">onNodeUncheckedCallback</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The callback that handles the response</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_GoogleChartsBase.js.html">services/GoogleChartsBase.js</a>, <a href="services_GoogleChartsBase.js.html#line243">line 243</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="updateFilters"><span class="type-signature">(private) </span>updateFilters<span class="signature">(node)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    If the column represented by the argument 'node' is a key and is not yet cached, stores it. Decides whether the selection of a node demands the usage of a new set of filters. The results are stored in the cache.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>node</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="DatabaseTree.html#~Node">DatabaseTree~Node</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The selected node</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_GoogleChartsBase.js.html">services/GoogleChartsBase.js</a>, <a href="services_GoogleChartsBase.js.html#line288">line 288</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ChartsController.html">ChartsController</a></li><li><a href="Connection.html">Connection</a></li><li><a href="DatabaseTree.html">DatabaseTree</a></li><li><a href="DetailsController.html">DetailsController</a></li><li><a href="GoogleChartsBase.html">GoogleChartsBase</a></li><li><a href="GoogleComboChartController.html">GoogleComboChartController</a></li><li><a href="GoogleMotionChartController.html">GoogleMotionChartController</a></li><li><a href="TreeController.html">TreeController</a></li></ul><h3>Events</h3><ul><li><a href="ChartsController.html#event:createChart">createChart</a></li><li><a href="global.html#event:chartCreated">chartCreated</a></li><li><a href="global.html#event:chartError">chartError</a></li><li><a href="TreeController.html#event:nodeChecked">nodeChecked</a></li><li><a href="TreeController.html#event:nodeUnchecked">nodeUnchecked</a></li><li><a href="TreeController.html#event:treeClicked">treeClicked</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Mar 07 2016 22:11:08 GMT-0300 (E. South America Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -35,7 +35,7 @@ rebuild <- function(run = TRUE, install = TRUE, doc = TRUE){
   }
 
   require(devtools)
-  devtools::build()
+  devtools::build(manual = TRUE)
 
   if(install){
     devtools::install()

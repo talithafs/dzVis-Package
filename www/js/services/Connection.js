@@ -11,7 +11,7 @@ services.service("connection", function(){
 
 /** @class
  * 	@name Connection
- *  @classdesc An object that makes OpenCPU call to execute R function
+ *  @classdesc An object that makes OpenCPU calls to execute R functions
  */
 var Connection = (function() {
 	

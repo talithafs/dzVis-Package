@@ -1,5 +1,5 @@
 /**
- * @fileOverview Definition of the TreeController. It manages events associated with the jstree
+ * @fileOverview Definition of the TreeController controller. It manages events associated with the jstree
  * @author Talitha Speranza
  * @version 0.1
  */

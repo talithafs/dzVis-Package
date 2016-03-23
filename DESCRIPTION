@@ -1,16 +1,20 @@
 Package: dzVis
 Type: Package
-Title: Data Visualization with Data Zoom 
+Title: Data Visualization with Data Zoom
 Version: 0.1
 Date: 2015-12-14
 Author: Talitha Speranza
 Maintainer: Talitha Speranza <talitha.speranza@gmail.com>
-Description: dzVis is an OpenCPU Web Application for Data Zoom that makes it possible 
-			 to create charts of brazilian economic data using several R packages, but without having 
-			 to type a single line of code into the R command line. The data source is the Brazilian 
+Description: dzVis is an OpenCPU Web Application for Data Zoom that makes it possible
+			 to create charts of brazilian economic data using several R packages, but without having
+			 to type a single line of code into the R command line. The data source is the Brazilian
 			 Institute of Geography and Statistics (IBGE).
 License: LGPL-3
+Depends:
+      googleVis,
+      DBI,
+      RMySQL,
+      jsonlite,
+      zoo
 LazyData: TRUE
-Imports:
-    googleVis
 RoxygenNote: 5.0.1

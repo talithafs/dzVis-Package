@@ -24,13 +24,13 @@ var DatabaseTree = (function(){
 	 */
 	
 	/** 
-	 * A jstree tree node 
-	 * @typedef {Object} DatabaseTree~TreeNode
+	 * The node from the json file that originated the jstree
+	 * @typedef {Object} DatabaseTree~OriginalNode
 	 */
 	
 	/** 
-	 * The node from the json file that originated the jstree
-	 * @typedef {Object} DatabaseTree~OriginalNode
+	 * A jstree tree node 
+	 * @typedef {Object} DatabaseTree~TreeNode
 	 */
 	
 	// Single instance
